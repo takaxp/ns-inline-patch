@@ -1,0 +1,4 @@
+An enhanced IME patch for GNU Emacs
+
+see https://qiita.com/takaxp/items/e07bb286d80fa9dd8e05
+
