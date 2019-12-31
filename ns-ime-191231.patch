@@ -1125,12 +1125,12 @@ diff -crN --exclude .git emacs_origin/src/nsterm.m emacs/src/nsterm.m
 +   Vmac_in_echo_area = Qnil;
 +
 +   DEFVAR_LISP ("mac-ime-panel-offset-x", Vmac_ime_panel_offset_x,
-+                doc: /* state of cursor in echo area. */);
++                doc: /* Horizontal offset to show candidates panel. */);
 +   Vmac_ime_panel_offset_x = Qnil;
 +
 +   DEFVAR_LISP ("mac-ime-panel-offset-y", Vmac_ime_panel_offset_y,
-+                doc: /* state of cursor in echo area. */);
-+   Vmac_ime_panel_offset_y = Qnil;
++                doc: /* Vertical offset to show candidates panel. */);
++   Vmac_ime_panel_offset_y = make_fixnum (2);
 +
     /* Tell Emacs about this window system.  */
     Fprovide (Qns, Qnil);
