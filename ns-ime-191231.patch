@@ -546,7 +546,7 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
 +   (if arg
 +       (progn
 +         (make-local-variable 'input-method-function)
-+         (setq inactivate-current-input-method-function 'mac-toggle-input-method)
++         (setq deactivate-current-input-method-function 'mac-toggle-input-method)
 +         (setq input-method-function nil)
 +         (setq describe-current-input-method-function nil)
 +         (mac-toggle-input-source t))
