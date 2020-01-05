@@ -180,7 +180,7 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
     "Insert contents of `ns-working-text' as UTF-8 string and mark with
 ***************
 *** 909,914 ****
---- 930,1433 ----
+--- 930,1436 ----
                                            &context (window-system ns))
     (ns-get-selection selection-symbol target-type))
 
@@ -602,7 +602,10 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
 +         (mac-handle-input-method-change)
 +         (mac-input-method-update (mac-get-current-input-source))
 +         (add-hook 'minibuffer-setup-hook #'mac-ime-deactivate-sticky)
-+         (add-hook 'minibuffer-exit-hook #'mac-ime-activate-sticky))
++         (add-hook 'minibuffer-exit-hook #'mac-ime-activate-sticky)
++         (when (and (not mac-default-input-source)
++                    (string-match "\\.ABC$" (mac-get-locale-input-source)))
++           (warn "Variable `mac-default-input-source' should be configured, otherwise IME cannot switch input source")))
 +     (setq default-input-method nil)
 +     (remove-hook 'minibuffer-setup-hook #'mac-ime-deactivate-sticky)
 +     (remove-hook 'minibuffer-exit-hook #'mac-ime-activate-sticky)))
@@ -705,48 +708,48 @@ diff -crN --exclude .git emacs_origin/src/Makefile.in emacs/src/Makefile.in
     w32.o w32console.o w32cygwinx.o w32fns.o w32heap.o w32inevt.o w32notify.o \
     w32menu.o w32proc.o w32reg.o w32select.o w32term.o w32xfns.o \
     w16select.o widget.o xfont.o ftfont.o xftfont.o ftxfont.o gtkutil.o \
-diff -crN --exclude .git emacs_origin/src/macim.m emacs/src/macim.m
 *** emacs_origin/src/macim.m	1970-01-01 09:00:00.000000000 +0900
---- emacs/src/macim.m	2019-12-30 07:22:13.000000000 +0900
+--- emacs/src/macim.m	2020-01-05 13:50:26.000000000 +0900
 ***************
 *** 0 ****
---- 1,208 ----
+--- 1,233 ----
 + /* Implementation of Input Method Extension for macOS.
 +    Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011
 +    Taiichi Hashimoto <taiichi2@mac.com>.
-+ 
++
 +    2019
 +    enhanced by Takaaki Ishikawa <takaxp@ieee.org>
 + */
-+ 
++
 + #include "config.h"
-+ 
++
 + #ifdef NS_IMPL_COCOA
-+ 
++
 + #include <math.h>
 + #include <sys/types.h>
 + #include <time.h>
 + #include <signal.h>
 + #include <unistd.h>
-+ 
++
 + #include <Carbon/Carbon.h>
-+ 
++
 + #include "lisp.h"
 + #include "blockinput.h"
-+ 
++
 + #include "termhooks.h"
 + #include "keyboard.h"
 + #include "buffer.h"
-+ 
++
 + //extern Lisp_Object Qcurrent_input_method;
 + //extern int cursor_in_echo_area;
 + static Lisp_Object Qmac_keys_passed_to_system;
-+ 
++
 + void mac_init_input_method ();
 + int mac_pass_key_to_system (int code, int modifiers);
 + int mac_pass_key_directly_to_emacs ();
 + int mac_store_change_input_method_event ();
-+ 
++ NSString* mac_get_locale ();
++
 + DEFUN ("mac-input-source-is-ascii-capable", Fmac_input_source_is_ascii_capable, Smac_input_source_is_ascii_capable,
 +        0, 0, 0,
 +        doc: /* Is current input source ascii capable? */)
@@ -754,10 +757,26 @@ diff -crN --exclude .git emacs_origin/src/macim.m emacs/src/macim.m
 + {
 +   TISInputSourceRef is = TISCopyCurrentKeyboardInputSource();
 +   CFBooleanRef ret = TISGetInputSourceProperty(is, kTISPropertyInputSourceIsASCIICapable);
-+ 
++
 +   return CFBooleanGetValue(ret)? Qt : Qnil;
 + }
-+ 
++
++ DEFUN ("mac-get-locale-input-source", Fmac_get_locale_input_source, Smac_get_locale_input_source,
++        0, 0, 0,
++        doc: /* get input source based on locale */)
++      (void)
++ {
++   NSString *locale = mac_get_locale();
++   // locale = @"ja-JP";
++   // NSLog(@"%@", locale);
++
++   TISInputSourceRef is = TISCopyInputSourceForLanguage((CFStringRef)locale);
++   NSString *id = (NSString *)TISGetInputSourceProperty(is, kTISPropertyInputSourceID);
++
++   return make_string([id UTF8String],
++                      [id lengthOfBytesUsingEncoding:NSUTF8StringEncoding]);
++ }
++
 + DEFUN ("mac-get-input-source-list", Fmac_get_input_source_list, Smac_get_input_source_list,
 +        0, 0, 0,
 +        doc: /* get input source list on macOS */)
@@ -767,17 +786,17 @@ diff -crN --exclude .git emacs_origin/src/macim.m emacs/src/macim.m
 +   int list_size = [is_list count];
 +   Lisp_Object list[list_size];
 +   int i;
-+ 
++
 +   for (i = 0; i < list_size; i++) {
 +     TISInputSourceRef is = (TISInputSourceRef)[is_list objectAtIndex:i];
 +     NSString *id = (NSString *)TISGetInputSourceProperty(is, kTISPropertyInputSourceID);
 +     list[i] = make_string([id UTF8String],
 +                           [id lengthOfBytesUsingEncoding:NSUTF8StringEncoding]);
 +   }
-+ 
++
 +   return Flist(list_size, list);
 + }
-+ 
++
 + DEFUN ("mac-get-current-input-source", Fmac_get_current_input_source, Smac_get_current_input_source,
 +        0, 0, 0,
 +        doc: /* get current input source on macOS */)
@@ -785,11 +804,11 @@ diff -crN --exclude .git emacs_origin/src/macim.m emacs/src/macim.m
 + {
 +   TISInputSourceRef is = TISCopyCurrentKeyboardInputSource();
 +   NSString *id = (NSString *)TISGetInputSourceProperty(is, kTISPropertyInputSourceID);
-+ 
++
 +   return make_string([id UTF8String],
 +                      [id lengthOfBytesUsingEncoding:NSUTF8StringEncoding]);
 + }
-+ 
++
 + DEFUN ("mac-toggle-input-source", Fmac_toggle_input_source, Smac_toggle_input_source,
 +        1, 1, 0,
 +        doc: /* toggle input source on macOS */)
@@ -803,28 +822,21 @@ diff -crN --exclude .git emacs_origin/src/macim.m emacs/src/macim.m
 +   } else {
 +     Vinput_source = Vmac_default_input_source;
 +   }
-+ 
++
 +   if ( NILP (Vinput_source) || !STRINGP (Vinput_source) ){
 +     if (NILP (arg)) {
 +       is = TISCopyCurrentASCIICapableKeyboardInputSource();
 +     } else {
-+       NSString *locale;
-+       NSArray *languages = [NSLocale preferredLanguages];
-+       if (languages != nil) {
-+         locale = [languages objectAtIndex:0];
-+       } else {
-+         locale = [[NSLocale currentLocale]
-+                   objectForKey:NSLocaleLanguageCode];
-+       }
++       NSString *locale = mac_get_locale();
 +       if ( [locale hasPrefix:@"ja"] ) {
 +         is = TISCopyInputSourceForLanguage((CFStringRef)locale);
 +       }
 +     }
-+ 
++
 +     if (is) TISSelectInputSource(is);
 +     return arg;
 +   }
-+ 
++
 +   NSString *targetID = [NSString stringWithUTF8String: SSDATA (Vinput_source)];
 +   if ( targetID == nil) {
 +     return arg;
@@ -838,52 +850,66 @@ diff -crN --exclude .git emacs_origin/src/macim.m emacs/src/macim.m
 +       break;
 +     }
 +   }
-+ 
++
 +   if (is) TISSelectInputSource(is);
 +   return arg;
 + }
-+ 
++
++ NSString*
++ mac_get_locale ()
++ {
++   NSString *locale = NULL;
++   NSArray *languages = [NSLocale preferredLanguages];
++   if (languages != nil) {
++     locale = [languages objectAtIndex:0];
++   } else {
++     locale = [[NSLocale currentLocale]
++               objectForKey:NSLocaleLanguageCode];
++   }
++   return locale;
++ }
++
 + int
 + mac_store_change_input_method_event ()
 + {
 +   Lisp_Object dim;
 +   int ret = FALSE;
-+ 
++
 +   dim = Fsymbol_value (intern ("default-input-method"));
 +   if (STRINGP (dim) && (strcmp(SDATA (dim), "MacOSX") == 0
 +                         || strcmp(SDATA (dim), "macOS") == 0))
 +     {
 +       ret = TRUE;
 +     }
-+ 
++
 +   return ret;
 + }
-+ 
++
 + int
 + mac_pass_key_to_system (int code, int modifiers)
 + {
 +   Lisp_Object keys = Fsymbol_value (Qmac_keys_passed_to_system);
 +   Lisp_Object m, k;
-+ 
++
 +   while (!NILP (keys))
 +     {
 +       m = XCAR (XCAR (keys));
 +       k = XCDR (XCAR (keys));
 +       keys = XCDR (keys);
-+ 
++
 +       if (NUMBERP (m) && modifiers == XFIXNUM (m))
 +         if (NILP (k)
 +             || (NUMBERP (k) && code == XFIXNUM (k)))
 +           return TRUE;
 +     }
-+ 
++
 +   return FALSE;
 + }
-+ 
++
 + int
 + mac_pass_key_directly_to_emacs (void)
 + {
-+ 
++
 +   if (NILP (Fmac_input_source_is_ascii_capable()))
 +     {
 +       if (NILP (Vmac_use_input_method_on_system)
@@ -892,30 +918,31 @@ diff -crN --exclude .git emacs_origin/src/macim.m emacs/src/macim.m
 +           || !NILP (BVAR (current_buffer, read_only)))
 +         return TRUE;
 +     }
-+ 
++
 +   return FALSE;
 + }
-+ 
++
 + void mac_init_input_method (void)
 + {
 +   Qmac_keys_passed_to_system = intern ("mac-keys-passed-to-system");
 +   staticpro (&Qmac_keys_passed_to_system);
-+ 
++
 +   DEFVAR_LISP ("mac-use-input-method-on-system", Vmac_use_input_method_on_system,
 +                doc: /* If it is non-nil, use input method on system. */);
 +   Vmac_use_input_method_on_system = Qt;
-+ 
++
 +   DEFVAR_LISP ("mac-default-input-source", Vmac_default_input_source,
 +                doc: /* The default input source. */);
 +   Vmac_default_input_source = Qnil;
-+ 
++
 +   DEFVAR_LISP ("mac-default-input-ascii", Vmac_default_input_ascii,
 +                doc: /* The default input source for ASCII. */);
 +   Vmac_default_input_ascii = Qnil;
-+ 
++
 +   defsubr (&Smac_input_source_is_ascii_capable);
 +   defsubr (&Smac_get_input_source_list);
 +   defsubr (&Smac_get_current_input_source);
++   defsubr (&Smac_get_locale_input_source);
 +   defsubr (&Smac_toggle_input_source);
 + }
 + #endif
