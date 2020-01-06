@@ -199,7 +199,7 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
   (defun ns-find-file ()
 ***************
 *** 909,914 ****
---- 940,1454 ----
+--- 940,1455 ----
                                            &context (window-system ns))
     (ns-get-selection selection-symbol target-type))
 
@@ -521,8 +521,9 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
 +
 + (defun mac-ime-update-title ()
 +   "Update title on mode line."
-+   (mac-handle-input-method-change)
-+   (mac-input-method-update (mac-get-current-input-source)))
++   (unless isearch-mode
++     (mac-handle-input-method-change)
++     (mac-input-method-update (mac-get-current-input-source))))
 +
 + (defun mac-ime-active-p ()
 +   "Non-nil if current input source is not Roman or `mac-default-input-ascii'."
