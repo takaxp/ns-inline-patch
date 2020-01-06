@@ -199,7 +199,7 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
   (defun ns-find-file ()
 ***************
 *** 909,914 ****
---- 940,1448 ----
+--- 940,1454 ----
                                            &context (window-system ns))
     (ns-get-selection selection-symbol target-type))
 
@@ -519,6 +519,11 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
 +     (force-mode-line-update)
 +     (if isearch-mode (isearch-update))))
 +
++ (defun mac-ime-update-title ()
++   "Update title on mode line."
++   (mac-handle-input-method-change)
++   (mac-input-method-update (mac-get-current-input-source)))
++
 + (defun mac-ime-active-p ()
 +   "Non-nil if current input source is not Roman or `mac-default-input-ascii'."
 +   (let ((input-source (mac-get-current-input-source)))
@@ -620,16 +625,17 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
 +         (mac-translate-from-yen-to-backslash)
 +         (cond ((eq mac-ime-startup-state 'activate) (mac-ime-activate))
 +               ((eq mac-ime-startup-state 'deactivate) (mac-ime-deactivate)))
-+         (mac-handle-input-method-change)
-+         (mac-input-method-update (mac-get-current-input-source))
++         (mac-ime-update-title)
 +         (add-hook 'minibuffer-setup-hook #'mac-ime-deactivate-sticky)
 +         (add-hook 'minibuffer-exit-hook #'mac-ime-activate-sticky)
++         (add-hook 'buffer-list-update-hook #'mac-ime-update-title)
 +         (when (and (not mac-default-input-source)
 +                    (string-match "\\.ABC$" (mac-get-locale-input-source)))
 +           (warn "Variable `mac-default-input-source' should be configured, otherwise IME cannot switch input source")))
 +     (setq default-input-method nil)
 +     (remove-hook 'minibuffer-setup-hook #'mac-ime-deactivate-sticky)
-+     (remove-hook 'minibuffer-exit-hook #'mac-ime-activate-sticky)))
++     (remove-hook 'minibuffer-exit-hook #'mac-ime-activate-sticky)
++     (remove-hook 'buffer-list-update-hook #'mac-ime-update-title)))
 +
 + ;;
 + ;; Valiable and functions to pass key(shortcut) to system.
