@@ -179,8 +179,23 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
   (defun ns-insert-working-text ()
     "Insert contents of `ns-working-text' as UTF-8 string and mark with
 ***************
+*** 467,472 ****
+--- 488,499 ----
+    :version "23.1"
+    :group 'ns)
+
++ (defcustom mac-ime-startup-with-ime-deactivated nil
++   "If Non-nil, IME is deactivated when starting Emacs."
++   :type 'boolean
++   :version "27.0"
++   :group 'ns)
++
+  (declare-function ns-hide-emacs "nsfns.m" (on))
+
+  (defun ns-find-file ()
+***************
 *** 909,914 ****
---- 930,1436 ----
+--- 936,1444 ----
                                            &context (window-system ns))
     (ns-get-selection selection-symbol target-type))
 
@@ -599,6 +614,8 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
 +         (setq default-input-method "macOS")
 +         ;; (add-hook 'minibuffer-setup-hook 'mac-change-language-to-us)
 +         (mac-translate-from-yen-to-backslash)
++         (when mac-ime-startup-with-ime-deactivated
++           (mac-ime-deactivate))
 +         (mac-handle-input-method-change)
 +         (mac-input-method-update (mac-get-current-input-source))
 +         (add-hook 'minibuffer-setup-hook #'mac-ime-deactivate-sticky)
