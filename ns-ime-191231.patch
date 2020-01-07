@@ -199,7 +199,7 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
   (defun ns-find-file ()
 ***************
 *** 909,914 ****
---- 940,1455 ----
+--- 940,1454 ----
                                            &context (window-system ns))
     (ns-get-selection selection-symbol target-type))
 
@@ -522,8 +522,7 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
 + (defun mac-ime-update-title ()
 +   "Update title on mode line."
 +   (unless isearch-mode
-+     (mac-handle-input-method-change)
-+     (mac-input-method-update (mac-get-current-input-source))))
++     (mac-handle-input-method-change)))
 +
 + (defun mac-ime-active-p ()
 +   "Non-nil if current input source is not Roman or `mac-default-input-ascii'."
@@ -548,7 +547,7 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
 +   (interactive)
 +   (if (mac-ime-active-p) (mac-ime-deactivate) (mac-ime-activate)))
 +
-+ (defvar mac-ime--before-action nil)
++ (defvar mac-ime--before-action (mac-ime-active-p))
 + (defun mac-ime-activate-sticky ()
 +   "Activate IME for minibuffer."
 +   (when mac-ime--before-action
@@ -626,7 +625,7 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
 +         (mac-translate-from-yen-to-backslash)
 +         (cond ((eq mac-ime-startup-state 'activate) (mac-ime-activate))
 +               ((eq mac-ime-startup-state 'deactivate) (mac-ime-deactivate)))
-+         (mac-ime-update-title)
++         (mac-handle-input-method-change)
 +         (add-hook 'minibuffer-setup-hook #'mac-ime-deactivate-sticky)
 +         (add-hook 'minibuffer-exit-hook #'mac-ime-activate-sticky)
 +         (add-hook 'buffer-list-update-hook #'mac-ime-update-title)
