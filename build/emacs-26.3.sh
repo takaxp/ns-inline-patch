@@ -17,7 +17,7 @@ patch -p1 < ../ns-inline-patch/emacs-25.2-inline.patch
 sleep 5
 ./autogen.sh
 ./configure CC=clang --without-x --with-ns --with-modules
-CORES=4
+CORES=
 #CORES=1
 make bootstrap -j$CORES
 make install -j$CORES

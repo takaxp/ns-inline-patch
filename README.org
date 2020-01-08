@@ -5,7 +5,7 @@ see https://qiita.com/takaxp/items/e07bb286d80fa9dd8e05
 ** Supported features
  - avoid "M-x あ"
  - faces for composing text
- - non-jp locale
+ - non ja locale
  - directly change input source
 
 ** Supported Emacs version
