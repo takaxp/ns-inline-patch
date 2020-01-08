@@ -179,6 +179,27 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
   (defun ns-insert-working-text ()
     "Insert contents of `ns-working-text' as UTF-8 string and mark with
 ***************
+*** 331,336 ****
+--- 352,369 ----
+  		       'face 'ns-working-text-face msg)
+      (message "%s" msg)))
+
++ (defun ns-put-marked-text (event)
++   (interactive "e")
++   (let ((pos (nth 1 event))
++         (len (nth 2 event)))
++     (when (and mac-ime-cursor-type (> len 0))
++       (setq cursor-type nil))
++     (ns-put-working-text)
++     ;; (if (ns-in-echo-area)
++     ;;     (ns-echo-marked-text pos len)
++     ;;   (ns-insert-marked-text pos len))
++     ))
++
+  (defun ns-delete-working-text()
+    "Delete working text and clear `ns-working-overlay'."
+    (interactive)
+***************
 *** 467,472 ****
 --- 488,503 ----
     :version "23.1"
