@@ -791,12 +791,13 @@ diff -crN --exclude .git emacs_origin/src/nsterm.h emacs/src/nsterm.h
 --- emacs/src/nsterm.h	2019-12-30 07:22:13.000000000 +0900
 ***************
 *** 754,759 ****
---- 754,760 ----
+--- 754,761 ----
   #define KEY_NS_NEW_FRAME               ((1<<28)|(0<<16)|12)
   #define KEY_NS_TOGGLE_TOOLBAR          ((1<<28)|(0<<16)|13)
   #define KEY_NS_SHOW_PREFS              ((1<<28)|(0<<16)|14)
 + #define KEY_MAC_CHANGE_INPUT_METHOD    ((1<<28)|(0<<16)|15)
-  
++ #define KEY_NS_PUT_MARKED_TEXT         ((1<<28)|(0<<16)|16)
+
   /* Could use list to store these, but rest of emacs has a big infrastructure
      for managing a table of bitmap "records".  */
 diff -crN --exclude .git emacs_origin/src/nsterm.m emacs/src/nsterm.m
