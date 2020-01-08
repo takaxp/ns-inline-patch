@@ -1,4 +1,14 @@
-An enhanced inline patch for GNU Emacs
+#+title: An enhanced inline patch for GNU Emacs
 
 see https://qiita.com/takaxp/items/e07bb286d80fa9dd8e05
 
+** Supported features
+ - avoid "M-x あ"
+ - faces for composing text
+ - non-jp locale
+ - directly change input source
+
+** Supported Emacs version
+ - Emacs 27.0.60
+ - Emacs 26.3, 26.2, 26.1
+ - Emacs 25.2
