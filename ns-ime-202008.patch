@@ -900,6 +900,25 @@ diff -crN --exclude .git emacs_origin/src/nsterm.m emacs/src/nsterm.m
       }
   
 ***************
+*** 6519,6525 ****
+    ns_working_text = build_string ([workingText UTF8String]);
+
+    emacs_event->kind = NS_TEXT_EVENT;
+!   emacs_event->code = KEY_NS_PUT_WORKING_TEXT;
+    EV_TRAILER ((id)nil);
+  }
+
+--- 6550,6558 ----
+    ns_working_text = build_string ([workingText UTF8String]);
+
+    emacs_event->kind = NS_TEXT_EVENT;
+!   emacs_event->code = KEY_NS_PUT_MARKED_TEXT;
+!   emacs_event->arg = Fcons (make_int (selRange.location),
+!                             Fcons (make_int (selRange.length), Qnil));
+    EV_TRAILER ((id)nil);
+  }
+
+***************
 *** 6591,6608 ****
   {
     NSRect rect;
