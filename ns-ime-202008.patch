@@ -180,7 +180,7 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
     "Insert contents of `ns-working-text' as UTF-8 string and mark with
 ***************
 *** 331,336 ****
---- 352,369 ----
+--- 352,414 ----
   		       'face 'ns-working-text-face msg)
       (message "%s" msg)))
 
@@ -190,15 +190,84 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
 +         (len (nth 2 event)))
 +     (when (and mac-ime-cursor-type (> len 0))
 +       (setq cursor-type nil))
-+     (ns-put-working-text)
-+     ;; (if (ns-in-echo-area)
-+     ;;     (ns-echo-marked-text pos len)
-+     ;;   (ns-insert-marked-text pos len))
-+     ))
++     (if (ns-in-echo-area)
++         (ns-echo-marked-text pos len)
++       (ns-insert-marked-text pos len))))
++
++ (defun ns-insert-marked-text (pos len)
++   "Insert contents of `ns-working-text' as UTF-8 string and mark with
++   `ns-working-overlay' and `ns-marked-overlay'.  Any previously existing
++   working text is cleared first. The overlay is assigned the faces
++   `ns-working-text-face' and `ns-marked-text-face'."
++   (ns-delete-working-text)
++   (let ((start (point)))
++     (when (<= pos (length ns-working-text))
++       (if (= len 0)
++           (overlay-put (setq ns-working-overlay
++                              (make-overlay start (point) (current-buffer)))
++                        'after-string
++                        (propertize ns-working-text 'face 'ns-working-text-face))
++         (overlay-put (setq ns-working-overlay
++                            (make-overlay start (point) (current-buffer) nil t))
++                      'after-string
++                      (propertize (substring ns-working-text 0 len)
++                                  'face 'ns-marked-text-face))
++         (overlay-put (setq ns-marked-overlay
++                            (make-overlay (point) (+ (point) pos len)
++                                          (current-buffer) nil t))
++                      'before-string
++                      (propertize (substring ns-working-text len
++                                             (length ns-working-text))
++                                  'face 'ns-unmarked-text-face))))))
++
++ (defun ns-echo-marked-text (pos len)
++   "Echo contents of `ns-working-text' in message display area.
++   See `ns-insert-working-text'."
++   (ns-delete-working-text)
++   (let* ((msg (current-message))
++          (msglen (length msg))
++          message-log-max)
++     (when (integerp ns-working-overlay)
++       (setq msg (substring msg 0 (- (length msg) ns-working-overlay)))
++       (setq msglen (length msg)))
++     (setq ns-working-overlay (length ns-working-text))
++     (setq msg (concat msg ns-working-text))
++     (if (= len 0)
++         (put-text-property msglen (+ msglen ns-working-overlay)
++                            'face 'ns-working-text-face msg)
++       (put-text-property msglen (+ msglen ns-working-overlay)
++                          'face 'ns-marked-text-face msg)
++       (put-text-property (+ msglen pos) (+ msglen pos len)
++                          'face 'ns-unmarked-text-face msg))
++     (message "%s" msg)))
 +
   (defun ns-delete-working-text()
     "Delete working text and clear `ns-working-overlay'."
     (interactive)
+***************
+*** 346,353 ****
+            message-log-max)
+        (setq msg (substring msg 0 (- (length msg) ns-working-overlay)))
+        (message "%s" msg))))
+!   (setq ns-working-overlay nil))
+!
+
+  ;; macOS file system Unicode UTF-8 NFD (decomposed form) support.
+  (when (eq system-type 'darwin)
+--- 424,436 ----
+            message-log-max)
+        (setq msg (substring msg 0 (- (length msg) ns-working-overlay)))
+        (message "%s" msg))))
+!   (setq ns-working-overlay nil)
+!   (when (and (overlayp ns-marked-overlay)
+!              (overlay-buffer ns-marked-overlay))
+!     (with-current-buffer (overlay-buffer ns-marked-overlay)
+!       (overlay-put ns-marked-overlay 'before-string nil)
+!       (delete-overlay ns-marked-overlay)))
+!   (setq ns-marked-overlay nil))
+
+  ;; macOS file system Unicode UTF-8 NFD (decomposed form) support.
+  (when (eq system-type 'darwin)
 ***************
 *** 467,472 ****
 --- 488,503 ----
