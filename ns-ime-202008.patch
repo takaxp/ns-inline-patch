@@ -162,34 +162,39 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
   (defun ns-unput-working-text ()
     (interactive)
 !   (ns-delete-working-text))
-  
+
   (defun ns-insert-working-text ()
     "Insert contents of `ns-working-text' as UTF-8 string and mark with
---- 321,332 ----
+--- 321,333 ----
   (defun ns-put-working-text ()
     (interactive)
     (if (ns-in-echo-area) (ns-echo-working-text) (ns-insert-working-text)))
-+ (defvar mac-ime-cursor-type nil)
++
   (defun ns-unput-working-text ()
     (interactive)
 !   (ns-delete-working-text)
-!   (when mac-ime-cursor-type
-!     (setq cursor-type mac-ime-cursor-type)))
-  
+!   (when (and mac-ime-hide-cursor mac-ime--cursor-type)
+!     (setq cursor-type mac-ime--cursor-type
+!           mac-ime--cursor-type nil)))
+
   (defun ns-insert-working-text ()
     "Insert contents of `ns-working-text' as UTF-8 string and mark with
 ***************
 *** 331,336 ****
---- 352,414 ----
+--- 353,419 ----
   		       'face 'ns-working-text-face msg)
       (message "%s" msg)))
 
++ (defvar mac-ime--cursor-type nil)
 + (defun ns-put-marked-text (event)
 +   (interactive "e")
 +   (let ((pos (nth 1 event))
 +         (len (nth 2 event)))
-+     (when (and mac-ime-cursor-type (> len 0))
-+       (setq cursor-type nil))
++     (when (and (> len 0)
++                cursor-type
++                mac-ime-hide-cursor)
++       (setq mac-ime--cursor-type cursor-type
++             cursor-type nil))
 +     (if (ns-in-echo-area)
 +         (ns-echo-marked-text pos len)
 +       (ns-insert-marked-text pos len))))
@@ -270,17 +275,23 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
   (when (eq system-type 'darwin)
 ***************
 *** 467,472 ****
---- 488,503 ----
+--- 555,576 ----
     :version "23.1"
     :group 'ns)
 
 + (defcustom mac-ime-startup-state nil
-+   "If Non-nil, start Emacs with the specified IME state.
++   "If non-nil, start Emacs with the specified IME state.
 + `activate' or `deactivate' shall be used.
 + If nil, inherit the IME state from macOS."
 +   :type '(choice (const :tag "IME activated" activate)
 +                  (const :tag "IME deactivated" deactivate)
 +                  (const :tag "IME inherited from macOS" nil))
++   :version "27.0"
++   :group 'ns)
++
++ (defcustom mac-ime-hide-cursor t
++   "If non-nil, the cursor is not rendered when composing text."
++   :type 'boolean
 +   :version "27.0"
 +   :group 'ns)
 +
