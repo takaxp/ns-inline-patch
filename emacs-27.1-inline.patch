@@ -730,7 +730,7 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
 +         (add-hook 'minibuffer-setup-hook #'mac-ime-deactivate-sticky)
 +         (add-hook 'minibuffer-exit-hook #'mac-ime-activate-sticky)
 +         (add-hook 'buffer-list-update-hook #'mac-ime-update-title)
-+         (add-hook 'focus-in-hook #'mac-ime-update-title)
++         (add-function :after after-focus-change-function #'mac-ime-update-title)
 +         (when (and (not mac-default-input-source)
 +                    (string-match "\\.ABC$" (mac-get-locale-input-source)))
 +           (warn "Variable `mac-default-input-source' should be configured, otherwise IME cannot switch input source")))
@@ -738,7 +738,7 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
 +     (remove-hook 'minibuffer-setup-hook #'mac-ime-deactivate-sticky)
 +     (remove-hook 'minibuffer-exit-hook #'mac-ime-activate-sticky)
 +     (remove-hook 'buffer-list-update-hook #'mac-ime-update-title)
-+     (remove-hook 'focus-in-hook #'mac-ime-update-title)))
++     (remove-function after-focus-change-function #'mac-ime-update-title)))
 + 
 + ;;
 + ;; Valiable and functions to pass key(shortcut) to system.
