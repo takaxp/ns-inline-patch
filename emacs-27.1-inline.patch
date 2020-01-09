@@ -300,10 +300,10 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
   (defun ns-find-file ()
 ***************
 *** 909,914 ****
---- 940,1454 ----
+--- 1013,1529 ----
                                            &context (window-system ns))
     (ns-get-selection selection-symbol target-type))
-
+  
 + ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 + ;;
 + ;; Implementation of Input Method Extension for MacOS X
@@ -565,18 +565,18 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
 +      (cursor-type))
 +     )
 +   "Alist of Mac script code vs parameters for input method on macOS.")
-+
++ 
 + (defun mac-get-input-method-parameter (is key)
 +   "Function to get a parameter of a input method."
 +   (assq key (cdr (assoc is mac-input-method-parameters))))
-+
++ 
 + (defun mac-get-input-method-title (&optional input-source)
 +   "Return input method title of input source.
 +     If input-source is nil, return one of current frame."
 +   (if input-source
 +       (cdr (mac-get-input-method-parameter input-source 'title))
 +     current-input-method-title))
-+
++ 
 + (defun mac-get-cursor-type (&optional input-source)
 +   "Return cursor type of input source.
 +     If input-source is nil, return one of current frame."
@@ -585,7 +585,7 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
 +           (cdr (assq 'cursor-type default-frame-alist))
 +           cursor-type)
 +     (cdr (assq 'cursor-type (frame-parameters (selected-frame))))))
-+
++ 
 + (defun mac-get-cursor-color (&optional input-source)
 +   "Return cursor color of input source.
 +     If input-source is nil, return one of current frame."
@@ -593,7 +593,7 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
 +       (or (cdr (mac-get-input-method-parameter input-source 'cursor-color))
 +           (cdr (assq 'cursor-color default-frame-alist)))
 +     (cdr (assq 'cursor-color (frame-parameters (selected-frame))))))
-+
++ 
 + (defun mac-set-input-method-parameter (is key value)
 +   "Function to set a parameter of a input method."
 +   (let* ((is-param (assoc is mac-input-method-parameters))
@@ -605,7 +605,7 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
 +       (setq mac-input-method-parameters
 +             (cons (list is (cons key value))
 +                   mac-input-method-parameters)))))
-+
++ 
 + (defun mac-input-method-update (is)
 +   "Function to update parameters of a input method."
 +   (let ((title (mac-get-input-method-title is))
@@ -619,53 +619,53 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
 +         (set-cursor-color color))
 +     (force-mode-line-update)
 +     (if isearch-mode (isearch-update))))
-+
++ 
 + (defun mac-ime-update-title ()
 +   "Update title on mode line."
 +   (unless isearch-mode
 +     (mac-handle-input-method-change)))
-+
++ 
 + (defun mac-ime-active-p ()
 +   "Non-nil if current input source is not Roman or `mac-default-input-ascii'."
 +   (let ((input-source (mac-get-current-input-source)))
 +     (not (or (string-match "\\.\\(Roman\\|US\\)$" input-source)
 +              (equal mac-default-input-ascii input-source)))))
-+
++ 
 + (defun mac-ime-activate ()
 +   "Activate input method."
 +   (interactive)
 +   (mac-toggle-input-method t)
 +   (run-hooks 'input-method-activate-hook))
-+
++ 
 + (defun mac-ime-deactivate ()
 +   "Deactivate input method."
 +   (interactive)
 +   (mac-toggle-input-method nil)
 +   (run-hooks 'input-method-deactivate-hook))
-+
++ 
 + (defun mac-ime-toggle ()
 +   "Toggle IME."
 +   (interactive)
 +   (if (mac-ime-active-p) (mac-ime-deactivate) (mac-ime-activate)))
-+
++ 
 + (defvar mac-ime--before-action (mac-ime-active-p))
 + (defun mac-ime-activate-sticky ()
 +   "Activate IME for minibuffer."
 +   (when mac-ime--before-action
 +     (mac-ime-activate)))
-+
++ 
 + (defun mac-ime-deactivate-sticky ()
 +   "Deactivate IME for minibuffer."
 +   (when (setq mac-ime--before-action (mac-ime-active-p))
 +     (mac-ime-deactivate)))
-+
++ 
 + (defun mac-input-source-registerd-p (&optional input-source)
 +   "Return nil, if the INPUT-SOURCE is not listed in system.
 + If INPUT-SOURCE is nil, `mac-default-input-source' is checked."
 +   (let ((is (or input-source mac-default-input-source)))
 +     (when (member is (mac-get-input-source-list))
 +       t)))
-+
++ 
 + (defun mac-toggle-input-method (&optional arg)
 +   "Function to toggle input method on macOS."
 +   (if arg
@@ -678,12 +678,12 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
 +     (kill-local-variable 'input-method-function)
 +     (setq describe-current-input-method-function nil)
 +     (mac-toggle-input-source nil)))
-+
++ 
 + (defun mac-change-language-to-us ()
 +   "Function to change language to us."
 +   (interactive)
 +   (mac-toggle-input-method nil))
-+
++ 
 + (defun mac-ime-input-source-list ()
 +   "Show available input sources."
 +   (interactive)
@@ -692,7 +692,7 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
 +     (message "%s" is))
 +   (message "----------------")
 +   (message "see *Messages* buffer"))
-+
++ 
 + (defun mac-handle-input-method-change ()
 +   "Function run when a input method change."
 +   (interactive)
@@ -704,13 +704,13 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
 +             ((and (equal current-input-method "macOS") ascii-capable)
 +              (toggle-input-method nil)))
 +       (mac-input-method-update input-source))))
-+
++ 
 + ;;
 + ;; Emacs input method for input method on macOS.
 + ;;
 + (register-input-method "macOS" "macOS" 'mac-toggle-input-method
 +                        "Mac" "Input Method on macOS System")
-+
++ 
 + ;;
 + ;; Minor mode of using input methods on macOS
 + ;;
@@ -730,26 +730,28 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
 +         (add-hook 'minibuffer-setup-hook #'mac-ime-deactivate-sticky)
 +         (add-hook 'minibuffer-exit-hook #'mac-ime-activate-sticky)
 +         (add-hook 'buffer-list-update-hook #'mac-ime-update-title)
++         (add-hook 'focus-in-hook #'mac-ime-update-title)
 +         (when (and (not mac-default-input-source)
 +                    (string-match "\\.ABC$" (mac-get-locale-input-source)))
 +           (warn "Variable `mac-default-input-source' should be configured, otherwise IME cannot switch input source")))
 +     (setq default-input-method nil)
 +     (remove-hook 'minibuffer-setup-hook #'mac-ime-deactivate-sticky)
 +     (remove-hook 'minibuffer-exit-hook #'mac-ime-activate-sticky)
-+     (remove-hook 'buffer-list-update-hook #'mac-ime-update-title)))
-+
++     (remove-hook 'buffer-list-update-hook #'mac-ime-update-title)
++     (remove-hook 'focus-in-hook #'mac-ime-update-title)))
++ 
 + ;;
 + ;; Valiable and functions to pass key(shortcut) to system.
 + ;;
 + (defvar mac-keys-passed-to-system nil
 +   "A list of keys passed to system on macOS.")
-+
++ 
 + (defun mac-add-key-passed-to-system (key)
 +   (let ((shift   '(shift shft))
 +         (control '(control ctrl ctl))
 +         (option  '(option opt alternate alt))
 +         (command '(command cmd)))
-+
++ 
 +     (add-to-list 'mac-keys-passed-to-system
 +                  (cond ((symbolp key)
 +                         (cond ((memq key shift)
@@ -778,20 +780,20 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
 +                             (setq l (cdr l)))
 +                           (cons m k)))
 +                        (t (cons nil nil))))))
-+
++ 
 + ;;
 + ;; Entry Emacs event for inline input method on macOS.
 + ;;
 + (define-key special-event-map
 +   [mac-change-input-method] 'mac-handle-input-method-change)
-+
++ 
 + ;;
 + ;; Convert yen to backslash for JIS keyboard.
 + ;;
 + (defun mac-translate-from-yen-to-backslash ()
 +   ;; Convert yen to backslash for JIS keyboard.
 +   (interactive)
-+
++ 
 +   (define-key global-map [165] nil)
 +   (define-key global-map [2213] nil)
 +   (define-key global-map [3420] nil)
@@ -812,10 +814,10 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
 +   (define-key function-key-map [201328805] [?\C-\M-\\])
 +   )
 + ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-+
++ 
   (provide 'ns-win)
   (provide 'term/ns-win)
-
+  
 diff -crN --exclude .git emacs_origin/src/Makefile.in emacs/src/Makefile.in
 *** emacs_origin/src/Makefile.in	2019-12-30 01:10:55.000000000 +0900
 --- emacs/src/Makefile.in	2019-12-30 07:22:13.000000000 +0900
