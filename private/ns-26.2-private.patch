@@ -1,0 +1,60 @@
+diff -crN emacs-26.0.91/src/nsfns.m emacs-26.0.91_patch/src/nsfns.m
+*** emacs-26.0.91/src/nsfns.m	2018-03-20 18:41:09.000000000 +0900
+--- emacs-26.0.91_patch/src/nsfns.m	2018-03-20 18:42:52.000000000 +0900
+***************
+*** 1231,1239 ****
+  
+    x_default_parameter (f, parms, Qborder_width, make_number (0),
+  		       "borderwidth", "BorderWidth", RES_TYPE_NUMBER);
+!   x_default_parameter (f, parms, Qinternal_border_width, make_number (2),
+!                       "internalBorderWidth", "InternalBorderWidth",
+!                       RES_TYPE_NUMBER);
+    x_default_parameter (f, parms, Qright_divider_width, make_number (0),
+  		       NULL, NULL, RES_TYPE_NUMBER);
+    x_default_parameter (f, parms, Qbottom_divider_width, make_number (0),
+--- 1231,1239 ----
+  
+    x_default_parameter (f, parms, Qborder_width, make_number (0),
+  		       "borderwidth", "BorderWidth", RES_TYPE_NUMBER);
+!   x_default_parameter (f, parms, Qinternal_border_width, make_number (0),
+!                        "internalBorderWidth", "InternalBorderWidth",
+!                        RES_TYPE_NUMBER);
+    x_default_parameter (f, parms, Qright_divider_width, make_number (0),
+  		       NULL, NULL, RES_TYPE_NUMBER);
+    x_default_parameter (f, parms, Qbottom_divider_width, make_number (0),
+***************
+*** 1247,1252 ****
+--- 1247,1253 ----
+  #else
+            = Qright;
+  #endif
++       spos = Qnil;
+        x_default_parameter (f, parms, Qvertical_scroll_bars, spos,
+  			   "verticalScrollBars", "VerticalScrollBars",
+  			   RES_TYPE_SYMBOL);
+diff -crN emacs-26.0.91/src/nsterm.m emacs-26.0.91_patch/src/nsterm.m
+*** emacs-26.0.91/src/nsterm.m	2018-03-20 18:41:09.000000000 +0900
+--- emacs-26.0.91_patch/src/nsterm.m	2018-03-20 18:43:13.000000000 +0900
+***************
+*** 7073,7082 ****
+                *pos = '\0';
+              old_title = t;
+            }
+!         size_title = xmalloc (strlen (old_title) + 40);
+! 	esprintf (size_title, "%s  —  (%d x %d)", old_title, cols, rows);
+!         [window setTitle: [NSString stringWithUTF8String: size_title]];
+!         xfree (size_title);
+        }
+    }
+  #endif /* NS_IMPL_COCOA */
+--- 7073,7082 ----
+                *pos = '\0';
+              old_title = t;
+            }
+!         // size_title = xmalloc (strlen (old_title) + 40);
+! 	// esprintf (size_title, "%s  —  (%d x %d)", old_title, cols, rows);
+!         // [window setTitle: [NSString stringWithUTF8String: size_title]];
+!         // xfree (size_title);
+        }
+    }
+  #endif /* NS_IMPL_COCOA */
