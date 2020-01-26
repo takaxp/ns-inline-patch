@@ -12,3 +12,7 @@ see https://qiita.com/takaxp/items/e07bb286d80fa9dd8e05
  - Emacs HEAD, 27.0.60 (emacs-27.1-inline.patch)
  - Emacs 26.3, 26.2, 26.1 (emacs-25.2-inline.patch)
  - Emacs 25.2, 25.3 (emacs-25.2-inline.patch)
+
+** My contribution
+ - Use extra libraries from https://github.com/paaguti/rudix
+ - Create a standalone distributable Emacs.app
