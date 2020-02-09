@@ -17,4 +17,4 @@ jobs:
     - name: Setup to build
       run: sh build/setup.sh
     - name: Build emacs-27 with inline patch
-      run: sh build/emacs-27.1.sh
+      run: sh build/emacs-27.1.sh -d ${{ github.workspace }}
