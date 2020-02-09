@@ -1,5 +1,7 @@
 #+title: An enhanced inline patch for GNU Emacs
 
+[[file:https:/github.com/takaxp/ns-inline-patch/workflows/Build%20NS%20with%20inline-patch/badge.svg][Build NS with inline-patch]]
+
 see https://qiita.com/takaxp/items/e07bb286d80fa9dd8e05
 
 ** Supported features
