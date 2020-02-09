@@ -4,6 +4,7 @@
 MACSDK=`xcrun --show-sdk-path`
 export LIBXML2_CFLAGS="-I${MACSDK}/usr/include/libxml2"
 export LIBXML2_LIBS="-lxml2"
+export PATH="/usr/local/opt/texinfo/bin:$PATH"
 
 export WORKING_DIR="~/Desktop"
 while getopts d: opt
