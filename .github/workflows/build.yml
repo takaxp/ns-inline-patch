@@ -1,0 +1,17 @@
+name: Build NS with inline-patch
+on: [push]
+
+jobs:
+  build:
+    strategy:
+      matrix:
+      platform: [macos-latest]
+      emacs_version: [snapshot]
+    runs-on: ${{ matrix.platform }}
+    steps:
+    - uses: actions/checkout@v2
+    - uses: purcell/setup-emacs@master
+      with:
+        version: ${{ matrix.emacs_version }}
+    - name: Run a one-line script
+      run: echo done.
