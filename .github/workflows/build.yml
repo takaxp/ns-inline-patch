@@ -6,7 +6,17 @@ on:
   - cron: '0 6 * * *'
 
 jobs:
-  build:
+  build-head:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup to build
+      run: sh build/setup.sh
+    - name: Build emacs-28 with inline patch
+      run: sh build/emacs-head.sh -d ${{ github.workspace }}
+    - name: Verification
+      run: ${{ github.workspace }}/emacs/nextstep/Emacs.app/Contents/MacOS/Emacs --batch --eval="(unless (fboundp 'mac-input-method-mode) (error \"The inline-patch is NOT integrated\"))"
+  build-27.0:
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v2
@@ -14,5 +24,15 @@ jobs:
       run: sh build/setup.sh
     - name: Build emacs-27 with inline patch
       run: sh build/emacs-27.1.sh -d ${{ github.workspace }}
+    - name: Verification
+      run: ${{ github.workspace }}/emacs/nextstep/Emacs.app/Contents/MacOS/Emacs --batch --eval="(unless (fboundp 'mac-input-method-mode) (error \"The inline-patch is NOT integrated\"))"
+  build-26.3:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup to build
+      run: sh build/setup.sh
+    - name: Build emacs-26.3 with inline patch
+      run: sh build/emacs-26.3.sh -d ${{ github.workspace }}
     - name: Verification
       run: ${{ github.workspace }}/emacs/nextstep/Emacs.app/Contents/MacOS/Emacs --batch --eval="(unless (fboundp 'mac-input-method-mode) (error \"The inline-patch is NOT integrated\"))"
