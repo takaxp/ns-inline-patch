@@ -19,4 +19,4 @@ jobs:
     - name: Build emacs-27 with inline patch
       run: sh build/emacs-27.1.sh -d ${{ github.workspace }}
     - name: Show build information
-      run: ${{ github.workspace }}/emacs/nextstep/Emacs.app/Contents/MacOS/Emacs --batch --eval="(when (fboundp 'mac-input-method-mode) (error "Faild"))"
+      run: ${{ github.workspace }}/emacs/nextstep/Emacs.app/Contents/MacOS/Emacs --batch --eval="(when (fboundp 'mac-input-method-mode) (error \"Failed\"))"
