@@ -4,19 +4,11 @@ on: [push, pull_request]
 jobs:
   build:
     runs-on: macos-latest
-    strategy:
-      matrix:
-        emacs_version:
-          - 26.3
-          - snapshot
     steps:
-    - uses: purcell/setup-emacs@master
-      with:
-        version: ${{ matrix.emacs_version }}
     - uses: actions/checkout@v2
     - name: Setup to build
       run: sh build/setup.sh
     - name: Build emacs-27 with inline patch
       run: sh build/emacs-27.1.sh -d ${{ github.workspace }}
-    - name: Show build information
-      run: ${{ github.workspace }}/emacs/nextstep/Emacs.app/Contents/MacOS/Emacs --batch --eval="(when (fboundp 'mac-input-method-mode) (error \"Failed\"))"
+    - name: Verification
+      run: ${{ github.workspace }}/emacs/nextstep/Emacs.app/Contents/MacOS/Emacs --batch --eval="(unless (fboundp 'mac-input-method-mode) (error \"The inline-patch is NOT integrated\"))"
