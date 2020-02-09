@@ -15,4 +15,4 @@ jobs:
         version: ${{ matrix.emacs_version }}
     - uses: actions/checkout@v2
     - name: Setup to build
-      run: build/setup.sh
+      run: sh build/setup.sh
