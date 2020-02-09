@@ -5,7 +5,17 @@ MACSDK=`xcrun --show-sdk-path`
 export LIBXML2_CFLAGS="-I${MACSDK}/usr/include/libxml2"
 export LIBXML2_LIBS="-lxml2"
 
-cd ~/Desktop
+export WORKING_DIR="~/Desktop"
+while getopts d: opt
+do
+    case ${opt} in
+        d)
+            WORKING_DIR=${OPTARG}
+            ;;
+    esac
+done
+
+cd ${WORKING_DIR}
 git clone git://git.sv.gnu.org/emacs.git
 git clone --depth 1 https://github.com/takaxp/ns-inline-patch.git
 
