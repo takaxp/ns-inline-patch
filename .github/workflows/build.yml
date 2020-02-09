@@ -14,5 +14,5 @@ jobs:
       with:
         version: ${{ matrix.emacs_version }}
     - uses: actions/checkout@v2
-    - name: Run a one-line script
-      run: echo emacs --version
+    - name: Setup to build
+      run: build/setup.sh
