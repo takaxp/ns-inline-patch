@@ -1,5 +1,9 @@
 name: "Build NS with inline-patch"
-on: [push, pull_request]
+on:
+  push:
+  pull_request:
+  schedule:
+  - cron: '0 6 * * *'
 
 jobs:
   build:
