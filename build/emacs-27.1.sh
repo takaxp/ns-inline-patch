@@ -22,6 +22,7 @@ git clone --depth 1 https://github.com/takaxp/ns-inline-patch.git
 cd emacs
 git checkout --track origin/emacs-27
 patch -p1 < ../ns-inline-patch/emacs-27.1-inline.patch
+patch -p1 < ../ns-inline-patch/revert-89d0c445.patch
 
 sleep 5
 ./autogen.sh

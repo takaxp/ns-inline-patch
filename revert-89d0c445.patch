@@ -1,0 +1,70 @@
+*** emacs_origin/src/nsterm.m	2020-02-13 13:51:26.000000000 +0900
+--- emacs/src/nsterm.m	2020-02-13 13:54:57.000000000 +0900
+***************
+*** 6487,6496 ****
+    if (!emacs_event)
+      return;
+  
+-   /* First, clear any working text.  */
+-   if (workingText != nil)
+-     [self deleteWorkingText];
+- 
+    /* It might be preferable to use getCharacters:range: below,
+       cf. https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/CocoaPerformance/Articles/StringDrawing.html#//apple_ref/doc/uid/TP40001445-112378.
+       However, we probably can't use SAFE_NALLOCA here because it might
+--- 6487,6492 ----
+***************
+*** 6519,6524 ****
+--- 6515,6524 ----
+        emacs_event->code = code;
+        EV_TRAILER ((id)nil);
+      }
++ 
++   /* Last, clear any working text.  */
++   if (workingText != nil)
++     [self deleteWorkingText];
+  }
+  
+  
+*** emacs_origin/lisp/term/ns-win.el	2020-02-13 13:51:21.000000000 +0900
+--- emacs/lisp/term/ns-win.el	2020-02-13 13:54:07.000000000 +0900
+***************
+*** 336,345 ****
+    (interactive)
+    (ns-delete-working-text)
+    (let ((start (point)))
+!     (insert ns-working-text)
+!     (overlay-put (setq ns-working-overlay (make-overlay start (point)
+! 							(current-buffer) nil t))
+! 		 'face 'ns-working-text-face)))
+  
+  (defun ns-echo-working-text ()
+    "Echo contents of `ns-working-text' in message display area.
+--- 336,344 ----
+    (interactive)
+    (ns-delete-working-text)
+    (let ((start (point)))
+!     (overlay-put (setq ns-working-overlay (make-overlay start (point)))
+!                  'after-string
+!                  (propertize ns-working-text 'face 'ns-working-text-face))))
+  
+  (defun ns-echo-working-text ()
+    "Echo contents of `ns-working-text' in message display area.
+***************
+*** 423,430 ****
+           ;; Still alive?
+           (overlay-buffer ns-working-overlay))
+      (with-current-buffer (overlay-buffer ns-working-overlay)
+!       (delete-region (overlay-start ns-working-overlay)
+!                      (overlay-end ns-working-overlay))
+        (delete-overlay ns-working-overlay)))
+     ((integerp ns-working-overlay)
+      (let ((msg (current-message))
+--- 422,428 ----
+           ;; Still alive?
+           (overlay-buffer ns-working-overlay))
+      (with-current-buffer (overlay-buffer ns-working-overlay)
+!       (overlay-put ns-working-overlay 'after-string nil)
+        (delete-overlay ns-working-overlay)))
+     ((integerp ns-working-overlay)
+      (let ((msg (current-message))
