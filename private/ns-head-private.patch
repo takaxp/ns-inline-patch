@@ -1,0 +1,57 @@
+diff --exclude .git -crN emacs-27/src/nsfns.m emacs/src/nsfns.m
+*** emacs-27/src/nsfns.m	2019-02-09 13:11:12.000000000 +0900
+--- emacs/src/nsfns.m	2019-02-09 13:18:14.000000000 +0900
+***************
+*** 1185,1191 ****
+  
+    gui_default_parameter (f, parms, Qborder_width, make_fixnum (0),
+                           "borderwidth", "BorderWidth", RES_TYPE_NUMBER);
+!   gui_default_parameter (f, parms, Qinternal_border_width, make_fixnum (2),
+                           "internalBorderWidth", "InternalBorderWidth",
+                           RES_TYPE_NUMBER);
+    gui_default_parameter (f, parms, Qright_divider_width, make_fixnum (0),
+--- 1185,1191 ----
+  
+    gui_default_parameter (f, parms, Qborder_width, make_fixnum (0),
+                           "borderwidth", "BorderWidth", RES_TYPE_NUMBER);
+!   gui_default_parameter (f, parms, Qinternal_border_width, make_fixnum (0),
+                           "internalBorderWidth", "InternalBorderWidth",
+                           RES_TYPE_NUMBER);
+    gui_default_parameter (f, parms, Qright_divider_width, make_fixnum (0),
+***************
+*** 1201,1206 ****
+--- 1201,1207 ----
+  #else
+            = Qright;
+  #endif
++       spos = Qnil;
+        gui_default_parameter (f, parms, Qvertical_scroll_bars, spos,
+  			   "verticalScrollBars", "VerticalScrollBars",
+  			   RES_TYPE_SYMBOL);
+*** emacs_origin/src/nsterm.m	2020-02-13 18:43:41.000000000 +0900
+--- emacs/src/nsterm.m	2020-02-13 18:45:38.000000000 +0900
+***************
+*** 7231,7241 ****
+                *pos = '\0';
+              old_title = t;
+            }
+!         size_title = xmalloc (strlen (old_title) + 40);
+! 	esprintf (size_title, "%s  —  (%d x %d)", old_title, cols, rows);
+!         [window setTitle: [NSString stringWithUTF8String: size_title]];
+!         [window display];
+!         xfree (size_title);
+        }
+    }
+  #endif /* NS_IMPL_COCOA */
+--- 7231,7241 ----
+                *pos = '\0';
+              old_title = t;
+            }
+!         // size_title = xmalloc (strlen (old_title) + 40);
+! 	// esprintf (size_title, "%s  —  (%d x %d)", old_title, cols, rows);
+!         // [window setTitle: [NSString stringWithUTF8String: size_title]];
+!         // [window display];
+!         // xfree (size_title);
+        }
+    }
+  #endif /* NS_IMPL_COCOA */
