@@ -1,0 +1,66 @@
+*** emacs_origin/src/keyboard.c	2020-02-18 15:49:01.000000000 +0900
+--- emacs/src/keyboard.c	2020-02-18 15:54:48.000000000 +0900
+***************
+*** 2901,2906 ****
+--- 2901,2912 ----
+  	   example banishing the mouse under mouse-avoidance-mode.  */
+  	timer_resume_idle ();
+  
++ #ifdef HAVE_NS
++       if (CONSP (c)
++           && (EQ (XCAR (c), intern ("ns-unput-working-text"))))
++         input_was_pending = input_pending;
++ #endif
++ 
+        if (current_buffer != prev_buffer)
+  	{
+  	  /* The command may have changed the keymaps.  Pretend there
+*** emacs_origin/src/nsterm.m	2020-02-18 15:49:01.000000000 +0900
+--- emacs/src/nsterm.m	2020-02-18 16:01:51.000000000 +0900
+***************
+*** 6487,6492 ****
+--- 6487,6496 ----
+    if (!emacs_event)
+      return;
+  
++   /* First, clear any working text.  */
++   if (workingText != nil)
++     [self deleteWorkingText];
++ 
+    /* It might be preferable to use getCharacters:range: below,
+       cf. https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/CocoaPerformance/Articles/StringDrawing.html#//apple_ref/doc/uid/TP40001445-112378.
+       However, we probably can't use SAFE_NALLOCA here because it might
+***************
+*** 6515,6524 ****
+        emacs_event->code = code;
+        EV_TRAILER ((id)nil);
+      }
+- 
+-   /* Last, clear any working text.  */
+-   if (workingText != nil)
+-     [self deleteWorkingText];
+  }
+  
+  
+--- 6519,6524 ----
+***************
+*** 6743,6750 ****
+  
+    NSTRACE ("[EmacsView mouseDown:]");
+  
+-   [self deleteWorkingText];
+- 
+    if (!emacs_event)
+      return;
+  
+--- 6743,6748 ----
+***************
+*** 7369,7375 ****
+  
+    if (emacs_event && is_focus_frame)
+      {
+-       [self deleteWorkingText];
+        emacs_event->kind = FOCUS_OUT_EVENT;
+        EV_TRAILER ((id)nil);
+      }
+--- 7367,7372 ----

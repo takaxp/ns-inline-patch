@@ -23,6 +23,7 @@ cd emacs
 git checkout --track origin/emacs-27
 patch -p1 < ../ns-inline-patch/emacs-27.1-inline.patch
 patch -p1 < ../ns-inline-patch/revert-89d0c445.patch
+patch -p1 < ../$PATCH/ns-inline-patch/fix-working-text.patch
 
 sleep 5
 ./autogen.sh
