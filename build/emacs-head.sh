@@ -22,7 +22,7 @@ git clone --depth 1 https://github.com/takaxp/ns-inline-patch.git
 
 cd emacs
 patch -p1 < ../ns-inline-patch/emacs-27.1-inline.patch
-if [ $? -ne 0 ]; then echo "FAILED"; exit; fi
+if [ $? -ne 0 ]; then echo "FAILED"; exit 1; fi
 
 sleep 5
 ./autogen.sh
