@@ -5,7 +5,7 @@ MACSDK=`xcrun --show-sdk-path`
 export LIBXML2_CFLAGS="-I${MACSDK}/usr/include/libxml2"
 export LIBXML2_LIBS="-lxml2"
 
-export WORKING_DIR="~/Desktop"
+export WORKING_DIR="${HOME}/Desktop"
 while getopts d: opt
 do
     case ${opt} in
@@ -22,6 +22,7 @@ git clone --depth 1 https://github.com/takaxp/ns-inline-patch.git
 
 cd emacs
 patch -p1 < ../ns-inline-patch/emacs-27.1-inline.patch
+if [ $? -ne 0 ]; then echo "FAILED"; exit; fi
 
 sleep 5
 ./autogen.sh

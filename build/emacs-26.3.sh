@@ -6,7 +6,7 @@ export LIBXML2_CFLAGS="-I${MACSDK}/usr/include/libxml2"
 export LIBXML2_LIBS="-lxml2"
 export PATH="/usr/local/opt/texinfo/bin:$PATH"
 
-export WORKING_DIR="~/Desktop"
+export WORKING_DIR="${HOME}/Desktop"
 while getopts d: opt
 do
     case ${opt} in
@@ -25,6 +25,7 @@ git clone --depth 1 https://github.com/takaxp/ns-inline-patch.git
 tar zxvf emacs-$VERSION.tar.gz
 cd ./emacs-$VERSION
 patch -p1 < ../ns-inline-patch/emacs-25.2-inline.patch
+if [ $? -ne 0 ]; then echo "FAILED"; exit; fi
 sleep 5
 ./autogen.sh
 ./configure CC=clang --without-x --with-ns --with-modules
