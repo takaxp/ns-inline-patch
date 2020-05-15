@@ -25,7 +25,7 @@ Before you run the package, you will probably need to install some external pack
 
 #+begin_src sh
 brew install gnutls
-brew install imagemagck // or imagemagick@6
+brew install imagemagick // or imagemagick@6
 #+end_src
 
 I'll revisit this issue near future. If you face some issues, please let me know.
