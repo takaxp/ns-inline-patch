@@ -17,7 +17,7 @@ see https://qiita.com/takaxp/items/e07bb286d80fa9dd8e05
 
 ** [TEST] pre-built distribution package
 
-You can download my pre-built Emacs 27 with ns-inline patch. Emacs.app will be installed under =/Applications/Emacs-takaxp=. The pkg contains =GnuTLS=.
+You can download my pre-built Emacs 27 with ns-inline patch. Emacs.app will be installed under =/Applications/Emacs-takaxp=. The pkg contains =GnuTLS= but only for Catalina.
 
 https://github.com/takaxp/ns-inline-patch/raw/master/pkg/emacs-27-28541674cd.pkg
 
