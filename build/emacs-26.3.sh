@@ -25,6 +25,7 @@ git clone --depth 1 https://github.com/takaxp/ns-inline-patch.git
 tar zxvf emacs-$VERSION.tar.gz
 cd ./emacs-$VERSION
 patch -p1 < ../ns-inline-patch/emacs-25.2-inline.patch
+patch -p1 < ../ns-inline-patch/fix-emacs26.3-unexmacosx.c.patch
 if [ $? -ne 0 ]; then echo "FAILED"; exit 1; fi
 sleep 5
 ./autogen.sh
