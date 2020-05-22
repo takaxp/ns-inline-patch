@@ -32,9 +32,10 @@ If your environment for building Emacs is under PROXY, you can use =emacs-mirror
 
 ** Pre-built distribution package
 
-You can download my pre-built Emacs 27 with ns-inline patch. =Emacs.app= will be installed under =/Applications/Emacs-takaxp= in your macOS. The pkg contains =GnuTLS= and it supports Catalina only.
+You can download my pre-built Emacs 26.3 and 27.0.91 with ns-inline patch. =Emacs.app= will be installed under =/Applications/Emacs-takaxp= in your macOS. The pkg contains =GnuTLS= and it supports Catalina only.
 
-https://pxaka.tokyo/emacs/pkg/emacs-27.0.91.pkg (48.9MB, MD5:84ada2dd6505dab6483f5994675295b2)
+ - https://pxaka.tokyo/emacs/pkg/emacs-26.3.pkg (52.9MB, MD5:1868c787177f515f18f500ce6b898b05)
+ - https://pxaka.tokyo/emacs/pkg/emacs-27.0.91.pkg (51.3MB, MD5:ab4be9711fae1c2309dc4cce732f9fb0)
 
 Integrated dynamic libraries:
 

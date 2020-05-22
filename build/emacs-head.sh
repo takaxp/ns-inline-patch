@@ -18,7 +18,7 @@ done
 cd ${WORKING_DIR}
 
 # Please select emacs-mirror if you have any connection troubles.
-# git clone https://github.com/emacs-mirror/emacs.git
+# git clone --depth 1 https://github.com/emacs-mirror/emacs.git
 git clone --depth 1 git://git.sv.gnu.org/emacs.git
 
 # inline-patch
