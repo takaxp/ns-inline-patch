@@ -50,6 +50,9 @@ You can download my pre-built Emacs 26.3 and 27.0.91 with ns-inline patch. =Emac
  - https://pxaka.tokyo/emacs/pkg/emacs-26.3.pkg (52.9MB, MD5:1868c787177f515f18f500ce6b898b05)
  - https://pxaka.tokyo/emacs/pkg/emacs-27.0.91.pkg (51.3MB, MD5:ab4be9711fae1c2309dc4cce732f9fb0)
 
+Additionally, the following package is "WITHOUT" inline-patch NS build. In this case, =Emacs.app= will be installed under =/Applications/Emacs-takaxp/pure=.
+ - https://pxaka.tokyo/emacs/pkg/emacs-27.0.91_pure.pkg (51.3MB, MD5:30860a8268ab3afc74d12e96c2434c0d)
+
 Integrated dynamic libraries:
 
  - libffi.7.dylib
