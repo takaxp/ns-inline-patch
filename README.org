@@ -19,6 +19,19 @@ see https://qiita.com/takaxp/items/e07bb286d80fa9dd8e05
  - Emacs 26.3, 26.2, 26.1 (emacs-25.2-inline.patch)
  - Emacs 25.3, 25.2 (emacs-25.2-inline.patch)
 
+** How to use?
+
+Add the following code to your init.el.
+
+#+begin_src emacs-lisp
+(when (and (memq window-system '(ns nil))
+           (fboundp 'mac-get-current-input-source))
+  (when (version< "27.0" emacs-version)
+    (custom-set-variables
+     '(mac-default-input-source "com.google.inputmethod.Japanese.base"))
+    (mac-input-method-mode 1)))
+#+end_src
+
 ** Build scripts
 
 For your convenience, some build scripts are provided. Before you run the script, please run =setup.sh= first.
@@ -55,3 +68,4 @@ The =system-configuration-features= is:
 =NOTIFY KQUEUE ACL GNUTLS LIBXML2 ZLIB TOOLKIT_SCROLL_BARS NS MODULES THREADS PDUMPER=
 
 Enjoy!
+
