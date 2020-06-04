@@ -818,6 +818,37 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
   (provide 'ns-win)
   (provide 'term/ns-win)
   
+*** emacs_origin/lisp/term/ns-win.el	2020-06-05 01:58:05.000000000 +0900
+--- emacs/lisp/term/ns-win.el	2020-06-05 01:55:14.000000000 +0900
+***************
+*** 1414,1419 ****
+--- 1414,1439 ----
+               (toggle-input-method nil)))
+        (mac-input-method-update input-source))))
+
++ ;;;###autoload
++ (defun mac-build-info ()
++   "Display build information in a buffer."
++   (interactive)
++   (switch-to-buffer (get-buffer-create "*Build info*"))
++   (let ((buffer-read-only nil))
++     (erase-buffer)
++     (insert (format "GNU Emacs %s\nCommit:\t\t%s\nBranch:\t\t%s\n"
++                     emacs-version
++                     (emacs-repository-get-version)
++                     (when (version< "27.0" emacs-version)
++                       (emacs-repository-get-branch))))
++     (insert (format "System:\t\t%s\nDate:\t\t\t%s\n"
++                     system-configuration
++                     (format-time-string "%Y-%m-%d %T (%Z)" emacs-build-time)))
++     (insert (format "Patch:\t\t%s ns-inline.patch\n"
++                     (if (boundp 'mac-ime--cursor-type) "with" "without")))
++     (insert (format "Features:\t%s\n" system-configuration-features)))
++   (view-mode))
++
+  ;;
+  ;; Emacs input method for input method on macOS.
+  ;;
 diff -crN --exclude .git emacs_origin/src/Makefile.in emacs/src/Makefile.in
 *** emacs_origin/src/Makefile.in	2019-12-30 01:10:55.000000000 +0900
 --- emacs/src/Makefile.in	2019-12-30 07:22:13.000000000 +0900
