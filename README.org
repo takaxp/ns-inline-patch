@@ -27,9 +27,10 @@ Add the following code to your init.el.
 (when (and (memq window-system '(ns nil))
            (fboundp 'mac-get-current-input-source))
   (when (version< "27.0" emacs-version)
+    ;; Required for some cases when auto detection is failed or the locale is "en".
     (custom-set-variables
-     '(mac-default-input-source "com.google.inputmethod.Japanese.base"))
-    (mac-input-method-mode 1)))
+     '(mac-default-input-source "com.google.inputmethod.Japanese.base")))
+  (mac-input-method-mode 1))
 #+end_src
 
 ** Build scripts
