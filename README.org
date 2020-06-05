@@ -19,6 +19,10 @@ see https://qiita.com/takaxp/items/e07bb286d80fa9dd8e05 and https://qiita.com/ta
  - Emacs 26.3, 26.2, 26.1 (emacs-25.2-inline.patch)
  - Emacs 25.3, 25.2 (emacs-25.2-inline.patch)
 
+** Integrated functions
+
+ - M-x mac-build-info
+
 ** How to use?
 
 Add the following code to your init.el.
