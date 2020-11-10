@@ -1098,13 +1098,12 @@ diff -crN --exclude .git emacs_origin/src/nsterm.m emacs/src/nsterm.m
 *** emacs_origin/src/nsterm.m	2019-12-30 06:49:02.000000000 +0900
 --- emacs/src/nsterm.m	2019-12-30 07:22:13.000000000 +0900
 ***************
-*** 68,73 ****
---- 68,74 ----
+*** 66,70 ****
+--- 66,71 ----
 
   #ifdef NS_IMPL_COCOA
   #include "macfont.h"
 + #include "macim.h"
-  #include <Carbon/Carbon.h>
   #endif
 
 diff -crN emacs-25.2_orig/src/nsterm.m emacs-25.2/src/nsterm.m
