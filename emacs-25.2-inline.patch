@@ -850,7 +850,7 @@ diff -crN emacs-25.2_orig/src/macim.m emacs-25.2/src/macim.m
 --- emacs-25.2/src/macim.m	2017-04-25 16:52:18.000000000 +0900
 ***************
 *** 0 ****
---- 1,173 ----
+--- 1,175 ----
 + /* Implementation of Input Method Extension for MacOS X.
 +    Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011
 +    Taiichi Hashimoto <taiichi2@mac.com>.
@@ -874,6 +874,8 @@ diff -crN emacs-25.2_orig/src/macim.m emacs-25.2/src/macim.m
 + #include "termhooks.h"
 + #include "keyboard.h"
 + #include "buffer.h"
++
++ #include "macim.h"
 +
 + //extern Lisp_Object Qcurrent_input_method;
 + //extern int cursor_in_echo_area;
@@ -1024,6 +1026,19 @@ diff -crN emacs-25.2_orig/src/macim.m emacs-25.2/src/macim.m
 +   defsubr (&Smac_toggle_input_source);
 + }
 + #endif
+diff -crN --exclude .git emacs_origin/src/nsfns.m emacs/src/nsfns.m
+*** emacs_origin/src/nsfns.m	2019-12-30 01:10:54.000000000 +0900
+--- emacs/src/nsfns.m	2019-12-30 07:22:13.000000000 +0900
+***************
+*** 47,52 ****
+--- 47,53 ----
+  #ifdef NS_IMPL_COCOA
+  #include <IOKit/graphics/IOGraphicsLib.h>
+  #include "macfont.h"
++ #include "macim.h"
+  #endif
+
+  #ifdef HAVE_NS
 diff -crN emacs-25.2_orig/src/nsfns.m emacs-25.2/src/nsfns.m
 *** emacs-25.2_orig/src/nsfns.m	2017-02-03 19:25:45.000000000 +0900
 --- emacs-25.2/src/nsfns.m	2017-04-25 16:52:18.000000000 +0900
@@ -1079,6 +1094,19 @@ diff -crN emacs-25.2_orig/src/nsterm.h emacs-25.2/src/nsterm.h
 
   /* could use list to store these, but rest of emacs has a big infrastructure
      for managing a table of bitmap "records" */
+diff -crN --exclude .git emacs_origin/src/nsterm.m emacs/src/nsterm.m
+*** emacs_origin/src/nsterm.m	2019-12-30 06:49:02.000000000 +0900
+--- emacs/src/nsterm.m	2019-12-30 07:22:13.000000000 +0900
+***************
+*** 68,73 ****
+--- 68,74 ----
+
+  #ifdef NS_IMPL_COCOA
+  #include "macfont.h"
++ #include "macim.h"
+  #include <Carbon/Carbon.h>
+  #endif
+
 diff -crN emacs-25.2_orig/src/nsterm.m emacs-25.2/src/nsterm.m
 *** emacs-25.2_orig/src/nsterm.m	2017-02-03 19:25:45.000000000 +0900
 --- emacs-25.2/src/nsterm.m	2017-04-25 16:52:18.000000000 +0900
