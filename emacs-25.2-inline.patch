@@ -829,6 +829,22 @@ diff -crN emacs-25.2_orig/src/keyboard.c emacs-25.2/src/keyboard.c
     /* Here we used to use `ignore-event' which would simple set prefix-arg to
        current-prefix-arg, as is done in `handle-switch-frame'.
        But `handle-switch-frame is not run from the special-map.
+*** emacs-25.2_origin/src/macim.h	1970-01-01 09:00:00.000000000 +0900
+--- emacs-25.2/src/macim.h	2020-01-07 14:42:30.000000000 +0900
+***************
+*** 0 ****
+--- 1,11 ----
++ /* Implementation of Input Method Extension for macOS.
++    Copyright (C) 2020
++    Takaaki Ishikawa <takaxp@ieee.org>
++ */
++ #ifdef NS_IMPL_COCOA
++ void mac_init_input_method ();
++ int mac_pass_key_to_system (int code, int modifiers);
++ int mac_pass_key_directly_to_emacs ();
++ int mac_store_change_input_method_event ();
++ NSString* mac_get_locale ();
++ #endif
 diff -crN emacs-25.2_orig/src/macim.m emacs-25.2/src/macim.m
 *** emacs-25.2_orig/src/macim.m	1970-01-01 09:00:00.000000000 +0900
 --- emacs-25.2/src/macim.m	2017-04-25 16:52:18.000000000 +0900
