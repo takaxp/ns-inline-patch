@@ -6,6 +6,8 @@
 
 see https://qiita.com/takaxp/items/e07bb286d80fa9dd8e05 and https://qiita.com/takaxp/items/6a7f9b26eb1b1a8237a0
 
+Note: Version 27.2 has been released. The inline patch (emacs-27.1-inline.patch) can be still utilized to 27.2. Installer packages for Intel-based Mac and Apple Silicon M1 Mac will also be available soon from this repository (possibly end of march).
+
 ** Supported features
 
  - avoid "M-x あ"
