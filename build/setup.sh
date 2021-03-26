@@ -6,7 +6,7 @@ function setup_homebrew () {
 }
 
 function install_deps () {
-    brew install autoconf automake pkg-config gnutls texinfo
+    brew install autoconf automake pkg-config gnutls texinfo jansson
 }
 
 function install_xcode () {
