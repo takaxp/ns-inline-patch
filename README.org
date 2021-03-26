@@ -53,7 +53,7 @@ If your environment for building Emacs is under PROXY, you can use =emacs-mirror
 
 ** Pre-built distribution package
 
-You can download my pre-built Emacs 26.3 and 27.2 with ns-inline patch. =Emacs.app= will be installed under =/Applications/Emacs-takaxp= in your macOS. The pkg contains =GnuTLS= and =jansson=. Then support Big Sur only.
+You can download my pre-built Emacs 26.3 and 27.2 with ns-inline patch. =Emacs.app= will be installed under =/Applications/Emacs-takaxp= in your macOS. The pkg contains =GnuTLS= and =jansson=. They support Big Sur only.
 
  - For Apple Silicon
    - [[https://pxaka.tokyo/emacs/pkg/emacs-27.2_apple.pkg]] (51.2MB, md5:2cc963b00c0d41c038941ebb35e18446)
