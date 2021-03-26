@@ -18,7 +18,7 @@ Note: Version 27.2 has been released. The inline patch (emacs-27.1-inline.patch)
 ** Supported Emacs version
 
  - Emacs HEAD (emacs-head-inline.patch)
- - Emacs 27.1 (emacs-27.1-inline.patch)
+ - Emacs 27.2, 27.1 (emacs-27.1-inline.patch)
  - Emacs 26.3, 26.2, 26.1 (emacs-25.2-inline.patch)
  - Emacs 25.3, 25.2 (emacs-25.2-inline.patch)
 
@@ -53,13 +53,21 @@ If your environment for building Emacs is under PROXY, you can use =emacs-mirror
 
 ** Pre-built distribution package
 
-You can download my pre-built Emacs 26.3 and 27.1 with ns-inline patch. =Emacs.app= will be installed under =/Applications/Emacs-takaxp= in your macOS. The pkg contains =GnuTLS= and it supports Catalina only.
+You can download my pre-built Emacs 26.3 and 27.2 with ns-inline patch. =Emacs.app= will be installed under =/Applications/Emacs-takaxp= in your macOS. The pkg contains =GnuTLS= and =jansson=. Then support Big Sur only.
 
- - https://pxaka.tokyo/emacs/pkg/emacs-27.1.pkg (51.3MB, MD5:0c7048d147dea6fcdda638a25b161af8)
- - https://pxaka.tokyo/emacs/pkg/emacs-26.3.pkg (52.9MB, MD5:1868c787177f515f18f500ce6b898b05)
+ - For Apple Silicon
+   - [[https://pxaka.tokyo/emacs/pkg/emacs-27.2_apple.pkg]] (51.2MB, md5:2cc963b00c0d41c038941ebb35e18446)
+ - For Intel-based Mac
+   - [[https://pxaka.tokyo/emacs/pkg/emacs-27.2_intel.pkg]] (51.5MB, md5:baca1c558bdecd2eb02e0f86114ef54e)
+   - [[https://pxaka.tokyo/emacs/pkg/emacs-27.1.pkg]] (51.3MB, md5:0c7048d147dea6fcdda638a25b161af8)
+   - [[https://pxaka.tokyo/emacs/pkg/emacs-26.3.pkg]] (52.9MB, md5:1868c787177f515f18f500ce6b898b05)
 
 Additionally, the following package is "WITHOUT" inline-patch NS build. In this case, =Emacs.app= will be installed under =/Applications/Emacs-takaxp/pure=.
- - [[https://pxaka.tokyo/emacs/pkg/emacs-27.1_pure.pkg]] (51.3MB, MD5:fdd14baf87ed4f903b5b02c4e1dd022c)
+ - For Apple Silicon
+   - [[https://pxaka.tokyo/emacs/pkg/emacs-27.2_apple_pure.pkg]] (51.2MB, md5:64583b05ebf4d9aa89e8812af980b06f)
+ - For Intel-based Mac
+   - [[https://pxaka.tokyo/emacs/pkg/emacs-27.2_intel_pure.pkg]] (51.4MB, md5:5c23507b21bd3eadbdff1af6a017ff55)
+   - [[https://pxaka.tokyo/emacs/pkg/emacs-27.1_pure.pkg]] (51.3MB, md5:fdd14baf87ed4f903b5b02c4e1dd022c)
 
 Integrated dynamic libraries:
 
@@ -69,6 +77,7 @@ Integrated dynamic libraries:
  - libhogweed.6.dylib
  - libidn2.0.dylib
  - libintl.8.dylib
+ - libjansson.4.dylib
  - libnettle.8.dylib
  - libp11-kit.0.dylib
  - libtasn1.6.dylib
@@ -76,7 +85,7 @@ Integrated dynamic libraries:
 
 The =system-configuration-features= is:
 
-=NOTIFY KQUEUE ACL GNUTLS LIBXML2 ZLIB TOOLKIT_SCROLL_BARS NS MODULES THREADS PDUMPER=
+=NOTIFY KQUEUE ACL GNUTLS LIBXML2 ZLIB TOOLKIT_SCROLL_BARS NS MODULES THREADS JSON PDUMPER=
 
 Enjoy!
 
