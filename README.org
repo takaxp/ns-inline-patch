@@ -26,7 +26,7 @@ Note: Version 27.2 has been released. The inline patch (emacs-27.1-inline.patch)
 
  - M-x mac-build-info
 
-Note: This function is not valid in pre-built packages described later section.
+Note: This function is not valid in pre-built packages described in later section.
 
 ** How to use?
 
