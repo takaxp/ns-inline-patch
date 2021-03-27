@@ -53,15 +53,17 @@ If your environment for building Emacs is under PROXY, you can use =emacs-mirror
 
 ** Pre-built distribution package
 
-You can download my pre-built Emacs 26.3 and 27.2 with ns-inline patch. =Emacs.app= will be installed under =/Applications/Emacs-takaxp= in your macOS. The pkg contains =GnuTLS= and =jansson=. They support Big Sur only.
+You can download my pre-built Emacs 26.3, 27.1, and 27.2 with ns-inline patch. =Emacs.app= will be installed under =/Applications/Emacs-takaxp= in your macOS. The pkg contains =GnuTLS= and =jansson=.
 
 #+caption: inline
 | Chip  | Download             | macOS    | [MB] | md5                              |
 |-------+----------------------+----------+------+----------------------------------|
 | Apple | [[https://pxaka.tokyo/emacs/pkg/emacs-27.2_apple.pkg][emacs-27.2_apple.pkg]] | Big Sur  | 51.2 | 2cc963b00c0d41c038941ebb35e18446 |
-| Intel | [[https://pxaka.tokyo/emacs/pkg/emacs-27.2_intel.pkg][emacs-27.2_intel.pkg]] | Big Sur  | 51.5 | baca1c558bdecd2eb02e0f86114ef54e |
+| Intel | [[https://pxaka.tokyo/emacs/pkg/emacs-27.2_intel.pkg][emacs-27.2_intel.pkg]] | [*1]     | 51.8 | 74e06cb24c8898a261d5778892355d3a |
 | Intel | [[https://pxaka.tokyo/emacs/pkg/emacs-27.1.pkg][emacs-27.1.pkg]]       | Catalina | 51.3 | 0c7048d147dea6fcdda638a25b161af8 |
 | Intel | [[https://pxaka.tokyo/emacs/pkg/emacs-26.3.pkg][emacs-26.3.pkg]]       | Catalina | 52.9 | 1868c787177f515f18f500ce6b898b05 |
+
+[*1] Mojave / Catalina / Big Sur
 
 Additionally, the following package is "WITHOUT" inline-patch NS build. In this case, =Emacs.app= will be installed under =/Applications/Emacs-takaxp/pure=.
 
@@ -69,8 +71,10 @@ Additionally, the following package is "WITHOUT" inline-patch NS build. In this 
 | Chip  | Download                  | macOS    | [MB] | md5                              |
 |-------+---------------------------+----------+------+----------------------------------|
 | Apple | [[https://pxaka.tokyo/emacs/pkg/emacs-27.2_apple_pure.pkg][emacs-27.2_apple_pure.pkg]] | Big Sur  | 51.2 | 64583b05ebf4d9aa89e8812af980b06f |
-| Intel | [[https://pxaka.tokyo/emacs/pkg/emacs-27.2_intel_pure.pkg][emacs-27.2_intel_pure.pkg]] | Big Sur  | 51.4 | 5c23507b21bd3eadbdff1af6a017ff55 |
+| Intel | [[https://pxaka.tokyo/emacs/pkg/emacs-27.2_intel_pure.pkg][emacs-27.2_intel_pure.pkg]] | [*1]     | 51.7 | 165fed95067d5b4b6d885bfacd1ff9fa |
 | Intel | [[https://pxaka.tokyo/emacs/pkg/emacs-27.1_pure.pkg][emacs-27.1_pure.pkg]]       | Catalina | 51.3 | fdd14baf87ed4f903b5b02c4e1dd022c |
+
+[*1] Mojave / Catalina / Big Sur
 
 Integrated dynamic libraries:
 
