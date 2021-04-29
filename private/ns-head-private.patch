@@ -31,24 +31,24 @@ diff --exclude .git -crN emacs-27/src/nsfns.m emacs/src/nsfns.m
 *** emacs_origin/src/nsterm.m	2020-02-13 18:43:41.000000000 +0900
 --- emacs/src/nsterm.m	2020-02-13 18:45:38.000000000 +0900
 ***************
-*** 7231,7241 ****
+*** 7241,7251 ****
                 *pos = '\0';
               old_title = t;
             }
 !         size_title = xmalloc (strlen (old_title) + 40);
-! 	esprintf (size_title, "%s  —  (%d x %d)", old_title, cols, rows);
+! 	esprintf (size_title, "%s  —  (%d × %d)", old_title, cols, rows);
 !         [window setTitle: [NSString stringWithUTF8String: size_title]];
 !         [window display];
 !         xfree (size_title);
         }
     }
   #endif /* NS_IMPL_COCOA */
---- 7231,7241 ----
+--- 7241,7251 ----
                 *pos = '\0';
               old_title = t;
             }
 !         // size_title = xmalloc (strlen (old_title) + 40);
-! 	// esprintf (size_title, "%s  —  (%d x %d)", old_title, cols, rows);
+! 	// esprintf (size_title, "%s  —  (%d × %d)", old_title, cols, rows);
 !         // [window setTitle: [NSString stringWithUTF8String: size_title]];
 !         // [window display];
 !         // xfree (size_title);
