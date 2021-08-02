@@ -835,9 +835,9 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
 +     (erase-buffer)
 +     (insert (format "GNU Emacs %s\nCommit:\t\t%s\nBranch:\t\t%s\n"
 +                     emacs-version
-+                     (emacs-repository-get-version)
++                     emacs-repository-version
 +                     (when (version< "27.0" emacs-version)
-+                       (emacs-repository-get-branch))))
++                       emacs-repository-branch)))
 +     (insert (format "System:\t\t%s\nDate:\t\t\t%s\n"
 +                     system-configuration
 +                     (format-time-string "%Y-%m-%d %T (%Z)" emacs-build-time)))
