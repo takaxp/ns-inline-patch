@@ -853,6 +853,23 @@ diff -crN --exclude .git emacs_origin/src/Makefile.in emacs/src/Makefile.in
 *** emacs_origin/src/Makefile.in	2019-12-30 01:10:55.000000000 +0900
 --- emacs/src/Makefile.in	2019-12-30 07:22:13.000000000 +0900
 ***************
+*** 339,345 ****
+
+  ## ARM Macs require that all code have a valid signature.  Since pump
+  ## invalidates the signature, we must re-sign to fix it.
+! DO_CODESIGN=$(patsubst arm-apple-darwin%,yes,@configuration@)
+
+  # 'make' verbosity.
+  AM_DEFAULT_VERBOSITY = @AM_DEFAULT_VERBOSITY@
+--- 339,345 ----
+
+  ## ARM Macs require that all code have a valid signature.  Since pump
+  ## invalidates the signature, we must re-sign to fix it.
+! DO_CODESIGN=$(patsubst aarch64-apple-darwin%,yes,@configuration@)
+
+  # 'make' verbosity.
+  AM_DEFAULT_VERBOSITY = @AM_DEFAULT_VERBOSITY@
+***************
 *** 433,439 ****
   SOME_MACHINE_OBJECTS = dosfns.o msdos.o \
     xterm.o xfns.o xmenu.o xselect.o xrdb.o xsmfns.o fringe.o image.o \
