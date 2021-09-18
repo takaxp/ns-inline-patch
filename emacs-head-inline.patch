@@ -69,7 +69,7 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
   ;; Set up a number of aliases and other layers to pretend we're using
   ;; the Choi/Mitsuharu Carbon port.
 ***************
-*** 269,282 ****
+*** 269,278 ****
   ;; editing window.)
 
   (defface ns-working-text-face
@@ -80,11 +80,7 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
   (defvar ns-working-overlay nil
     "Overlay used to highlight working text during compose sequence insert.
   When text is in th echo area, this just stores the length of the working text.")
-
-  (defvar ns-working-text)		; nsterm.m
-
-  ;; Test if in echo area, based on mac-win.el 2007/08/26 unicode-2.
---- 269,298 ----
+--- 269,291 ----
   ;; editing window.)
 
   (defface ns-working-text-face
@@ -108,13 +104,6 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
   (defvar ns-working-overlay nil
     "Overlay used to highlight working text during compose sequence insert.
   When text is in th echo area, this just stores the length of the working text.")
-
-+ (defvar ns-marked-overlay nil
-+   "Overlay used to highlight marked text during compose sequence insert.")
-+
-  (defvar ns-working-text)		; nsterm.m
-
-  ;; Test if in echo area, based on mac-win.el 2007/08/26 unicode-2.
 ***************
 *** 284,300 ****
   (defun ns-in-echo-area ()
@@ -134,7 +123,7 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
 
   ;; The 'interactive' here stays for subinvocations, so the ns-in-echo-area
   ;; always returns nil for some reason.  If this WASN'T the case, we could
---- 300,318 ----
+--- 297,315 ----
   (defun ns-in-echo-area ()
     "Whether, for purposes of inserting working composition text, the minibuffer
   is currently being used."
@@ -165,7 +154,7 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
 
   (defun ns-insert-working-text ()
     "Insert contents of `ns-working-text' as UTF-8 string and mark with
---- 321,333 ----
+--- 318,330 ----
   (defun ns-put-working-text ()
     (interactive)
     (if (ns-in-echo-area) (ns-echo-working-text) (ns-insert-working-text)))
@@ -181,7 +170,7 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
     "Insert contents of `ns-working-text' as UTF-8 string and mark with
 ***************
 *** 331,336 ****
---- 353,419 ----
+--- 350,411 ----
   		       'face 'ns-working-text-face msg)
       (message "%s" msg)))
 
@@ -199,31 +188,26 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
 +         (ns-echo-marked-text pos len)
 +       (ns-insert-marked-text pos len))))
 +
-+ (defun ns-insert-marked-text (pos len)
-+   "Insert contents of `ns-working-text' as UTF-8 string and mark with
-+   `ns-working-overlay' and `ns-marked-overlay'.  Any previously existing
-+   working text is cleared first. The overlay is assigned the faces
-+   `ns-working-text-face' and `ns-marked-text-face'."
++ (defun ns-insert-marked-text (mark-from mark-length)
++   "Insert the content of `ns-working-text' as a propertized `before-string'
++ of an overlay."
 +   (ns-delete-working-text)
-+   (let ((start (point)))
-+     (when (<= pos (length ns-working-text))
-+       (if (= len 0)
-+           (overlay-put (setq ns-working-overlay
-+                              (make-overlay start (point) (current-buffer)))
-+                        'after-string
++   (let ((mark-to (+ mark-from mark-length)))
++     (when (<= mark-to (length ns-working-text))
++       (setq ns-working-overlay (make-overlay (point) (point)))
++       (if (= mark-length 0)
++           (overlay-put ns-working-overlay
++                        'before-string
 +                        (propertize ns-working-text 'face 'ns-working-text-face))
-+         (overlay-put (setq ns-working-overlay
-+                            (make-overlay start (point) (current-buffer) nil t))
-+                      'after-string
-+                      (propertize (substring ns-working-text 0 len)
-+                                  'face 'ns-marked-text-face))
-+         (overlay-put (setq ns-marked-overlay
-+                            (make-overlay (point) (+ (point) pos len)
-+                                          (current-buffer) nil t))
++         (overlay-put ns-working-overlay
 +                      'before-string
-+                      (propertize (substring ns-working-text len
-+                                             (length ns-working-text))
-+                                  'face 'ns-unmarked-text-face))))))
++                      (concat
++                       (propertize (substring ns-working-text 0 mark-from)
++                                   'face 'ns-unmarked-text-face)
++                       (propertize (substring ns-working-text mark-from mark-to)
++                                   'face 'ns-marked-text-face)
++                       (propertize (substring ns-working-text mark-to nil)
++                                   'face 'ns-unmarked-text-face)))))))
 +
 + (defun ns-echo-marked-text (pos len)
 +   "Echo contents of `ns-working-text' in message display area.
@@ -259,23 +243,17 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
 
   ;; macOS file system Unicode UTF-8 NFD (decomposed form) support.
   (when (eq system-type 'darwin)
---- 424,436 ----
+--- 421,427 ----
             message-log-max)
         (setq msg (substring msg 0 (- (length msg) ns-working-overlay)))
         (message "%s" msg))))
-!   (setq ns-working-overlay nil)
-!   (when (and (overlayp ns-marked-overlay)
-!              (overlay-buffer ns-marked-overlay))
-!     (with-current-buffer (overlay-buffer ns-marked-overlay)
-!       (overlay-put ns-marked-overlay 'before-string nil)
-!       (delete-overlay ns-marked-overlay)))
-!   (setq ns-marked-overlay nil))
+!   (setq ns-working-overlay nil))
 
   ;; macOS file system Unicode UTF-8 NFD (decomposed form) support.
   (when (eq system-type 'darwin)
 ***************
 *** 467,472 ****
---- 555,576 ----
+--- 552,573 ----
     :version "23.1"
     :group 'ns)
 
@@ -300,7 +278,7 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
   (defun ns-find-file ()
 ***************
 *** 909,914 ****
---- 1013,1529 ----
+--- 1010,1526 ----
                                            &context (window-system ns))
     (ns-get-selection selection-symbol target-type))
   
