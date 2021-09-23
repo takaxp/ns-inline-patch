@@ -826,6 +826,46 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
   ;;
   ;; Emacs input method for input method on macOS.
   ;;
+*** emacs_origin/lisp/term/ns-win.el	2021-09-23 21:00:27.000000000 +0900
+--- emacs/lisp/term/ns-win.el	2021-09-23 21:12:56.000000000 +0900
+***************
+*** 318,333 ****
+--- 318,341 ----
+                                (get-char-property (point) 'composition)))))))
+    mac-in-echo-area)
+  
++ (defvar ns-put-text-p nil)
++ (defvar mac-ime-before-put-text-hook nil)
++ (defvar mac-ime-after-put-text-hook nil)
++ 
+  ;; The 'interactive' here stays for subinvocations, so the ns-in-echo-area
+  ;; always returns nil for some reason.  If this WASN'T the case, we could
+  ;; map this to [ns-insert-working-text] and eliminate Fevals in nsterm.m.
+  ;; These functions test whether in echo area and delegate accordingly.
+  (defun ns-put-working-text ()
+    (interactive)
++   (setq ns-put-text-p t)
++   (run-hooks 'mac-ime-before-put-text-hook)
+    (if (ns-in-echo-area) (ns-echo-working-text) (ns-insert-working-text)))
+  
+  (defun ns-unput-working-text ()
+    (interactive)
++   (setq ns-put-text-p nil)
++   (run-hooks 'mac-ime-after-put-text-hook)
+    (ns-delete-working-text)
+    (when (and mac-ime-hide-cursor mac-ime--cursor-type)
+      (setq cursor-type mac-ime--cursor-type
+***************
+*** 360,365 ****
+--- 368,375 ----
+  (defvar mac-ime--cursor-type nil)
+  (defun ns-put-marked-text (event)
+    (interactive "e")
++   (setq ns-put-text-p t)
++   (run-hooks 'mac-ime-before-put-text-hook)
+    (let ((pos (nth 1 event))
+          (len (nth 2 event)))
+      (when (and (> len 0)
 diff -crN --exclude .git emacs_origin/src/Makefile.in emacs/src/Makefile.in
 *** emacs_origin/src/Makefile.in	2019-12-30 01:10:55.000000000 +0900
 --- emacs/src/Makefile.in	2019-12-30 07:22:13.000000000 +0900
