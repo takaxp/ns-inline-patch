@@ -50,7 +50,7 @@ diff -crN --exclude .git emacs_origin/lisp/term/common-win.el emacs/lisp/term/co
 
 diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win.el
 *** emacs_orig/lisp/term/ns-win.el	2021-09-24 01:09:05.000000000 +0900
---- emacs/lisp/term/ns-win.el	2021-09-24 02:05:56.000000000 +0900
+--- emacs/lisp/term/ns-win.el	2021-09-24 18:23:21.000000000 +0900
 ***************
 *** 18,24 ****
 
@@ -1643,8 +1643,8 @@ diff -crN --exclude .git emacs_origin/src/nsterm.h emacs/src/nsterm.h
   /* Could use list to store these, but rest of emacs has a big infrastructure
      for managing a table of bitmap "records".  */
 diff -crN --exclude .git emacs_origin/src/nsterm.m emacs/src/nsterm.m
-*** emacs_origin/src/nsterm.m	2019-12-30 06:49:02.000000000 +0900
---- emacs/src/nsterm.m	2019-12-30 07:22:13.000000000 +0900
+*** emacs_orig/src/nsterm.m	2021-09-24 01:09:10.000000000 +0900
+--- emacs/src/nsterm.m	2021-09-24 18:21:30.000000000 +0900
 ***************
 *** 68,73 ****
 --- 68,74 ----
@@ -1656,8 +1656,8 @@ diff -crN --exclude .git emacs_origin/src/nsterm.m emacs/src/nsterm.m
   #endif
 
 ***************
-*** 5321,5326 ****
---- 5321,5330 ----
+*** 5346,5351 ****
+--- 5347,5356 ----
                                            selector: @selector (logNotification:)
                                                name: nil object: nil]; */
 
@@ -1669,8 +1669,8 @@ diff -crN --exclude .git emacs_origin/src/nsterm.m emacs/src/nsterm.m
 
     ns_initialize_display_info (dpyinfo);
 ***************
-*** 5637,5642 ****
---- 5641,5661 ----
+*** 5662,5667 ****
+--- 5667,5687 ----
       NSLog (@"notification: '%@'", [notification name]);
   }
 
@@ -1693,7 +1693,7 @@ diff -crN --exclude .git emacs_origin/src/nsterm.m emacs/src/nsterm.m
   - (void)sendEvent: (NSEvent *)theEvent
   /* --------------------------------------------------------------------------
 ***************
-*** 6362,6368 ****
+*** 6399,6405 ****
 
         /* If it was a function key or had control-like modifiers, pass
            it directly to Emacs.  */
@@ -1701,7 +1701,7 @@ diff -crN --exclude .git emacs_origin/src/nsterm.m emacs/src/nsterm.m
                          && (emacs_event->modifiers != shift_modifier)
                          && [[theEvent charactersIgnoringModifiers] length] > 0))
           {
---- 6381,6388 ----
+--- 6419,6426 ----
 
         /* If it was a function key or had control-like modifiers, pass
            it directly to Emacs.  */
@@ -1711,7 +1711,7 @@ diff -crN --exclude .git emacs_origin/src/nsterm.m emacs/src/nsterm.m
                          && [[theEvent charactersIgnoringModifiers] length] > 0))
           {
 ***************
-*** 6390,6398 ****
+*** 6427,6435 ****
               }
 
             emacs_event->code = code;
@@ -1721,7 +1721,7 @@ diff -crN --exclude .git emacs_origin/src/nsterm.m emacs/src/nsterm.m
           }
       }
 
---- 6410,6428 ----
+--- 6448,6466 ----
               }
 
             emacs_event->code = code;
@@ -1742,7 +1742,33 @@ diff -crN --exclude .git emacs_origin/src/nsterm.m emacs/src/nsterm.m
       }
 
 ***************
-*** 6519,6525 ****
+*** 6492,6501 ****
+    if (!emacs_event)
+      return;
+
+-   /* First, clear any working text.  */
+-   if (workingText != nil)
+-     [self deleteWorkingText];
+-
+    /* It might be preferable to use getCharacters:range: below,
+       cf. https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/CocoaPerformance/Articles/StringDrawing.html#//apple_ref/doc/uid/TP40001445-112378.
+       However, we probably can't use SAFE_NALLOCA here because it might
+--- 6523,6528 ----
+***************
+*** 6524,6529 ****
+--- 6551,6560 ----
+        emacs_event->code = code;
+        EV_TRAILER ((id)nil);
+      }
++
++   /* Last, clear any working text.  */
++   if (workingText != nil)
++     [self deleteWorkingText];
+  }
+
+
+***************
+*** 6556,6562 ****
     ns_working_text = build_string ([workingText UTF8String]);
 
     emacs_event->kind = NS_TEXT_EVENT;
@@ -1750,7 +1776,7 @@ diff -crN --exclude .git emacs_origin/src/nsterm.m emacs/src/nsterm.m
     EV_TRAILER ((id)nil);
   }
 
---- 6550,6558 ----
+--- 6587,6595 ----
     ns_working_text = build_string ([workingText UTF8String]);
 
     emacs_event->kind = NS_TEXT_EVENT;
@@ -1761,7 +1787,7 @@ diff -crN --exclude .git emacs_origin/src/nsterm.m emacs/src/nsterm.m
   }
 
 ***************
-*** 6591,6608 ****
+*** 6619,6636 ****
   {
     NSRect rect;
     NSPoint pt;
@@ -1780,7 +1806,7 @@ diff -crN --exclude .git emacs_origin/src/nsterm.m emacs/src/nsterm.m
 
     pt = [self convertPoint: pt toView: nil];
 
---- 6612,6643 ----
+--- 6652,6683 ----
   {
     NSRect rect;
     NSPoint pt;
@@ -1814,8 +1840,52 @@ diff -crN --exclude .git emacs_origin/src/nsterm.m emacs/src/nsterm.m
     pt = [self convertPoint: pt toView: nil];
 
 ***************
-*** 9609,9614 ****
---- 9644,9661 ----
+*** 6732,6739 ****
+
+    NSTRACE ("[EmacsView mouseDown:]");
+
+-   [self deleteWorkingText];
+-
+    if (!emacs_event)
+      return;
+
+--- 6779,6784 ----
+***************
+*** 7202,7211 ****
+                *pos = '\0';
+              old_title = t;
+            }
+!         size_title = xmalloc (strlen (old_title) + 40);
+! 	esprintf (size_title, "%s  —  (%d x %d)", old_title, cols, rows);
+!         [window setTitle: [NSString stringWithUTF8String: size_title]];
+!         xfree (size_title);
+        }
+    }
+  #endif /* NS_IMPL_COCOA */
+--- 7247,7256 ----
+                *pos = '\0';
+              old_title = t;
+            }
+!         // size_title = xmalloc (strlen (old_title) + 40);
+! 	// esprintf (size_title, "%s  —  (%d x %d)", old_title, cols, rows);
+!         // [window setTitle: [NSString stringWithUTF8String: size_title]];
+!         // xfree (size_title);
+        }
+    }
+  #endif /* NS_IMPL_COCOA */
+***************
+*** 7358,7364 ****
+
+    if (emacs_event && is_focus_frame)
+      {
+-       [self deleteWorkingText];
+        emacs_event->kind = FOCUS_OUT_EVENT;
+        EV_TRAILER ((id)nil);
+      }
+--- 7403,7408 ----
+***************
+*** 9637,9642 ****
+--- 9681,9698 ----
     x_underline_at_descent_line = 0;
     DEFSYM (Qx_underline_at_descent_line, "x-underline-at-descent-line");
 
@@ -1834,6 +1904,7 @@ diff -crN --exclude .git emacs_origin/src/nsterm.m emacs/src/nsterm.m
     /* Tell Emacs about this window system.  */
     Fprovide (Qns, Qnil);
 
+diff -crN --exclude .git emacs_origin/src/macim.h emacs/src/macim.h
 *** emacs_origin/src/macim.h	1970-01-01 09:00:00.000000000 +0900
 --- emacs/src/macim.h	2020-01-07 14:42:30.000000000 +0900
 ***************
@@ -2084,10 +2155,26 @@ diff -crN --exclude .git emacs_origin/src/nsterm.m emacs/src/nsterm.m
 +   defsubr (&Smac_toggle_input_source);
 + }
 + #endif
-*** emacs_origin/src/keyboard.c	2020-01-06 14:04:20.000000000 +0900
---- emacs/src/keyboard.c	2020-01-08 11:03:02.000000000 +0900
+diff -crN --exclude .git emacs_origin/src/keyboard.c emacs/src/keyboard.c
+*** emacs_orig/src/keyboard.c 2021-09-24 01:09:10.000000000 +0900
+--- emacs/src/keyboard.c  2021-09-24 18:18:26.000000000 +0900
 ***************
-*** 5441,5449 ****
+*** 2901,2906 ****
+--- 2901,2912 ----
+       example banishing the mouse under mouse-avoidance-mode.  */
+    timer_resume_idle ();
+
++ #ifdef HAVE_NS
++       if (CONSP (c)
++           && (EQ (XCAR (c), intern ("ns-unput-working-text"))))
++         input_was_pending = input_pending;
++ #endif
++
+        if (current_buffer != prev_buffer)
+    {
+      /* The command may have changed the keymaps.  Pretend there
+***************
+*** 5442,5450 ****
 
   #ifdef HAVE_NS
       case NS_TEXT_EVENT:
@@ -2096,8 +2183,8 @@ diff -crN --exclude .git emacs_origin/src/nsterm.m emacs/src/nsterm.m
 !                             : "ns-unput-working-text"));
 
         /* NS_NONKEY_EVENTs are just like NON_ASCII_KEYSTROKE_EVENTs,
-  	 except that they are non-key events (last-nonmenu-event is nil).  */
---- 5441,5452 ----
+     except that they are non-key events (last-nonmenu-event is nil).  */
+--- 5448,5459 ----
 
   #ifdef HAVE_NS
       case NS_TEXT_EVENT:
@@ -2109,15 +2196,15 @@ diff -crN --exclude .git emacs_origin/src/nsterm.m emacs/src/nsterm.m
 !         return list1 (intern ("ns-unput-working-text"));
 
         /* NS_NONKEY_EVENTs are just like NON_ASCII_KEYSTROKE_EVENTs,
-  	 except that they are non-key events (last-nonmenu-event is nil).  */
+     except that they are non-key events (last-nonmenu-event is nil).  */
 ***************
-*** 12412,12417 ****
---- 12415,12422 ----
-  			    "ns-put-working-text");
+*** 12411,12416 ****
+--- 12420,12427 ----
+            "ns-put-working-text");
     initial_define_lispy_key (Vspecial_event_map, "ns-unput-working-text",
-  			    "ns-unput-working-text");
+            "ns-unput-working-text");
 +   initial_define_lispy_key (Vspecial_event_map, "ns-put-marked-text",
-+ 			    "ns-put-marked-text");
++           "ns-put-marked-text");
     /* Here we used to use `ignore-event' which would simple set prefix-arg to
        current-prefix-arg, as is done in `handle-switch-frame'.
        But `handle-switch-frame is not run from the special-map.
