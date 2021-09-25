@@ -1851,29 +1851,6 @@ diff -crN --exclude .git emacs_origin/src/nsterm.m emacs/src/nsterm.m
 
 --- 6779,6784 ----
 ***************
-*** 7202,7211 ****
-                *pos = '\0';
-              old_title = t;
-            }
-!         size_title = xmalloc (strlen (old_title) + 40);
-! 	esprintf (size_title, "%s  —  (%d x %d)", old_title, cols, rows);
-!         [window setTitle: [NSString stringWithUTF8String: size_title]];
-!         xfree (size_title);
-        }
-    }
-  #endif /* NS_IMPL_COCOA */
---- 7247,7256 ----
-                *pos = '\0';
-              old_title = t;
-            }
-!         // size_title = xmalloc (strlen (old_title) + 40);
-! 	// esprintf (size_title, "%s  —  (%d x %d)", old_title, cols, rows);
-!         // [window setTitle: [NSString stringWithUTF8String: size_title]];
-!         // xfree (size_title);
-        }
-    }
-  #endif /* NS_IMPL_COCOA */
-***************
 *** 7358,7364 ****
 
     if (emacs_event && is_focus_frame)
