@@ -28,10 +28,10 @@ cd emacs
 git checkout --track origin/emacs-27
 patch -p1 < ../ns-inline-patch/emacs-27.1-inline.patch
 if [ $? -ne 0 ]; then echo "FAILED"; exit 1; fi
-patch -p1 < ../ns-inline-patch/revert-89d0c445.patch
-if [ $? -ne 0 ]; then echo "FAILED"; exit 1; fi
-patch -p1 < ../$PATCH/ns-inline-patch/fix-working-text.patch
-if [ $? -ne 0 ]; then echo "FAILED"; exit 1; fi
+# patch -p1 < ../ns-inline-patch/revert-89d0c445.patch
+# if [ $? -ne 0 ]; then echo "FAILED"; exit 1; fi
+# patch -p1 < ../$PATCH/ns-inline-patch/fix-working-text.patch
+# if [ $? -ne 0 ]; then echo "FAILED"; exit 1; fi
 
 sleep 5
 ./autogen.sh

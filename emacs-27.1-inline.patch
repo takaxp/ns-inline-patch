@@ -49,8 +49,63 @@ diff -crN --exclude .git emacs_origin/lisp/term/common-win.el emacs/lisp/term/co
       (set-terminal-parameter frame 'x-setup-function-keys t)))
 
 diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win.el
-*** emacs_origin/lisp/term/ns-win.el	2019-12-30 01:06:56.000000000 +0900
---- emacs/lisp/term/ns-win.el	2019-12-30 07:24:16.000000000 +0900
+*** emacs_orig/lisp/term/ns-win.el	2021-09-24 01:09:05.000000000 +0900
+--- emacs/lisp/term/ns-win.el	2021-09-24 18:23:21.000000000 +0900
+***************
+*** 18,24 ****
+
+  ;; GNU Emacs is distributed in the hope that it will be useful,
+  ;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+! ;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ;; GNU General Public License for more details.
+
+  ;; You should have received a copy of the GNU General Public License
+--- 18,24 ----
+
+  ;; GNU Emacs is distributed in the hope that it will be useful,
+  ;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+! ;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
+  ;; GNU General Public License for more details.
+
+  ;; You should have received a copy of the GNU General Public License
+***************
+*** 42,48 ****
+  (eval-when-compile (require 'cl-lib))
+  (or (featurep 'ns)
+      (error "%s: Loading ns-win.el but not compiled for GNUstep/macOS"
+!            invocation-name))
+
+  ;; Documentation-purposes only: actually loaded in loadup.el.
+  (require 'frame)
+--- 42,48 ----
+  (eval-when-compile (require 'cl-lib))
+  (or (featurep 'ns)
+      (error "%s: Loading ns-win.el but not compiled for GNUstep/macOS"
+! 	   invocation-name))
+
+  ;; Documentation-purposes only: actually loaded in loadup.el.
+  (require 'frame)
+***************
+*** 68,76 ****
+
+  (defun ns-handle-nxopen (_switch &optional temp)
+    (setq unread-command-events (append unread-command-events
+!                                       (if temp '(ns-open-temp-file)
+!                                         '(ns-open-file)))
+!         ns-input-file (append ns-input-file (list (pop x-invocation-args)))))
+
+  (defun ns-handle-nxopentemp (switch)
+    (ns-handle-nxopen switch t))
+--- 68,76 ----
+
+  (defun ns-handle-nxopen (_switch &optional temp)
+    (setq unread-command-events (append unread-command-events
+! 				      (if temp '(ns-open-temp-file)
+! 					'(ns-open-file)))
+! 	ns-input-file (append ns-input-file (list (pop x-invocation-args)))))
+
+  (defun ns-handle-nxopentemp (switch)
+    (ns-handle-nxopen switch t))
 ***************
 *** 175,181 ****
   (define-key global-map [ns-new-frame] 'make-frame)
@@ -69,7 +124,60 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
   ;; Set up a number of aliases and other layers to pretend we're using
   ;; the Choi/Mitsuharu Carbon port.
 ***************
-*** 269,282 ****
+*** 198,222 ****
+    (let ((mapping [menu-bar services])
+  	(service (mapconcat 'identity path "/"))
+  	(name (intern
+!                (subst-char-in-string
+!                 ?\s ?-
+!                 (mapconcat 'identity (cons "ns-service" path) "-")))))
+      ;; This defines the function.
+      (defalias name
+        (lambda (arg)
+!         (interactive "p")
+!         (let* ((in-string
+!                 (cond ((stringp arg) arg)
+!                       (mark-active
+!                        (buffer-substring (region-beginning) (region-end)))))
+!                (out-string (ns-perform-service service in-string)))
+!           (cond
+!            ((stringp arg) out-string)
+!            ((and out-string (or (not in-string)
+!                                 (not (string= in-string out-string))))
+!             (if mark-active (delete-region (region-beginning) (region-end)))
+!             (insert out-string)
+!             (setq deactivate-mark nil))))))
+      (cond
+       ((lookup-key global-map mapping)
+        (while (cdr path)
+--- 198,222 ----
+    (let ((mapping [menu-bar services])
+  	(service (mapconcat 'identity path "/"))
+  	(name (intern
+! 	       (subst-char-in-string
+! 		?\s ?-
+! 		(mapconcat 'identity (cons "ns-service" path) "-")))))
+      ;; This defines the function.
+      (defalias name
+        (lambda (arg)
+! 	(interactive "p")
+! 	(let* ((in-string
+! 		(cond ((stringp arg) arg)
+! 		      (mark-active
+! 		       (buffer-substring (region-beginning) (region-end)))))
+! 	       (out-string (ns-perform-service service in-string)))
+! 	  (cond
+! 	   ((stringp arg) out-string)
+! 	   ((and out-string (or (not in-string)
+! 				(not (string= in-string out-string))))
+! 	    (if mark-active (delete-region (region-beginning) (region-end)))
+! 	    (insert out-string)
+! 	    (setq deactivate-mark nil))))))
+      (cond
+       ((lookup-key global-map mapping)
+        (while (cdr path)
+***************
+*** 269,311 ****
   ;; editing window.)
 
   (defface ns-working-text-face
@@ -81,10 +189,39 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
     "Overlay used to highlight working text during compose sequence insert.
   When text is in th echo area, this just stores the length of the working text.")
 
-  (defvar ns-working-text)		; nsterm.m
-
+- (defvar ns-working-text)		; nsterm.m
+-
   ;; Test if in echo area, based on mac-win.el 2007/08/26 unicode-2.
---- 269,298 ----
+  ;; This will fail if called from a NONASCII_KEYSTROKE event on the global map.
+  (defun ns-in-echo-area ()
+    "Whether, for purposes of inserting working composition text, the minibuffer
+  is currently being used."
+!   (or isearch-mode
+!       (and cursor-in-echo-area (current-message))
+!       ;; Overlay strings are not shown in some cases.
+!       (get-char-property (point) 'invisible)
+!       (and (not (bobp))
+! 	   (or (and (get-char-property (point) 'display)
+! 		    (eq (get-char-property (1- (point)) 'display)
+! 			(get-char-property (point) 'display)))
+! 	       (and (get-char-property (point) 'composition)
+! 		    (eq (get-char-property (1- (point)) 'composition)
+! 			(get-char-property (point) 'composition)))))))
+
+  ;; The 'interactive' here stays for subinvocations, so the ns-in-echo-area
+! ;; always returns nil for some reason.  If this WASN'T the case, we could
+  ;; map this to [ns-insert-working-text] and eliminate Fevals in nsterm.m.
+  ;; These functions test whether in echo area and delegate accordingly.
+  (defun ns-put-working-text ()
+    (interactive)
+    (if (ns-in-echo-area) (ns-echo-working-text) (ns-insert-working-text)))
+  (defun ns-unput-working-text ()
+    (interactive)
+!   (ns-delete-working-text))
+
+  (defun ns-insert-working-text ()
+    "Insert contents of `ns-working-text' as UTF-8 string and mark with
+--- 269,336 ----
   ;; editing window.)
 
   (defface ns-working-text-face
@@ -109,173 +246,323 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
     "Overlay used to highlight working text during compose sequence insert.
   When text is in th echo area, this just stores the length of the working text.")
 
-+ (defvar ns-marked-overlay nil
-+   "Overlay used to highlight marked text during compose sequence insert.")
-+
-  (defvar ns-working-text)		; nsterm.m
-
   ;; Test if in echo area, based on mac-win.el 2007/08/26 unicode-2.
-***************
-*** 284,300 ****
-  (defun ns-in-echo-area ()
-    "Whether, for purposes of inserting working composition text, the minibuffer
-  is currently being used."
-!   (or isearch-mode
-!       (and cursor-in-echo-area (current-message))
-!       ;; Overlay strings are not shown in some cases.
-!       (get-char-property (point) 'invisible)
-!       (and (not (bobp))
-! 	   (or (and (get-char-property (point) 'display)
-! 		    (eq (get-char-property (1- (point)) 'display)
-! 			(get-char-property (point) 'display)))
-! 	       (and (get-char-property (point) 'composition)
-! 		    (eq (get-char-property (1- (point)) 'composition)
-! 			(get-char-property (point) 'composition)))))))
-
-  ;; The 'interactive' here stays for subinvocations, so the ns-in-echo-area
-  ;; always returns nil for some reason.  If this WASN'T the case, we could
---- 300,318 ----
+  ;; This will fail if called from a NONASCII_KEYSTROKE event on the global map.
   (defun ns-in-echo-area ()
     "Whether, for purposes of inserting working composition text, the minibuffer
   is currently being used."
 !   (setq mac-in-echo-area
-!         (or isearch-mode
-!             (and cursor-in-echo-area (current-message))
-!             ;; Overlay strings are not shown in some cases.
-!             (get-char-property (point) 'invisible)
-!             (and (not (bobp))
-!                  (or (and (get-char-property (point) 'display)
-!                           (eq (get-char-property (1- (point)) 'display)
-!                               (get-char-property (point) 'display)))
-!                      (and (get-char-property (point) 'composition)
-!                           (eq (get-char-property (1- (point)) 'composition)
-!                               (get-char-property (point) 'composition)))))))
+! 	(or isearch-mode
+! 	    (and cursor-in-echo-area (current-message))
+! 	    ;; Overlay strings are not shown in some cases.
+! 	    (get-char-property (point) 'invisible)
+! 	    (and (not (bobp))
+! 		 (or (and (get-char-property (point) 'display)
+! 			  (eq (get-char-property (1- (point)) 'display)
+! 			      (get-char-property (point) 'display)))
+! 		     (and (get-char-property (point) 'composition)
+! 			  (eq (get-char-property (1- (point)) 'composition)
+! 			      (get-char-property (point) 'composition)))))))
 !   mac-in-echo-area)
+!
+! (defvar ns-put-text-p nil)
+! (defvar mac-ime-before-put-text-hook nil)
+! (defvar mac-ime-after-put-text-hook nil)
 
   ;; The 'interactive' here stays for subinvocations, so the ns-in-echo-area
-  ;; always returns nil for some reason.  If this WASN'T the case, we could
-***************
-*** 303,311 ****
+! ;; always returns nil for some reason.	If this WASN'T the case, we could
+  ;; map this to [ns-insert-working-text] and eliminate Fevals in nsterm.m.
+  ;; These functions test whether in echo area and delegate accordingly.
   (defun ns-put-working-text ()
     (interactive)
-    (if (ns-in-echo-area) (ns-echo-working-text) (ns-insert-working-text)))
-  (defun ns-unput-working-text ()
-    (interactive)
-!   (ns-delete-working-text))
-
-  (defun ns-insert-working-text ()
-    "Insert contents of `ns-working-text' as UTF-8 string and mark with
---- 321,333 ----
-  (defun ns-put-working-text ()
-    (interactive)
++   (setq ns-put-text-p t)
++   (run-hooks 'mac-ime-before-put-text-hook)
     (if (ns-in-echo-area) (ns-echo-working-text) (ns-insert-working-text)))
 +
   (defun ns-unput-working-text ()
     (interactive)
+!   (setq ns-put-text-p nil)
+!   (run-hooks 'mac-ime-after-put-text-hook)
 !   (ns-delete-working-text)
 !   (when (and mac-ime-hide-cursor mac-ime--cursor-type)
 !     (setq cursor-type mac-ime--cursor-type
-!           mac-ime--cursor-type nil)))
+! 	  mac-ime--cursor-type nil)))
 
   (defun ns-insert-working-text ()
     "Insert contents of `ns-working-text' as UTF-8 string and mark with
 ***************
-*** 331,336 ****
---- 353,419 ----
+*** 314,323 ****
+    (interactive)
+    (ns-delete-working-text)
+    (let ((start (point)))
+!     (insert ns-working-text)
+!     (overlay-put (setq ns-working-overlay (make-overlay start (point)
+! 							(current-buffer) nil t))
+! 		 'face 'ns-working-text-face)))
+
+  (defun ns-echo-working-text ()
+    "Echo contents of `ns-working-text' in message display area.
+--- 339,347 ----
+    (interactive)
+    (ns-delete-working-text)
+    (let ((start (point)))
+!     (overlay-put (setq ns-working-overlay (make-overlay start (point)))
+!                  'after-string
+! 		 (propertize ns-working-text 'face 'ns-working-text-face))))
+
+  (defun ns-echo-working-text ()
+    "Echo contents of `ns-working-text' in message display area.
+***************
+*** 332,356 ****
+  		       'face 'ns-working-text-face msg)
+      (message "%s" msg)))
+
+  (defun ns-delete-working-text()
+    "Delete working text and clear `ns-working-overlay'."
+    (interactive)
+    (cond
+     ((and (overlayp ns-working-overlay)
+!          ;; Still alive?
+!          (overlay-buffer ns-working-overlay))
+      (with-current-buffer (overlay-buffer ns-working-overlay)
+!       (delete-region (overlay-start ns-working-overlay)
+!                      (overlay-end ns-working-overlay))
+        (delete-overlay ns-working-overlay)))
+     ((integerp ns-working-overlay)
+      (let ((msg (current-message))
+!           message-log-max)
+        (setq msg (substring msg 0 (- (length msg) ns-working-overlay)))
+        (message "%s" msg))))
+    (setq ns-working-overlay nil))
+
+-
+  ;; macOS file system Unicode UTF-8 NFD (decomposed form) support.
+  (when (eq system-type 'darwin)
+    ;; Used prior to Emacs 25.
+--- 356,438 ----
   		       'face 'ns-working-text-face msg)
       (message "%s" msg)))
 
 + (defvar mac-ime--cursor-type nil)
 + (defun ns-put-marked-text (event)
 +   (interactive "e")
++   (setq ns-put-text-p t)
++   (run-hooks 'mac-ime-before-put-text-hook)
 +   (let ((pos (nth 1 event))
-+         (len (nth 2 event)))
++ 	(len (nth 2 event)))
 +     (when (and (> len 0)
-+                cursor-type
-+                mac-ime-hide-cursor)
++ 	       cursor-type
++ 	       mac-ime-hide-cursor)
 +       (setq mac-ime--cursor-type cursor-type
-+             cursor-type nil))
++ 	    cursor-type nil))
 +     (if (ns-in-echo-area)
-+         (ns-echo-marked-text pos len)
++ 	(ns-echo-marked-text pos len)
 +       (ns-insert-marked-text pos len))))
 +
-+ (defun ns-insert-marked-text (pos len)
++ (defun ns-insert-marked-text (mark-from mark-length)
 +   "Insert contents of `ns-working-text' as UTF-8 string and mark with
-+   `ns-working-overlay' and `ns-marked-overlay'.  Any previously existing
-+   working text is cleared first. The overlay is assigned the faces
-+   `ns-working-text-face' and `ns-marked-text-face'."
++   `ns-working-overlay'.	 Any previously existing working text is cleared
++  first. The overlay is assigned the faces `ns-working-text-face' and
++  `ns-marked-text-face'."
 +   (ns-delete-working-text)
-+   (let ((start (point)))
-+     (when (<= pos (length ns-working-text))
-+       (if (= len 0)
-+           (overlay-put (setq ns-working-overlay
-+                              (make-overlay start (point) (current-buffer)))
-+                        'after-string
-+                        (propertize ns-working-text 'face 'ns-working-text-face))
-+         (overlay-put (setq ns-working-overlay
-+                            (make-overlay start (point) (current-buffer) nil t))
-+                      'after-string
-+                      (propertize (substring ns-working-text 0 len)
-+                                  'face 'ns-marked-text-face))
-+         (overlay-put (setq ns-marked-overlay
-+                            (make-overlay (point) (+ (point) pos len)
-+                                          (current-buffer) nil t))
-+                      'before-string
-+                      (propertize (substring ns-working-text len
-+                                             (length ns-working-text))
-+                                  'face 'ns-unmarked-text-face))))))
++   (let ((mark-to (+ mark-from mark-length)))
++     (when (<= mark-to (length ns-working-text))
++       (setq ns-working-overlay (make-overlay (point) (point)))
++       (if (= mark-length 0)
++ 	  (overlay-put ns-working-overlay
++ 		       'before-string
++ 		       (propertize ns-working-text 'face 'ns-working-text-face))
++ 	(overlay-put ns-working-overlay
++ 		     'before-string
++ 		     (concat
++ 		      (propertize (substring ns-working-text 0 mark-from)
++ 				  'face 'ns-unmarked-text-face)
++ 		      (propertize (substring ns-working-text mark-from mark-to)
++ 				  'face 'ns-marked-text-face)
++ 		      (propertize (substring ns-working-text mark-to nil)
++ 				  'face 'ns-unmarked-text-face)))))))
 +
 + (defun ns-echo-marked-text (pos len)
 +   "Echo contents of `ns-working-text' in message display area.
 +   See `ns-insert-working-text'."
 +   (ns-delete-working-text)
 +   (let* ((msg (current-message))
-+          (msglen (length msg))
-+          message-log-max)
++ 	 (msglen (length msg))
++ 	 message-log-max)
 +     (when (integerp ns-working-overlay)
 +       (setq msg (substring msg 0 (- (length msg) ns-working-overlay)))
 +       (setq msglen (length msg)))
 +     (setq ns-working-overlay (length ns-working-text))
 +     (setq msg (concat msg ns-working-text))
 +     (if (= len 0)
-+         (put-text-property msglen (+ msglen ns-working-overlay)
-+                            'face 'ns-working-text-face msg)
++ 	(put-text-property msglen (+ msglen ns-working-overlay)
++ 			   'face 'ns-working-text-face msg)
 +       (put-text-property msglen (+ msglen ns-working-overlay)
-+                          'face 'ns-marked-text-face msg)
++ 			 'face 'ns-marked-text-face msg)
 +       (put-text-property (+ msglen pos) (+ msglen pos len)
-+                          'face 'ns-unmarked-text-face msg))
++ 			 'face 'ns-unmarked-text-face msg))
 +     (message "%s" msg)))
 +
   (defun ns-delete-working-text()
     "Delete working text and clear `ns-working-overlay'."
     (interactive)
-***************
-*** 346,353 ****
-            message-log-max)
+    (cond
+     ((and (overlayp ns-working-overlay)
+! 	 ;; Still alive?
+! 	 (overlay-buffer ns-working-overlay))
+      (with-current-buffer (overlay-buffer ns-working-overlay)
+!       (overlay-put ns-working-overlay 'after-string nil)
+        (delete-overlay ns-working-overlay)))
+     ((integerp ns-working-overlay)
+      (let ((msg (current-message))
+! 	  message-log-max)
         (setq msg (substring msg 0 (- (length msg) ns-working-overlay)))
         (message "%s" msg))))
-!   (setq ns-working-overlay nil))
-!
+    (setq ns-working-overlay nil))
 
   ;; macOS file system Unicode UTF-8 NFD (decomposed form) support.
   (when (eq system-type 'darwin)
---- 424,436 ----
-            message-log-max)
-        (setq msg (substring msg 0 (- (length msg) ns-working-overlay)))
-        (message "%s" msg))))
-!   (setq ns-working-overlay nil)
-!   (when (and (overlayp ns-marked-overlay)
-!              (overlay-buffer ns-marked-overlay))
-!     (with-current-buffer (overlay-buffer ns-marked-overlay)
-!       (overlay-put ns-marked-overlay 'before-string nil)
-!       (delete-overlay ns-marked-overlay)))
-!   (setq ns-marked-overlay nil))
-
-  ;; macOS file system Unicode UTF-8 NFD (decomposed form) support.
-  (when (eq system-type 'darwin)
+    ;; Used prior to Emacs 25.
 ***************
-*** 467,472 ****
---- 555,576 ----
+*** 366,379 ****
+    (interactive)
+    (let ((f (pop ns-input-file)))
+      (if (file-directory-p f)
+!         (find-file f)
+        (push-mark (+ (point) (cadr (insert-file-contents f)))))))
+
+  (defvar ns-select-overlay nil
+    "Overlay used to highlight areas in files requested by Nextstep apps.")
+  (make-variable-buffer-local 'ns-select-overlay)
+
+! (defvar ns-input-line) 			; nsterm.m
+
+  (defun ns-open-file-select-line ()
+    "Open a buffer containing the file `ns-input-file'.
+--- 448,461 ----
+    (interactive)
+    (let ((f (pop ns-input-file)))
+      (if (file-directory-p f)
+! 	(find-file f)
+        (push-mark (+ (point) (cadr (insert-file-contents f)))))))
+
+  (defvar ns-select-overlay nil
+    "Overlay used to highlight areas in files requested by Nextstep apps.")
+  (make-variable-buffer-local 'ns-select-overlay)
+
+! (defvar ns-input-line)			; nsterm.m
+
+  (defun ns-open-file-select-line ()
+    "Open a buffer containing the file `ns-input-file'.
+***************
+*** 383,417 ****
+    (cond
+     ((and ns-input-line (buffer-modified-p))
+      (if ns-select-overlay
+!         (setq ns-select-overlay (delete-overlay ns-select-overlay)))
+      (deactivate-mark)
+      (goto-char (point-min))
+      (forward-line (1- (if (consp ns-input-line)
+!                           (min (car ns-input-line) (cdr ns-input-line))
+!                         ns-input-line))))
+     (ns-input-line
+      (if (not ns-select-overlay)
+!         (overlay-put (setq ns-select-overlay (make-overlay (point-min)
+!                                                            (point-min)))
+!                      'face 'highlight))
+      (let ((beg (save-excursion
+!                  (goto-char (point-min))
+!                  (line-beginning-position
+!                   (if (consp ns-input-line)
+!                       (min (car ns-input-line) (cdr ns-input-line))
+!                     ns-input-line))))
+!           (end (save-excursion
+!                  (goto-char (point-min))
+!                  (line-beginning-position
+!                   (1+ (if (consp ns-input-line)
+!                           (max (car ns-input-line) (cdr ns-input-line))
+!                         ns-input-line))))))
+        (move-overlay ns-select-overlay beg end)
+        (deactivate-mark)
+        (goto-char beg)))
+     (t
+      (if ns-select-overlay
+!         (setq ns-select-overlay (delete-overlay ns-select-overlay))))))
+
+  (defun ns-unselect-line ()
+    "Removes any Nextstep highlight a buffer may contain."
+--- 465,499 ----
+    (cond
+     ((and ns-input-line (buffer-modified-p))
+      (if ns-select-overlay
+! 	(setq ns-select-overlay (delete-overlay ns-select-overlay)))
+      (deactivate-mark)
+      (goto-char (point-min))
+      (forward-line (1- (if (consp ns-input-line)
+! 			  (min (car ns-input-line) (cdr ns-input-line))
+! 			ns-input-line))))
+     (ns-input-line
+      (if (not ns-select-overlay)
+! 	(overlay-put (setq ns-select-overlay (make-overlay (point-min)
+! 							   (point-min)))
+! 		     'face 'highlight))
+      (let ((beg (save-excursion
+! 		 (goto-char (point-min))
+! 		 (line-beginning-position
+! 		  (if (consp ns-input-line)
+! 		      (min (car ns-input-line) (cdr ns-input-line))
+! 		    ns-input-line))))
+! 	  (end (save-excursion
+! 		 (goto-char (point-min))
+! 		 (line-beginning-position
+! 		  (1+ (if (consp ns-input-line)
+! 			  (max (car ns-input-line) (cdr ns-input-line))
+! 			ns-input-line))))))
+        (move-overlay ns-select-overlay beg end)
+        (deactivate-mark)
+        (goto-char beg)))
+     (t
+      (if ns-select-overlay
+! 	(setq ns-select-overlay (delete-overlay ns-select-overlay))))))
+
+  (defun ns-unselect-line ()
+    "Removes any Nextstep highlight a buffer may contain."
+***************
+*** 428,434 ****
+      (cond
+       ((not res) 'unbound)
+       ((string-equal (upcase res) "YES") t)
+!      ((string-equal (upcase res) "NO")  nil)
+       (t (read res)))))
+
+  ;; nsterm.m
+--- 510,516 ----
+      (cond
+       ((not res) 'unbound)
+       ((string-equal (upcase res) "YES") t)
+!      ((string-equal (upcase res) "NO")	nil)
+       (t (read res)))))
+
+  ;; nsterm.m
+***************
+*** 464,474 ****
+  If t, always do so.  Any other non-nil value means open a new frame
+  unless the current buffer is a scratch buffer."
+    :type '(choice (const :tag "Never" nil)
+!                  (const :tag "Always" t)
+!                  (other :tag "Except for scratch buffer" fresh))
+    :version "23.1"
+    :group 'ns)
+
+  (declare-function ns-hide-emacs "nsfns.m" (on))
+
+  (defun ns-find-file ()
+--- 546,572 ----
+  If t, always do so.  Any other non-nil value means open a new frame
+  unless the current buffer is a scratch buffer."
+    :type '(choice (const :tag "Never" nil)
+! 		 (const :tag "Always" t)
+! 		 (other :tag "Except for scratch buffer" fresh))
     :version "23.1"
     :group 'ns)
 
@@ -284,8 +571,8 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
 + `activate' or `deactivate' shall be used.
 + If nil, inherit the IME state from macOS."
 +   :type '(choice (const :tag "IME activated" activate)
-+                  (const :tag "IME deactivated" deactivate)
-+                  (const :tag "IME inherited from macOS" nil))
++ 		 (const :tag "IME deactivated" deactivate)
++ 		 (const :tag "IME inherited from macOS" nil))
 +   :version "27.0"
 +   :group 'ns)
 +
@@ -299,11 +586,426 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
 
   (defun ns-find-file ()
 ***************
-*** 909,914 ****
---- 1013,1529 ----
-                                           &context (window-system ns))
+*** 477,485 ****
+    (let* ((f (file-truename
+  	     (expand-file-name (pop ns-input-file)
+  			       command-line-default-directory)))
+!          (file (find-file-noselect f))
+!          (bufwin1 (get-buffer-window file 'visible))
+!          (bufwin2 (get-buffer-window "*scratch*" 'visible)))
+      (cond
+       (bufwin1
+        (select-frame (window-frame bufwin1))
+--- 575,583 ----
+    (let* ((f (file-truename
+  	     (expand-file-name (pop ns-input-file)
+  			       command-line-default-directory)))
+! 	 (file (find-file-noselect f))
+! 	 (bufwin1 (get-buffer-window file 'visible))
+! 	 (bufwin2 (get-buffer-window "*scratch*" 'visible)))
+      (cond
+       (bufwin1
+        (select-frame (window-frame bufwin1))
+***************
+*** 505,528 ****
+  string dropped into the current buffer."
+    (interactive "e")
+    (let* ((window (posn-window (event-start event)))
+!          (arg (car (cdr (cdr event))))
+!          (type (car arg))
+!          (operations (car (cdr arg)))
+!          (objects (cdr (cdr arg)))
+!          (string (mapconcat 'identity objects "\n")))
+      (set-frame-selected-window nil window)
+      (raise-frame)
+      (setq window (selected-window))
+      (cond ((or (memq 'ns-drag-operation-generic operations)
+!                (memq 'ns-drag-operation-copy operations))
+!            ;; Perform the default/copy action.
+!            (dolist (data objects)
+!              (dnd-handle-one-url window 'private (if (eq type 'file)
+!                                                      (concat "file:" data)
+!                                                    data))))
+!           (t
+!            ;; Insert the text as is.
+!            (dnd-insert-text window 'private string)))))
+
+  (global-set-key [drag-n-drop] 'ns-drag-n-drop)
+
+--- 603,626 ----
+  string dropped into the current buffer."
+    (interactive "e")
+    (let* ((window (posn-window (event-start event)))
+! 	 (arg (car (cdr (cdr event))))
+! 	 (type (car arg))
+! 	 (operations (car (cdr arg)))
+! 	 (objects (cdr (cdr arg)))
+! 	 (string (mapconcat 'identity objects "\n")))
+      (set-frame-selected-window nil window)
+      (raise-frame)
+      (setq window (selected-window))
+      (cond ((or (memq 'ns-drag-operation-generic operations)
+! 	       (memq 'ns-drag-operation-copy operations))
+! 	   ;; Perform the default/copy action.
+! 	   (dolist (data objects)
+! 	     (dnd-handle-one-url window 'private (if (eq type 'file)
+! 						     (concat "file:" data)
+! 						   data))))
+! 	  (t
+! 	   ;; Insert the text as is.
+! 	   (dnd-insert-text window 'private string)))))
+
+  (global-set-key [drag-n-drop] 'ns-drag-n-drop)
+
+***************
+*** 587,594 ****
+    (interactive)
+    (modify-frame-parameters
+     frame (list (cons 'tool-bar-lines
+! 		       (if (> (or (frame-parameter frame 'tool-bar-lines) 0) 0)
+! 				   0 1)) ))
+    (if (not tool-bar-mode) (tool-bar-mode t)))
+
+
+--- 685,692 ----
+    (interactive)
+    (modify-frame-parameters
+     frame (list (cons 'tool-bar-lines
+! 		     (if (> (or (frame-parameter frame 'tool-bar-lines) 0) 0)
+! 			 0 1)) ))
+    (if (not tool-bar-mode) (tool-bar-mode t)))
+
+
+***************
+*** 599,613 ****
+    "Interactive front-end to `print-buffer': asks for user confirmation first."
+    (interactive)
+    (if (and (called-interactively-p 'interactive)
+!            (or (listp last-nonmenu-event)
+!                (and (char-or-string-p (event-basic-type last-command-event))
+!                     (memq 'super (event-modifiers last-command-event)))))
+        (let ((last-nonmenu-event (if (listp last-nonmenu-event)
+!                                     last-nonmenu-event
+!                                   ;; Fake it:
+!                                   '(mouse-1 POSITION 1))))
+!         (if (y-or-n-p (format "Print buffer %s? " (buffer-name)))
+!             (print-buffer)
+  	  (error "Canceled")))
+      (print-buffer)))
+
+--- 697,711 ----
+    "Interactive front-end to `print-buffer': asks for user confirmation first."
+    (interactive)
+    (if (and (called-interactively-p 'interactive)
+! 	   (or (listp last-nonmenu-event)
+! 	       (and (char-or-string-p (event-basic-type last-command-event))
+! 		    (memq 'super (event-modifiers last-command-event)))))
+        (let ((last-nonmenu-event (if (listp last-nonmenu-event)
+! 				    last-nonmenu-event
+! 				  ;; Fake it:
+! 				  '(mouse-1 POSITION 1))))
+! 	(if (y-or-n-p (format "Print buffer %s? " (buffer-name)))
+! 	    (print-buffer)
+  	  (error "Canceled")))
+      (print-buffer)))
+
+***************
+*** 632,640 ****
+  `ns-input-fontsize' of new font."
+    (interactive)
+    (modify-frame-parameters (selected-frame)
+!                            (list (cons 'fontsize ns-input-fontsize)))
+    (modify-frame-parameters (selected-frame)
+!                            (list (cons 'font ns-input-font)))
+    (set-frame-font ns-input-font))
+
+
+--- 730,738 ----
+  `ns-input-fontsize' of new font."
+    (interactive)
+    (modify-frame-parameters (selected-frame)
+! 			   (list (cons 'fontsize ns-input-fontsize)))
+    (modify-frame-parameters (selected-frame)
+! 			   (list (cons 'font ns-input-font)))
+    (set-frame-font ns-input-font))
+
+
+***************
+*** 645,661 ****
+    ;; Only some code supports this so far, so use uglier XLFD version
+    ;; "-ns-*-*-*-*-*-10-*-*-*-*-*-fontset-standard,latin:Courier,han:Kai"
+    (mapconcat 'identity
+!              '("-ns-*-*-*-*-*-10-*-*-*-*-*-fontset-standard"
+!                "latin:-*-Courier-*-*-*-*-10-*-*-*-*-*-iso10646-1"
+!                "han:-*-Kai-*-*-*-*-10-*-*-*-*-*-iso10646-1"
+!                "cyrillic:-*-Trebuchet$MS-*-*-*-*-10-*-*-*-*-*-iso10646-1")
+!              ",")
+    "String of fontset spec of the standard fontset.
+  This defines a fontset consisting of the Courier and other fonts that
+  come with macOS.
+  See the documentation of `create-fontset-from-fontset-spec' for the format.")
+
+! (defvar ns-reg-to-script)               ; nsfont.m
+
+  ;; This maps font registries (not exposed by NS APIs for font selection) to
+  ;; Unicode scripts (which can be mapped to Unicode character ranges which are).
+--- 743,759 ----
+    ;; Only some code supports this so far, so use uglier XLFD version
+    ;; "-ns-*-*-*-*-*-10-*-*-*-*-*-fontset-standard,latin:Courier,han:Kai"
+    (mapconcat 'identity
+! 	     '("-ns-*-*-*-*-*-10-*-*-*-*-*-fontset-standard"
+! 	       "latin:-*-Courier-*-*-*-*-10-*-*-*-*-*-iso10646-1"
+! 	       "han:-*-Kai-*-*-*-*-10-*-*-*-*-*-iso10646-1"
+! 	       "cyrillic:-*-Trebuchet$MS-*-*-*-*-10-*-*-*-*-*-iso10646-1")
+! 	     ",")
+    "String of fontset spec of the standard fontset.
+  This defines a fontset consisting of the Courier and other fonts that
+  come with macOS.
+  See the documentation of `create-fontset-from-fontset-spec' for the format.")
+
+! (defvar ns-reg-to-script)		; nsfont.m
+
+  ;; This maps font registries (not exposed by NS APIs for font selection) to
+  ;; Unicode scripts (which can be mapped to Unicode character ranges which are).
+***************
+*** 733,746 ****
+  ;; that keeps customize happy?
+  (when (featurep 'cocoa)
+    (let ((appkit-version
+!          (progn (string-match "^appkit-\\([^\s-]*\\)" ns-version-string)
+!                 (string-to-number (match-string 1 ns-version-string)))))
+      ;; Appkit 1138 ~= macOS 10.7.
+      (when (>= appkit-version 1138)
+        (setq mouse-wheel-progressive-speed nil)
+        (put 'mouse-wheel-progressive-speed 'customized-value
+!            (list (custom-quote
+!                   (symbol-value 'mouse-wheel-progressive-speed)))))))
+
+
+  ;;;; Color support.
+--- 831,844 ----
+  ;; that keeps customize happy?
+  (when (featurep 'cocoa)
+    (let ((appkit-version
+! 	 (progn (string-match "^appkit-\\([^\s-]*\\)" ns-version-string)
+! 		(string-to-number (match-string 1 ns-version-string)))))
+      ;; Appkit 1138 ~= macOS 10.7.
+      (when (>= appkit-version 1138)
+        (setq mouse-wheel-progressive-speed nil)
+        (put 'mouse-wheel-progressive-speed 'customized-value
+! 	   (list (custom-quote
+! 		  (symbol-value 'mouse-wheel-progressive-speed)))))))
+
+
+  ;;;; Color support.
+***************
+*** 748,758 ****
+  ;; Functions for color panel + drag
+  (defun ns-face-at-pos (pos)
+    (let* ((frame (car pos))
+!          (frame-pos (cons (cadr pos) (cddr pos)))
+!          (window (window-at (car frame-pos) (cdr frame-pos) frame))
+!          (window-pos (coordinates-in-window-p frame-pos window))
+!          (buffer (window-buffer window))
+!          (edges (window-edges window)))
+      (cond
+       ((not window-pos)
+        nil)
+--- 846,856 ----
+  ;; Functions for color panel + drag
+  (defun ns-face-at-pos (pos)
+    (let* ((frame (car pos))
+! 	 (frame-pos (cons (cadr pos) (cddr pos)))
+! 	 (window (window-at (car frame-pos) (cdr frame-pos) frame))
+! 	 (window-pos (coordinates-in-window-p frame-pos window))
+! 	 (buffer (window-buffer window))
+! 	 (edges (window-edges window)))
+      (cond
+       ((not window-pos)
+        nil)
+***************
+*** 762,780 ****
+        'default)
+       ((consp window-pos)
+        (with-current-buffer buffer
+!         (let ((p (car (compute-motion (window-start window)
+!                                       (cons (nth 0 edges) (nth 1 edges))
+!                                       (window-end window)
+!                                       frame-pos
+!                                       (- (window-width window) 1)
+!                                       nil
+!                                       window))))
+!           (cond
+!            ((eq p (window-point window))
+!             'cursor)
+!            ((and mark-active (< (region-beginning) p) (< p (region-end)))
+!             'region)
+!            (t
+  	    (let ((faces (get-char-property p 'face window)))
+  	      (if (consp faces) (car faces) faces)))))))
+       (t
+--- 860,878 ----
+        'default)
+       ((consp window-pos)
+        (with-current-buffer buffer
+! 	(let ((p (car (compute-motion (window-start window)
+! 				      (cons (nth 0 edges) (nth 1 edges))
+! 				      (window-end window)
+! 				      frame-pos
+! 				      (- (window-width window) 1)
+! 				      nil
+! 				      window))))
+! 	  (cond
+! 	   ((eq p (window-point window))
+! 	    'cursor)
+! 	   ((and mark-active (< (region-beginning) p) (< p (region-end)))
+! 	    'region)
+! 	   (t
+  	    (let ((faces (get-char-property p 'face window)))
+  	      (if (consp faces) (car faces) faces)))))))
+       (t
+***************
+*** 797,809 ****
+  (declare-function x-handle-args "common-win" (args))
+  (declare-function ns-list-services "nsfns.m" ())
+  (declare-function x-open-connection "nsfns.m"
+!                   (display &optional xrm-string must-succeed))
+  (declare-function ns-set-resource "nsfns.m" (owner name value))
+
+  ;; Do the actual Nextstep Windows setup here; the above code just
+  ;; defines functions and variables that we use now.
+  (cl-defmethod window-system-initialization (&context (window-system ns)
+!                                             &optional _display)
+    "Initialize Emacs for Nextstep (Cocoa / GNUstep) windowing."
+    (cl-assert (not ns-initialized))
+
+--- 895,907 ----
+  (declare-function x-handle-args "common-win" (args))
+  (declare-function ns-list-services "nsfns.m" ())
+  (declare-function x-open-connection "nsfns.m"
+! 		  (display &optional xrm-string must-succeed))
+  (declare-function ns-set-resource "nsfns.m" (owner name value))
+
+  ;; Do the actual Nextstep Windows setup here; the above code just
+  ;; defines functions and variables that we use now.
+  (cl-defmethod window-system-initialization (&context (window-system ns)
+! 						     &optional _display)
+    "Initialize Emacs for Nextstep (Cocoa / GNUstep) windowing."
+    (cl-assert (not ns-initialized))
+
+***************
+*** 816,824 ****
+    (condition-case err
+        (create-fontset-from-fontset-spec ns-standard-fontset-spec t)
+      (error (display-warning
+!             'initialization
+!             (format "Creation of the standard fontset failed: %s" err)
+!             :error)))
+
+    (x-open-connection (or (system-name) "") x-command-line-resources t)
+
+--- 914,922 ----
+    (condition-case err
+        (create-fontset-from-fontset-spec ns-standard-fontset-spec t)
+      (error (display-warning
+! 	    'initialization
+! 	    (format "Creation of the standard fontset failed: %s" err)
+! 	    :error)))
+
+    (x-open-connection (or (system-name) "") x-command-line-resources t)
+
+***************
+*** 842,851 ****
+
+
+    (dolist (service (ns-list-services))
+!       (if (eq (car service) 'undefined)
+! 	  (ns-define-service (cdr service))
+! 	(define-key global-map (vector (car service))
+! 	  (ns-define-service (cdr service)))))
+
+    (if (and (eq (get-lisp-resource nil "NXAutoLaunch") t)
+  	   (eq (get-lisp-resource nil "HideOnAutoLaunch") t))
+--- 940,949 ----
+
+
+    (dolist (service (ns-list-services))
+!     (if (eq (car service) 'undefined)
+! 	(ns-define-service (cdr service))
+!       (define-key global-map (vector (car service))
+! 	(ns-define-service (cdr service)))))
+
+    (if (and (eq (get-lisp-resource nil "NXAutoLaunch") t)
+  	   (eq (get-lisp-resource nil "HideOnAutoLaunch") t))
+***************
+*** 856,866 ****
+
+    ;; For Darwin nothing except UTF-8 makes sense.
+    (when (eq system-type 'darwin)
+!       (add-hook 'before-init-hook
+!                 #'(lambda ()
+!                     (setq locale-coding-system 'utf-8-unix)
+!                     (setq default-process-coding-system
+!                           '(utf-8-unix . utf-8-unix)))))
+
+    ;; Mac OS X Lion introduces PressAndHold, which is unsupported by this port.
+    ;; See this thread for more details:
+--- 954,964 ----
+
+    ;; For Darwin nothing except UTF-8 makes sense.
+    (when (eq system-type 'darwin)
+!     (add-hook 'before-init-hook
+! 	      #'(lambda ()
+! 		  (setq locale-coding-system 'utf-8-unix)
+! 		  (setq default-process-coding-system
+! 			'(utf-8-unix . utf-8-unix)))))
+
+    ;; Mac OS X Lion introduces PressAndHold, which is unsupported by this port.
+    ;; See this thread for more details:
+***************
+*** 889,910 ****
+  (declare-function ns-get-selection "nsselect.m" (selection-symbol target-type))
+
+  (cl-defmethod gui-backend-set-selection (selection value
+!                                          &context (window-system ns))
+    (if value (ns-own-selection-internal selection value)
+      (ns-disown-selection-internal selection)))
+
+  (cl-defmethod gui-backend-selection-owner-p (selection
+!                                              &context (window-system ns))
+    (ns-selection-owner-p selection))
+
+  (cl-defmethod gui-backend-selection-exists-p (selection
+!                                               &context (window-system ns))
+    (ns-selection-exists-p selection))
+
+  (cl-defmethod gui-backend-get-selection (selection-symbol target-type
+!                                          &context (window-system ns))
     (ns-get-selection selection-symbol target-type))
-  
+
+  (provide 'ns-win)
+  (provide 'term/ns-win)
+
+--- 987,1538 ----
+  (declare-function ns-get-selection "nsselect.m" (selection-symbol target-type))
+
+  (cl-defmethod gui-backend-set-selection (selection value
+! 						   &context (window-system ns))
+    (if value (ns-own-selection-internal selection value)
+      (ns-disown-selection-internal selection)))
+
+  (cl-defmethod gui-backend-selection-owner-p (selection
+! 					     &context (window-system ns))
+    (ns-selection-owner-p selection))
+
+  (cl-defmethod gui-backend-selection-exists-p (selection
+! 					      &context (window-system ns))
+    (ns-selection-exists-p selection))
+
+  (cl-defmethod gui-backend-get-selection (selection-symbol target-type
+! 							  &context (window-system ns))
+    (ns-get-selection selection-symbol target-type))
+
 + ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 + ;;
 + ;; Implementation of Input Method Extension for MacOS X
@@ -565,125 +1267,125 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
 +      (cursor-type))
 +     )
 +   "Alist of Mac script code vs parameters for input method on macOS.")
-+ 
++
 + (defun mac-get-input-method-parameter (is key)
 +   "Function to get a parameter of a input method."
 +   (assq key (cdr (assoc is mac-input-method-parameters))))
-+ 
++
 + (defun mac-get-input-method-title (&optional input-source)
 +   "Return input method title of input source.
 +     If input-source is nil, return one of current frame."
 +   (if input-source
 +       (cdr (mac-get-input-method-parameter input-source 'title))
 +     current-input-method-title))
-+ 
++
 + (defun mac-get-cursor-type (&optional input-source)
 +   "Return cursor type of input source.
 +     If input-source is nil, return one of current frame."
 +   (if input-source
 +       (or (cdr (mac-get-input-method-parameter input-source 'cursor-type))
-+           (cdr (assq 'cursor-type default-frame-alist))
-+           cursor-type)
++ 	  (cdr (assq 'cursor-type default-frame-alist))
++ 	  cursor-type)
 +     (cdr (assq 'cursor-type (frame-parameters (selected-frame))))))
-+ 
++
 + (defun mac-get-cursor-color (&optional input-source)
 +   "Return cursor color of input source.
 +     If input-source is nil, return one of current frame."
 +   (if input-source
 +       (or (cdr (mac-get-input-method-parameter input-source 'cursor-color))
-+           (cdr (assq 'cursor-color default-frame-alist)))
++ 	  (cdr (assq 'cursor-color default-frame-alist)))
 +     (cdr (assq 'cursor-color (frame-parameters (selected-frame))))))
-+ 
++
 + (defun mac-set-input-method-parameter (is key value)
 +   "Function to set a parameter of a input method."
 +   (let* ((is-param (assoc is mac-input-method-parameters))
-+          (param (assq key is-param)))
++ 	 (param (assq key is-param)))
 +     (if is-param
-+         (if param
-+             (setcdr param value)
-+           (setcdr is-param (cons (cons key value) (cdr is-param))))
++ 	(if param
++ 	    (setcdr param value)
++ 	  (setcdr is-param (cons (cons key value) (cdr is-param))))
 +       (setq mac-input-method-parameters
-+             (cons (list is (cons key value))
-+                   mac-input-method-parameters)))))
-+ 
++ 	    (cons (list is (cons key value))
++ 		  mac-input-method-parameters)))))
++
 + (defun mac-input-method-update (is)
 +   "Function to update parameters of a input method."
 +   (let ((title (mac-get-input-method-title is))
-+         (type (mac-get-cursor-type is))
-+         (color (mac-get-cursor-color is)))
++ 	(type (mac-get-cursor-type is))
++ 	(color (mac-get-cursor-color is)))
 +     (if (and title (not (equal title (mac-get-input-method-title))))
-+         (setq current-input-method-title title))
++ 	(setq current-input-method-title title))
 +     (if (and type (not (equal type (mac-get-cursor-type))))
-+         (setq cursor-type type))
++ 	(setq cursor-type type))
 +     (if (and color (not (equal color (mac-get-cursor-color))))
-+         (set-cursor-color color))
++ 	(set-cursor-color color))
 +     (force-mode-line-update)
 +     (if isearch-mode (isearch-update))))
-+ 
++
 + (defun mac-ime-update-title ()
 +   "Update title on mode line."
 +   (unless isearch-mode
 +     (mac-handle-input-method-change)))
-+ 
++
 + (defun mac-ime-active-p ()
 +   "Non-nil if current input source is not Roman or `mac-default-input-ascii'."
 +   (let ((input-source (mac-get-current-input-source)))
-+     (not (or (string-match "\\.\\(Roman\\|US\\)$" input-source)
-+              (equal mac-default-input-ascii input-source)))))
-+ 
++     (not (or (string-match "\\.\\(Roman\\|US\\|ABC\\)$" input-source)
++ 	     (equal mac-default-input-ascii input-source)))))
++
 + (defun mac-ime-activate ()
 +   "Activate input method."
 +   (interactive)
 +   (mac-toggle-input-method t)
 +   (run-hooks 'input-method-activate-hook))
-+ 
++
 + (defun mac-ime-deactivate ()
 +   "Deactivate input method."
 +   (interactive)
 +   (mac-toggle-input-method nil)
 +   (run-hooks 'input-method-deactivate-hook))
-+ 
++
 + (defun mac-ime-toggle ()
 +   "Toggle IME."
 +   (interactive)
 +   (if (mac-ime-active-p) (mac-ime-deactivate) (mac-ime-activate)))
-+ 
++
 + (defvar mac-ime--before-action (mac-ime-active-p))
 + (defun mac-ime-activate-sticky ()
 +   "Activate IME for minibuffer."
 +   (when mac-ime--before-action
 +     (mac-ime-activate)))
-+ 
++
 + (defun mac-ime-deactivate-sticky ()
 +   "Deactivate IME for minibuffer."
 +   (when (setq mac-ime--before-action (mac-ime-active-p))
 +     (mac-ime-deactivate)))
-+ 
++
 + (defun mac-input-source-registerd-p (&optional input-source)
 +   "Return nil, if the INPUT-SOURCE is not listed in system.
 + If INPUT-SOURCE is nil, `mac-default-input-source' is checked."
 +   (let ((is (or input-source mac-default-input-source)))
 +     (when (member is (mac-get-input-source-list))
 +       t)))
-+ 
++
 + (defun mac-toggle-input-method (&optional arg)
 +   "Function to toggle input method on macOS."
 +   (if arg
 +       (progn
-+         (make-local-variable 'input-method-function)
-+         (setq deactivate-current-input-method-function 'mac-toggle-input-method)
-+         (setq input-method-function nil)
-+         (setq describe-current-input-method-function nil)
-+         (mac-toggle-input-source t))
++ 	(make-local-variable 'input-method-function)
++ 	(setq deactivate-current-input-method-function 'mac-toggle-input-method)
++ 	(setq input-method-function nil)
++ 	(setq describe-current-input-method-function nil)
++ 	(mac-toggle-input-source t))
 +     (kill-local-variable 'input-method-function)
 +     (setq describe-current-input-method-function nil)
 +     (mac-toggle-input-source nil)))
-+ 
++
 + (defun mac-change-language-to-us ()
 +   "Function to change language to us."
 +   (interactive)
 +   (mac-toggle-input-method nil))
-+ 
++
 + (defun mac-ime-input-source-list ()
 +   "Show available input sources."
 +   (interactive)
@@ -692,25 +1394,45 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
 +     (message "%s" is))
 +   (message "----------------")
 +   (message "see *Messages* buffer"))
-+ 
++
 + (defun mac-handle-input-method-change ()
 +   "Function run when a input method change."
 +   (interactive)
 +   (when (member default-input-method '("MacOSX" "macOS"))
 +     (let ((input-source (mac-get-current-input-source))
-+           (ascii-capable (mac-input-source-is-ascii-capable)))
++ 	  (ascii-capable (mac-input-source-is-ascii-capable)))
 +       (cond ((and (not current-input-method) (not ascii-capable))
-+              (set-input-method "macOS"))
-+             ((and (equal current-input-method "macOS") ascii-capable)
-+              (toggle-input-method nil)))
++ 	     (set-input-method "macOS"))
++ 	    ((and (equal current-input-method "macOS") ascii-capable)
++ 	     (toggle-input-method nil)))
 +       (mac-input-method-update input-source))))
-+ 
++
++ ;;;###autoload
++ (defun mac-build-info ()
++   "Display build information in a buffer."
++   (interactive)
++   (switch-to-buffer (get-buffer-create "*Build info*"))
++   (let ((buffer-read-only nil))
++     (erase-buffer)
++     (insert (format "GNU Emacs %s\nCommit:\t\t%s\nBranch:\t\t%s\n"
++ 		    emacs-version
++ 		    emacs-repository-version
++ 		    (when (version< "27.0" emacs-version)
++ 		      emacs-repository-branch)))
++     (insert (format "System:\t\t%s\nDate:\t\t\t%s\n"
++ 		    system-configuration
++ 		    (format-time-string "%Y-%m-%d %T (%Z)" emacs-build-time)))
++     (insert (format "Patch:\t\t%s ns-inline.patch\n"
++ 		    (if (boundp 'mac-ime--cursor-type) "with" "without")))
++     (insert (format "Features:\t%s\n" system-configuration-features)))
++   (view-mode))
++
 + ;;
 + ;; Emacs input method for input method on macOS.
 + ;;
 + (register-input-method "macOS" "macOS" 'mac-toggle-input-method
-+                        "Mac" "Input Method on macOS System")
-+ 
++ 		       "Mac" "Input Method on macOS System")
++
 + ;;
 + ;; Minor mode of using input methods on macOS
 + ;;
@@ -721,79 +1443,79 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
 +   :global t
 +   (if mac-input-method-mode
 +       (progn
-+         (setq default-input-method "macOS")
-+         ;; (add-hook 'minibuffer-setup-hook 'mac-change-language-to-us)
-+         (mac-translate-from-yen-to-backslash)
-+         (cond ((eq mac-ime-startup-state 'activate) (mac-ime-activate))
-+               ((eq mac-ime-startup-state 'deactivate) (mac-ime-deactivate)))
-+         (mac-handle-input-method-change)
-+         (add-hook 'minibuffer-setup-hook #'mac-ime-deactivate-sticky)
-+         (add-hook 'minibuffer-exit-hook #'mac-ime-activate-sticky)
-+         (add-hook 'buffer-list-update-hook #'mac-ime-update-title)
-+         (add-function :after after-focus-change-function #'mac-ime-update-title)
-+         (when (and (not mac-default-input-source)
-+                    (string-match "\\.ABC$" (mac-get-locale-input-source)))
-+           (warn "Variable `mac-default-input-source' should be configured, otherwise IME cannot switch input source")))
++ 	(setq default-input-method "macOS")
++ 	;; (add-hook 'minibuffer-setup-hook 'mac-change-language-to-us)
++ 	(mac-translate-from-yen-to-backslash)
++ 	(cond ((eq mac-ime-startup-state 'activate) (mac-ime-activate))
++ 	      ((eq mac-ime-startup-state 'deactivate) (mac-ime-deactivate)))
++ 	(mac-handle-input-method-change)
++ 	(add-hook 'minibuffer-setup-hook #'mac-ime-deactivate-sticky)
++ 	(add-hook 'minibuffer-exit-hook #'mac-ime-activate-sticky)
++ 	(add-hook 'buffer-list-update-hook #'mac-ime-update-title)
++ 	(add-function :after after-focus-change-function #'mac-ime-update-title)
++ 	(when (and (not mac-default-input-source)
++ 		   (string-match "\\.ABC$" (mac-get-locale-input-source)))
++ 	  (warn "Variable `mac-default-input-source' should be configured, otherwise IME cannot switch input source")))
 +     (setq default-input-method nil)
 +     (remove-hook 'minibuffer-setup-hook #'mac-ime-deactivate-sticky)
 +     (remove-hook 'minibuffer-exit-hook #'mac-ime-activate-sticky)
 +     (remove-hook 'buffer-list-update-hook #'mac-ime-update-title)
 +     (remove-function after-focus-change-function #'mac-ime-update-title)))
-+ 
++
 + ;;
 + ;; Valiable and functions to pass key(shortcut) to system.
 + ;;
 + (defvar mac-keys-passed-to-system nil
 +   "A list of keys passed to system on macOS.")
-+ 
++
 + (defun mac-add-key-passed-to-system (key)
-+   (let ((shift   '(shift shft))
-+         (control '(control ctrl ctl))
-+         (option  '(option opt alternate alt))
-+         (command '(command cmd)))
-+ 
++   (let ((shift	 '(shift shft))
++ 	(control '(control ctrl ctl))
++ 	(option	 '(option opt alternate alt))
++ 	(command '(command cmd)))
++
 +     (add-to-list 'mac-keys-passed-to-system
-+                  (cond ((symbolp key)
-+                         (cond ((memq key shift)
-+                                (cons ns-shift-key-mask nil))
-+                               ((memq key control)
-+                                (cons ns-control-key-mask nil))
-+                               ((memq key option)
-+                                (cons ns-alternate-key-mask nil))
-+                               ((memq key command)
-+                                (cons ns-command-key-mask nil))
-+                               (t (cons nil nil))))
-+                        ((numberp key) (cons 0 key))
-+                        ((listp key)
-+                         (let ((l key) (k nil) (m 0))
-+                           (while l
-+                             (cond ((memq (car l) shift)
-+                                    (setq m (logior m ns-shift-key-mask)))
-+                                   ((memq (car l) control)
-+                                    (setq m (logior m ns-control-key-mask)))
-+                                   ((memq (car l) option)
-+                                    (setq m (logior m ns-alternate-key-mask)))
-+                                   ((memq (car l) command)
-+                                    (setq m (logior m ns-command-key-mask)))
-+                                   ((numberp (car l))
-+                                    (if (not k) (setq k (car l)))))
-+                             (setq l (cdr l)))
-+                           (cons m k)))
-+                        (t (cons nil nil))))))
-+ 
++ 		 (cond ((symbolp key)
++ 			(cond ((memq key shift)
++ 			       (cons ns-shift-key-mask nil))
++ 			      ((memq key control)
++ 			       (cons ns-control-key-mask nil))
++ 			      ((memq key option)
++ 			       (cons ns-alternate-key-mask nil))
++ 			      ((memq key command)
++ 			       (cons ns-command-key-mask nil))
++ 			      (t (cons nil nil))))
++ 		       ((numberp key) (cons 0 key))
++ 		       ((listp key)
++ 			(let ((l key) (k nil) (m 0))
++ 			  (while l
++ 			    (cond ((memq (car l) shift)
++ 				   (setq m (logior m ns-shift-key-mask)))
++ 				  ((memq (car l) control)
++ 				   (setq m (logior m ns-control-key-mask)))
++ 				  ((memq (car l) option)
++ 				   (setq m (logior m ns-alternate-key-mask)))
++ 				  ((memq (car l) command)
++ 				   (setq m (logior m ns-command-key-mask)))
++ 				  ((numberp (car l))
++ 				   (if (not k) (setq k (car l)))))
++ 			    (setq l (cdr l)))
++ 			  (cons m k)))
++ 		       (t (cons nil nil))))))
++
 + ;;
 + ;; Entry Emacs event for inline input method on macOS.
 + ;;
 + (define-key special-event-map
 +   [mac-change-input-method] 'mac-handle-input-method-change)
-+ 
++
 + ;;
 + ;; Convert yen to backslash for JIS keyboard.
 + ;;
 + (defun mac-translate-from-yen-to-backslash ()
 +   ;; Convert yen to backslash for JIS keyboard.
 +   (interactive)
-+ 
++
 +   (define-key global-map [165] nil)
 +   (define-key global-map [2213] nil)
 +   (define-key global-map [3420] nil)
@@ -814,41 +1536,10 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
 +   (define-key function-key-map [201328805] [?\C-\M-\\])
 +   )
 + ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-+ 
++
   (provide 'ns-win)
   (provide 'term/ns-win)
-  
-*** emacs_origin/lisp/term/ns-win.el	2020-06-05 01:58:05.000000000 +0900
---- emacs/lisp/term/ns-win.el	2020-06-05 01:55:14.000000000 +0900
-***************
-*** 1414,1419 ****
---- 1414,1439 ----
-               (toggle-input-method nil)))
-        (mac-input-method-update input-source))))
 
-+ ;;;###autoload
-+ (defun mac-build-info ()
-+   "Display build information in a buffer."
-+   (interactive)
-+   (switch-to-buffer (get-buffer-create "*Build info*"))
-+   (let ((buffer-read-only nil))
-+     (erase-buffer)
-+     (insert (format "GNU Emacs %s\nCommit:\t\t%s\nBranch:\t\t%s\n"
-+                     emacs-version
-+                     emacs-repository-version
-+                     (when (version< "27.0" emacs-version)
-+                       emacs-repository-branch)))
-+     (insert (format "System:\t\t%s\nDate:\t\t\t%s\n"
-+                     system-configuration
-+                     (format-time-string "%Y-%m-%d %T (%Z)" emacs-build-time)))
-+     (insert (format "Patch:\t\t%s ns-inline.patch\n"
-+                     (if (boundp 'mac-ime--cursor-type) "with" "without")))
-+     (insert (format "Features:\t%s\n" system-configuration-features)))
-+   (view-mode))
-+
-  ;;
-  ;; Emacs input method for input method on macOS.
-  ;;
 diff -crN --exclude .git emacs_origin/src/Makefile.in emacs/src/Makefile.in
 *** emacs_origin/src/Makefile.in	2019-12-30 01:10:55.000000000 +0900
 --- emacs/src/Makefile.in	2019-12-30 07:22:13.000000000 +0900
@@ -952,8 +1643,8 @@ diff -crN --exclude .git emacs_origin/src/nsterm.h emacs/src/nsterm.h
   /* Could use list to store these, but rest of emacs has a big infrastructure
      for managing a table of bitmap "records".  */
 diff -crN --exclude .git emacs_origin/src/nsterm.m emacs/src/nsterm.m
-*** emacs_origin/src/nsterm.m	2019-12-30 06:49:02.000000000 +0900
---- emacs/src/nsterm.m	2019-12-30 07:22:13.000000000 +0900
+*** emacs_orig/src/nsterm.m	2021-09-24 01:09:10.000000000 +0900
+--- emacs/src/nsterm.m	2021-09-24 18:21:30.000000000 +0900
 ***************
 *** 68,73 ****
 --- 68,74 ----
@@ -965,8 +1656,8 @@ diff -crN --exclude .git emacs_origin/src/nsterm.m emacs/src/nsterm.m
   #endif
 
 ***************
-*** 5321,5326 ****
---- 5321,5330 ----
+*** 5346,5351 ****
+--- 5347,5356 ----
                                            selector: @selector (logNotification:)
                                                name: nil object: nil]; */
 
@@ -978,8 +1669,8 @@ diff -crN --exclude .git emacs_origin/src/nsterm.m emacs/src/nsterm.m
 
     ns_initialize_display_info (dpyinfo);
 ***************
-*** 5637,5642 ****
---- 5641,5661 ----
+*** 5662,5667 ****
+--- 5667,5687 ----
       NSLog (@"notification: '%@'", [notification name]);
   }
 
@@ -1002,7 +1693,7 @@ diff -crN --exclude .git emacs_origin/src/nsterm.m emacs/src/nsterm.m
   - (void)sendEvent: (NSEvent *)theEvent
   /* --------------------------------------------------------------------------
 ***************
-*** 6362,6368 ****
+*** 6399,6405 ****
 
         /* If it was a function key or had control-like modifiers, pass
            it directly to Emacs.  */
@@ -1010,7 +1701,7 @@ diff -crN --exclude .git emacs_origin/src/nsterm.m emacs/src/nsterm.m
                          && (emacs_event->modifiers != shift_modifier)
                          && [[theEvent charactersIgnoringModifiers] length] > 0))
           {
---- 6381,6388 ----
+--- 6419,6426 ----
 
         /* If it was a function key or had control-like modifiers, pass
            it directly to Emacs.  */
@@ -1020,7 +1711,7 @@ diff -crN --exclude .git emacs_origin/src/nsterm.m emacs/src/nsterm.m
                          && [[theEvent charactersIgnoringModifiers] length] > 0))
           {
 ***************
-*** 6390,6398 ****
+*** 6427,6435 ****
               }
 
             emacs_event->code = code;
@@ -1030,7 +1721,7 @@ diff -crN --exclude .git emacs_origin/src/nsterm.m emacs/src/nsterm.m
           }
       }
 
---- 6410,6428 ----
+--- 6448,6466 ----
               }
 
             emacs_event->code = code;
@@ -1051,7 +1742,33 @@ diff -crN --exclude .git emacs_origin/src/nsterm.m emacs/src/nsterm.m
       }
 
 ***************
-*** 6519,6525 ****
+*** 6492,6501 ****
+    if (!emacs_event)
+      return;
+
+-   /* First, clear any working text.  */
+-   if (workingText != nil)
+-     [self deleteWorkingText];
+-
+    /* It might be preferable to use getCharacters:range: below,
+       cf. https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/CocoaPerformance/Articles/StringDrawing.html#//apple_ref/doc/uid/TP40001445-112378.
+       However, we probably can't use SAFE_NALLOCA here because it might
+--- 6523,6528 ----
+***************
+*** 6524,6529 ****
+--- 6551,6560 ----
+        emacs_event->code = code;
+        EV_TRAILER ((id)nil);
+      }
++
++   /* Last, clear any working text.  */
++   if (workingText != nil)
++     [self deleteWorkingText];
+  }
+
+
+***************
+*** 6556,6562 ****
     ns_working_text = build_string ([workingText UTF8String]);
 
     emacs_event->kind = NS_TEXT_EVENT;
@@ -1059,7 +1776,7 @@ diff -crN --exclude .git emacs_origin/src/nsterm.m emacs/src/nsterm.m
     EV_TRAILER ((id)nil);
   }
 
---- 6550,6558 ----
+--- 6587,6595 ----
     ns_working_text = build_string ([workingText UTF8String]);
 
     emacs_event->kind = NS_TEXT_EVENT;
@@ -1070,7 +1787,7 @@ diff -crN --exclude .git emacs_origin/src/nsterm.m emacs/src/nsterm.m
   }
 
 ***************
-*** 6591,6608 ****
+*** 6619,6636 ****
   {
     NSRect rect;
     NSPoint pt;
@@ -1089,7 +1806,7 @@ diff -crN --exclude .git emacs_origin/src/nsterm.m emacs/src/nsterm.m
 
     pt = [self convertPoint: pt toView: nil];
 
---- 6612,6643 ----
+--- 6652,6683 ----
   {
     NSRect rect;
     NSPoint pt;
@@ -1123,8 +1840,52 @@ diff -crN --exclude .git emacs_origin/src/nsterm.m emacs/src/nsterm.m
     pt = [self convertPoint: pt toView: nil];
 
 ***************
-*** 9609,9614 ****
---- 9644,9661 ----
+*** 6732,6739 ****
+
+    NSTRACE ("[EmacsView mouseDown:]");
+
+-   [self deleteWorkingText];
+-
+    if (!emacs_event)
+      return;
+
+--- 6779,6784 ----
+***************
+*** 7202,7211 ****
+                *pos = '\0';
+              old_title = t;
+            }
+!         size_title = xmalloc (strlen (old_title) + 40);
+! 	esprintf (size_title, "%s  —  (%d x %d)", old_title, cols, rows);
+!         [window setTitle: [NSString stringWithUTF8String: size_title]];
+!         xfree (size_title);
+        }
+    }
+  #endif /* NS_IMPL_COCOA */
+--- 7247,7256 ----
+                *pos = '\0';
+              old_title = t;
+            }
+!         // size_title = xmalloc (strlen (old_title) + 40);
+! 	// esprintf (size_title, "%s  —  (%d x %d)", old_title, cols, rows);
+!         // [window setTitle: [NSString stringWithUTF8String: size_title]];
+!         // xfree (size_title);
+        }
+    }
+  #endif /* NS_IMPL_COCOA */
+***************
+*** 7358,7364 ****
+
+    if (emacs_event && is_focus_frame)
+      {
+-       [self deleteWorkingText];
+        emacs_event->kind = FOCUS_OUT_EVENT;
+        EV_TRAILER ((id)nil);
+      }
+--- 7403,7408 ----
+***************
+*** 9637,9642 ****
+--- 9681,9698 ----
     x_underline_at_descent_line = 0;
     DEFSYM (Qx_underline_at_descent_line, "x-underline-at-descent-line");
 
@@ -1143,6 +1904,7 @@ diff -crN --exclude .git emacs_origin/src/nsterm.m emacs/src/nsterm.m
     /* Tell Emacs about this window system.  */
     Fprovide (Qns, Qnil);
 
+diff -crN --exclude .git emacs_origin/src/macim.h emacs/src/macim.h
 *** emacs_origin/src/macim.h	1970-01-01 09:00:00.000000000 +0900
 --- emacs/src/macim.h	2020-01-07 14:42:30.000000000 +0900
 ***************
@@ -1393,10 +2155,26 @@ diff -crN --exclude .git emacs_origin/src/nsterm.m emacs/src/nsterm.m
 +   defsubr (&Smac_toggle_input_source);
 + }
 + #endif
-*** emacs_origin/src/keyboard.c	2020-01-06 14:04:20.000000000 +0900
---- emacs/src/keyboard.c	2020-01-08 11:03:02.000000000 +0900
+diff -crN --exclude .git emacs_origin/src/keyboard.c emacs/src/keyboard.c
+*** emacs_orig/src/keyboard.c 2021-09-24 01:09:10.000000000 +0900
+--- emacs/src/keyboard.c  2021-09-24 18:18:26.000000000 +0900
 ***************
-*** 5441,5449 ****
+*** 2901,2906 ****
+--- 2901,2912 ----
+       example banishing the mouse under mouse-avoidance-mode.  */
+    timer_resume_idle ();
+
++ #ifdef HAVE_NS
++       if (CONSP (c)
++           && (EQ (XCAR (c), intern ("ns-unput-working-text"))))
++         input_was_pending = input_pending;
++ #endif
++
+        if (current_buffer != prev_buffer)
+    {
+      /* The command may have changed the keymaps.  Pretend there
+***************
+*** 5442,5450 ****
 
   #ifdef HAVE_NS
       case NS_TEXT_EVENT:
@@ -1405,8 +2183,8 @@ diff -crN --exclude .git emacs_origin/src/nsterm.m emacs/src/nsterm.m
 !                             : "ns-unput-working-text"));
 
         /* NS_NONKEY_EVENTs are just like NON_ASCII_KEYSTROKE_EVENTs,
-  	 except that they are non-key events (last-nonmenu-event is nil).  */
---- 5441,5452 ----
+     except that they are non-key events (last-nonmenu-event is nil).  */
+--- 5448,5459 ----
 
   #ifdef HAVE_NS
       case NS_TEXT_EVENT:
@@ -1418,15 +2196,15 @@ diff -crN --exclude .git emacs_origin/src/nsterm.m emacs/src/nsterm.m
 !         return list1 (intern ("ns-unput-working-text"));
 
         /* NS_NONKEY_EVENTs are just like NON_ASCII_KEYSTROKE_EVENTs,
-  	 except that they are non-key events (last-nonmenu-event is nil).  */
+     except that they are non-key events (last-nonmenu-event is nil).  */
 ***************
-*** 12412,12417 ****
---- 12415,12422 ----
-  			    "ns-put-working-text");
+*** 12411,12416 ****
+--- 12420,12427 ----
+            "ns-put-working-text");
     initial_define_lispy_key (Vspecial_event_map, "ns-unput-working-text",
-  			    "ns-unput-working-text");
+            "ns-unput-working-text");
 +   initial_define_lispy_key (Vspecial_event_map, "ns-put-marked-text",
-+ 			    "ns-put-marked-text");
++           "ns-put-marked-text");
     /* Here we used to use `ignore-event' which would simple set prefix-arg to
        current-prefix-arg, as is done in `handle-switch-frame'.
        But `handle-switch-frame is not run from the special-map.
