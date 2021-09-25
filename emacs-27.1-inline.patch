@@ -986,7 +986,7 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
   (provide 'ns-win)
   (provide 'term/ns-win)
 
---- 987,1538 ----
+--- 987,1539 ----
   (declare-function ns-get-selection "nsselect.m" (selection-symbol target-type))
 
   (cl-defmethod gui-backend-set-selection (selection value
@@ -1330,7 +1330,7 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
 + (defun mac-ime-active-p ()
 +   "Non-nil if current input source is not Roman or `mac-default-input-ascii'."
 +   (let ((input-source (mac-get-current-input-source)))
-+     (not (or (string-match "\\.\\(Roman\\|US\\|ABC\\)$" input-source)
++     (not (or (string-match "\\.\\(Roman\\|US\\ABC\\)$" input-source)
 + 	     (equal mac-default-input-ascii input-source)))))
 +
 + (defun mac-ime-activate ()
@@ -2200,11 +2200,11 @@ diff -crN --exclude .git emacs_origin/src/keyboard.c emacs/src/keyboard.c
 ***************
 *** 12411,12416 ****
 --- 12420,12427 ----
-            "ns-put-working-text");
+  			    "ns-put-working-text");
     initial_define_lispy_key (Vspecial_event_map, "ns-unput-working-text",
-            "ns-unput-working-text");
+  			    "ns-unput-working-text");
 +   initial_define_lispy_key (Vspecial_event_map, "ns-put-marked-text",
-+           "ns-put-marked-text");
++                             "ns-put-marked-text");
     /* Here we used to use `ignore-event' which would simple set prefix-arg to
        current-prefix-arg, as is done in `handle-switch-frame'.
        But `handle-switch-frame is not run from the special-map.
