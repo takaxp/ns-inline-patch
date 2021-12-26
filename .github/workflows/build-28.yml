@@ -6,7 +6,7 @@ on:
   - cron: '0 7 * * *'
 
 jobs:
-  build-head:
+  build-28:
     runs-on: macos-latest
     timeout-minutes: 60
     steps:
