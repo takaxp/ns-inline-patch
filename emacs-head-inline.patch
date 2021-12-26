@@ -1398,7 +1398,7 @@ diff -crN --exclude .git emacs_origin/src/nsterm.m emacs/src/nsterm.m
 *** emacs_origin/src/keyboard.c	2020-01-06 14:04:20.000000000 +0900
 --- emacs/src/keyboard.c	2020-01-08 11:03:02.000000000 +0900
 ***************
-*** 5441,5449 ****
+*** 5523,5531 ****
 
   #ifdef HAVE_NS
       case NS_TEXT_EVENT:
@@ -1408,7 +1408,7 @@ diff -crN --exclude .git emacs_origin/src/nsterm.m emacs/src/nsterm.m
 
         /* NS_NONKEY_EVENTs are just like NON_ASCII_KEYSTROKE_EVENTs,
   	 except that they are non-key events (last-nonmenu-event is nil).  */
---- 5441,5452 ----
+--- 5523,5534 ----
 
   #ifdef HAVE_NS
       case NS_TEXT_EVENT:
@@ -1422,13 +1422,13 @@ diff -crN --exclude .git emacs_origin/src/nsterm.m emacs/src/nsterm.m
         /* NS_NONKEY_EVENTs are just like NON_ASCII_KEYSTROKE_EVENTs,
   	 except that they are non-key events (last-nonmenu-event is nil).  */
 ***************
-*** 12412,12417 ****
---- 12415,12422 ----
+*** 12694,12699 ****
+--- 12697,12704 ----
   			    "ns-put-working-text");
     initial_define_lispy_key (Vspecial_event_map, "ns-unput-working-text",
   			    "ns-unput-working-text");
 +   initial_define_lispy_key (Vspecial_event_map, "ns-put-marked-text",
 + 			    "ns-put-marked-text");
+    initial_define_lispy_key (Vspecial_event_map, "pgtk-preedit-text",
+  			    "pgtk-preedit-text");
     /* Here we used to use `ignore-event' which would simple set prefix-arg to
-       current-prefix-arg, as is done in `handle-switch-frame'.
-       But `handle-switch-frame is not run from the special-map.
