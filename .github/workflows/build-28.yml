@@ -14,6 +14,6 @@ jobs:
     - name: Setup to build
       run: sh build/setup.sh
     - name: Build emacs-28 with inline patch
-      run: sh build/emacs-28.sh -d ${{ github.workspace }}
+      run: sh build/emacs-28.1.sh -d ${{ github.workspace }}
     - name: Verification
       run: ${{ github.workspace }}/emacs/nextstep/Emacs.app/Contents/MacOS/Emacs --batch --eval="(unless (fboundp 'mac-input-method-mode) (error \"The inline-patch is NOT integrated\"))"
