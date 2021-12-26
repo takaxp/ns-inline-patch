@@ -1,4 +1,4 @@
-name: "Build NS with inline-patch (HEAD)"
+name: "Build NS with inline-patch (emacs-28)"
 on:
   push:
   pull_request:
