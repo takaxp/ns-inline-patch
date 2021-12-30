@@ -1,7 +1,7 @@
 #+title: An enhanced inline patch for GNU Emacs
 
 [[https://github.com/takaxp/ns-inline-patch/actions?query=workflow%3A%22Build+NS+with+inline-patch+%28HEAD%29%22][https://github.com/takaxp/ns-inline-patch/workflows/Build%20NS%20with%20inline-patch%20(HEAD)/badge.svg]]
-[[https://github.com/takaxp/ns-inline-patch/actions?query=workflow%3A%22Build+NS+with+inline-patch+%2828.1%29%22][https://github.com/takaxp/ns-inline-patch/workflows/Build%20NS%20with%20inline-patch%20(28.1)/badge.svg]]
+[[https://github.com/takaxp/ns-inline-patch/actions?query=workflow%3A%22Build+NS+with+inline-patch+%28emacs-28%29%22][https://github.com/takaxp/ns-inline-patch/workflows/Build%20NS%20with%20inline-patch%20(28.1)/badge.svg]]
 [[https://github.com/takaxp/ns-inline-patch/actions?query=workflow%3A%22Build+NS+with+inline-patch+%2827.0%29%22][https://github.com/takaxp/ns-inline-patch/workflows/Build%20NS%20with%20inline-patch%20(27.0)/badge.svg]]
 [[https://github.com/takaxp/ns-inline-patch/actions?query=workflow%3A%22Build+NS+with+inline-patch+%2826.3%29%22][https://github.com/takaxp/ns-inline-patch/workflows/Build%20NS%20with%20inline-patch%20(26.3)/badge.svg]]
 
