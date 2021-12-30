@@ -5,9 +5,9 @@ on:
   - cron: '0 7 * * *'
 
 jobs:
-  build-27_0:
+  build-27:
     runs-on: macos-latest
-    timeout-minutes: 30
+    timeout-minutes: 60
     steps:
     - uses: actions/checkout@v2
     - name: Setup to build
