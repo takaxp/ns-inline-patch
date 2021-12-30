@@ -1,6 +1,5 @@
-name: "Build NS with inline-patch (26.3)"
+name: "Build NS with inline-patch (emacs-26)"
 on:
-  push:
   pull_request:
   schedule:
   - cron: '0 6 * * *'
