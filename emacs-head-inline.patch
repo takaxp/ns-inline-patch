@@ -1422,13 +1422,13 @@ diff -crN --exclude .git emacs_origin/src/nsterm.m emacs/src/nsterm.m
         /* NS_NONKEY_EVENTs are just like NON_ASCII_KEYSTROKE_EVENTs,
   	 except that they are non-key events (last-nonmenu-event is nil).  */
 ***************
-*** 12694,12699 ****
---- 12697,12704 ----
+*** 12767,12772 ****
+--- 12767,12774 ----
+  #endif
+    initial_define_lispy_key (Vspecial_event_map, "ns-put-working-text",
   			    "ns-put-working-text");
-    initial_define_lispy_key (Vspecial_event_map, "ns-unput-working-text",
-  			    "ns-unput-working-text");
 +   initial_define_lispy_key (Vspecial_event_map, "ns-put-marked-text",
 + 			    "ns-put-marked-text");
-    initial_define_lispy_key (Vspecial_event_map, "pgtk-preedit-text",
-  			    "pgtk-preedit-text");
+    initial_define_lispy_key (Vspecial_event_map, "ns-unput-working-text",
+  			    "ns-unput-working-text");
     /* Here we used to use `ignore-event' which would simple set prefix-arg to
