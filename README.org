@@ -7,7 +7,7 @@
 
 see https://qiita.com/takaxp/items/e07bb286d80fa9dd8e05 and https://qiita.com/takaxp/items/6a7f9b26eb1b1a8237a0
 
-Note: Version 27.2 has been released. The inline patch (emacs-27.1-inline.patch) can be still utilized to 27.2. Installer packages for Intel-based Mac and Apple Silicon M1 Mac will also be available soon from this repository (possibly end of march).
+Note: Version 28.1 has been released. The inline patch (emacs-28.1-inline.patch) is newly generated for Emacs 28.1. Installer packages for Intel-based Mac and Apple Silicon M1 Mac will be available soon from this repository (possibly middle of April).
 
 ** Supported features
 
@@ -19,6 +19,7 @@ Note: Version 27.2 has been released. The inline patch (emacs-27.1-inline.patch)
 ** Supported Emacs version
 
  - Emacs HEAD (emacs-head-inline.patch)
+ - Emacs 28.1 (emacs-28.1-inline.patch)
  - Emacs 27.2, 27.1 (emacs-27.1-inline.patch)
  - Emacs 26.3, 26.2, 26.1 (emacs-25.2-inline.patch)
  - Emacs 25.3, 25.2 (emacs-25.2-inline.patch)
@@ -49,10 +50,10 @@ For your convenience, some build scripts are provided. Before you run the script
 
 #+begin_src sh
 sh ./build/setup.sh
-sh ./build/emacs-27.1.sh
+sh ./build/emacs-28.1.sh
 #+end_src
 
-If your environment for building Emacs is under PROXY, you can use =emacs-mirror= to get Emacs source codes. Please change the URL of the git repository specified in =emacs-head.sh= and =emacs-27.1.sh= if needed.
+If your environment for building Emacs is under PROXY, you can use =emacs-mirror= to get Emacs source codes. Please change the URL of the git repository specified in =emacs-head.sh= and =emacs-28.1.sh= if needed.
 
 ** Pre-built distribution package
 
