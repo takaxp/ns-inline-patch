@@ -7,7 +7,7 @@
 
 see https://qiita.com/takaxp/items/e07bb286d80fa9dd8e05 and https://qiita.com/takaxp/items/6a7f9b26eb1b1a8237a0
 
-Note: Version 28.1 has been released. The inline patch (emacs-28.1-inline.patch) is newly generated for Emacs 28.1. Installer packages for Intel-based Mac and Apple Silicon M1 Mac will be available soon from this repository (possibly middle of April).
+Note: Version 28.1 has been released. The inline patch (emacs-28.1-inline.patch) is newly generated for Emacs 28.1. Installer packages for Intel-based Mac and Apple Silicon M1 Mac are also available.
 
 ** Supported features
 
@@ -56,33 +56,45 @@ sh ./build/emacs-28.1.sh
 If your environment for building Emacs is under PROXY, you can use =emacs-mirror= to get Emacs source codes. Please change the URL of the git repository specified in =emacs-head.sh= and =emacs-28.1.sh= if needed.
 
 ** Pre-built distribution package
+   :PROPERTIES:
+   :ID:       3A8A27A7-93D9-4F4E-A621-042FC4521D14
+   :END:
 
-You can download my pre-built Emacs 26.3, 27.1, and 27.2 with ns-inline patch. =Emacs.app= will be installed under =/Applications/Emacs-takaxp= in your macOS. The pkg contains =GnuTLS= and =jansson=.
+You can download my pre-built Emacs 26.3, 27.1, 27.2, and 28.1 with ns-inline patch. =Emacs.app= will be installed under =/Applications/Emacs-takaxp= in your macOS. The pkg contains =GnuTLS= and =jansson=.
 
 #+caption: inline
-| Chip  | Download             | macOS    | [MB] | md5                              |
-|-------+----------------------+----------+------+----------------------------------|
-| Apple | [[https://pxaka.tokyo/emacs/pkg/emacs-27.2_apple.pkg][emacs-27.2_apple.pkg]] | Big Sur  | 51.2 | 2cc963b00c0d41c038941ebb35e18446 |
-| Intel | [[https://pxaka.tokyo/emacs/pkg/emacs-27.2_intel.pkg][emacs-27.2_intel.pkg]] | [*1]     | 51.8 | 74e06cb24c8898a261d5778892355d3a |
-| Intel | [[https://pxaka.tokyo/emacs/pkg/emacs-27.1.pkg][emacs-27.1.pkg]]       | Catalina | 51.3 | 0c7048d147dea6fcdda638a25b161af8 |
-| Intel | [[https://pxaka.tokyo/emacs/pkg/emacs-26.3.pkg][emacs-26.3.pkg]]       | Catalina | 52.9 | 1868c787177f515f18f500ce6b898b05 |
+| Chip  | Download             | macOS             | [MB] | md5                              |
+|-------+----------------------+-------------------+------+----------------------------------|
+| Apple | [[https://pxaka.tokyo/emacs/pkg/emacs-28.1_apple.pkg][emacs-28.1_apple.pkg]] | Big Sur[*1]       | 55.0 | b795fa2b76aeca301bb25193f5aed0e3 |
+| Intel | [[https://pxaka.tokyo/emacs/pkg/emacs-28.1_intel.pkg][emacs-28.1_intel.pkg]] | Big Sur, Monterey | 55.4 | b5e0e7afad21b98dc3081118e6a7032d |
+|-------+----------------------+-------------------+------+----------------------------------|
+| Apple | [[https://pxaka.tokyo/emacs/pkg/emacs-27.2_apple.pkg][emacs-27.2_apple.pkg]] | Big Sur           | 51.2 | 2cc963b00c0d41c038941ebb35e18446 |
+| Intel | [[https://pxaka.tokyo/emacs/pkg/emacs-27.2_intel.pkg][emacs-27.2_intel.pkg]] | [*2]              | 51.8 | 74e06cb24c8898a261d5778892355d3a |
+| Intel | [[https://pxaka.tokyo/emacs/pkg/emacs-27.1.pkg][emacs-27.1.pkg]]       | Catalina          | 51.3 | 0c7048d147dea6fcdda638a25b161af8 |
+|-------+----------------------+-------------------+------+----------------------------------|
+| Intel | [[https://pxaka.tokyo/emacs/pkg/emacs-26.3.pkg][emacs-26.3.pkg]]       | Catalina          | 52.9 | 1868c787177f515f18f500ce6b898b05 |
 
-[*1] Mojave / Catalina / Big Sur
+[*1] Not tested in Monterey but it probably be installed
+[*2] Mojave / Catalina / Big Sur
 
 Additionally, the following package is "WITHOUT" inline-patch NS build. In this case, =Emacs.app= will be installed under =/Applications/Emacs-takaxp/pure=.
 
 #+caption: pure
-| Chip  | Download                  | macOS    | [MB] | md5                              |
-|-------+---------------------------+----------+------+----------------------------------|
-| Apple | [[https://pxaka.tokyo/emacs/pkg/emacs-27.2_apple_pure.pkg][emacs-27.2_apple_pure.pkg]] | Big Sur  | 51.2 | 64583b05ebf4d9aa89e8812af980b06f |
-| Intel | [[https://pxaka.tokyo/emacs/pkg/emacs-27.2_intel_pure.pkg][emacs-27.2_intel_pure.pkg]] | [*1]     | 51.7 | 165fed95067d5b4b6d885bfacd1ff9fa |
-| Intel | [[https://pxaka.tokyo/emacs/pkg/emacs-27.1_pure.pkg][emacs-27.1_pure.pkg]]       | Catalina | 51.3 | fdd14baf87ed4f903b5b02c4e1dd022c |
+| Chip  | Download                  | macOS             | [MB] | md5                              |
+|-------+---------------------------+-------------------+------+----------------------------------|
+| Apple | [[https://pxaka.tokyo/emacs/pkg/emacs-28.1_apple_pure.pkg][emacs-28.1_apple_pure.pkg]] | Big Sur[*1]       | 55.0 | 60415bedb0d5f510e3a35e3fe7b8483e |
+| Intel | [[https://pxaka.tokyo/emacs/pkg/emacs-28.1_intel_pure.pkg][emacs-28.1_intel_pure.pkg]] | Big Sur, Monterey | 55.4 | eff3ac5dcfc83f3b09997e1e3c02ada2 |
+|-------+---------------------------+-------------------+------+----------------------------------|
+| Apple | [[https://pxaka.tokyo/emacs/pkg/emacs-27.2_apple_pure.pkg][emacs-27.2_apple_pure.pkg]] | Big Sur           | 51.2 | 64583b05ebf4d9aa89e8812af980b06f |
+| Intel | [[https://pxaka.tokyo/emacs/pkg/emacs-27.2_intel_pure.pkg][emacs-27.2_intel_pure.pkg]] | [*2]              | 51.7 | 165fed95067d5b4b6d885bfacd1ff9fa |
+| Intel | [[https://pxaka.tokyo/emacs/pkg/emacs-27.1_pure.pkg][emacs-27.1_pure.pkg]]       | Catalina          | 51.3 | fdd14baf87ed4f903b5b02c4e1dd022c |
 
-[*1] Mojave / Catalina / Big Sur
+[*1] Not tested in Monterey but it probably be installed
+[*2] Mojave / Catalina / Big Sur
 
 Integrated dynamic libraries:
 
- - libffi.7.dylib
+ - libffi.7.dylib (libffi.8.dylib for 28.1 builds)
  - libgmp.10.dylib
  - libgnutls.30.dylib
  - libhogweed.6.dylib
