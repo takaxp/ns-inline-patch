@@ -60,7 +60,7 @@ If your environment for building Emacs is under PROXY, you can use =emacs-mirror
    :ID:       3A8A27A7-93D9-4F4E-A621-042FC4521D14
    :END:
 
-You can download my pre-built Emacs 26.3, 27.1, 27.2, and 28.1 with ns-inline patch. =Emacs.app= will be installed under =/Applications/Emacs-takaxp= in your macOS. The pkg contains =GnuTLS= and =jansson=.
+You can download my pre-built Emacs 26.3, 27.1, 27.2, and 28.1 with ns-inline patch. =Emacs.app= will be installed under =/Applications/Emacs-takaxp= in your macOS. The pkg contains =GnuTLS= and =jansson=. These packages are signed and notarized with my Apple developer ID: H2PH8KNN3H.
 
 #+caption: inline
 | Chip  | Download             | macOS             | [MB] | md5                              |
