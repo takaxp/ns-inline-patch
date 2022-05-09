@@ -70,11 +70,11 @@ You can download my pre-built Emacs 26.3, 27.1, 27.2, and 28.1 with ns-inline pa
 
 [*1] Not tested in Monterey but it probably be installed
 *** Emacs 27 (inline)
-| Chip  | Version | Download         | macOS       | [MB] | md5                              |
-|-------+---------+------------------+-------------+------+----------------------------------|
-| Apple |    27.2 | [[https://pxaka.tokyo/emacs/pkg/emacs-27.2_apple.pkg][pkg]] (2022-05-09) | Big Sur[*1] | 51.4 | [[https://pxaka.tokyo/emacs/pkg/emacs-27.2_apple.md5][52fda7e597430ae86997555317ff11b2]] |
-| Intel |    27.2 | [[https://pxaka.tokyo/emacs/pkg/emacs-27.2_intel.pkg][pkg]] (2022-05-09) | Big Sur     | 51.8 | [[https://pxaka.tokyo/emacs/pkg/emacs-27.2_intel.md5][58f315e392a9fa893d3260eaf7424fe1]] |
-| Intel |    27.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-27.1.pkg][pkg]]              | Catalina    | 51.3 | 0c7048d147dea6fcdda638a25b161af8 |
+| Chip  | Version | Download         | macOS             | [MB] | md5                              |
+|-------+---------+------------------+-------------------+------+----------------------------------|
+| Apple |    27.2 | [[https://pxaka.tokyo/emacs/pkg/emacs-27.2_apple.pkg][pkg]] (2022-05-09) | Big Sur[*1]       | 51.4 | [[https://pxaka.tokyo/emacs/pkg/emacs-27.2_apple.md5][52fda7e597430ae86997555317ff11b2]] |
+| Intel |    27.2 | [[https://pxaka.tokyo/emacs/pkg/emacs-27.2_intel.pkg][pkg]] (2022-05-09) | Big Sur, Monterey | 51.8 | [[https://pxaka.tokyo/emacs/pkg/emacs-27.2_intel.md5][58f315e392a9fa893d3260eaf7424fe1]] |
+| Intel |    27.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-27.1.pkg][pkg]]              | Catalina          | 51.3 | 0c7048d147dea6fcdda638a25b161af8 |
 
 [*1] Not tested in Monterey but it probably be installed
 
