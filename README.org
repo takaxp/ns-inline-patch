@@ -62,6 +62,8 @@ If your environment for building Emacs is under PROXY, you can use =emacs-mirror
 
 You can download my pre-built Emacs 26.3, 27.1, 27.2, and 28.1 with ns-inline patch. =Emacs.app= will be installed under =/Applications/Emacs-takaxp= in your macOS. The pkg contains =GnuTLS= and =jansson=. These packages are signed and notarized with my Apple developer ID: H2PH8KNN3H.
 
+*Note:* You may need to allow to install the downloaded Emacs by accepting third party applications in "System Preferences" > "Security & Privacy". Please click "Open Anyway" to install pre-built packages.
+
 *** Emacs 28 (inline)
 | Chip  | Version | Download         | macOS             | [MB] | md5                              |
 |-------+---------+------------------+-------------------+------+----------------------------------|
