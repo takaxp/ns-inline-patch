@@ -60,16 +60,29 @@ If your environment for building Emacs is under PROXY, you can use =emacs-mirror
    :ID:       3A8A27A7-93D9-4F4E-A621-042FC4521D14
    :END:
 
-You can download my pre-built Emacs 26.3, 27.1, 27.2, and 28.1 with ns-inline patch. =Emacs.app= will be installed under =/Applications/Emacs-takaxp= in your macOS. The pkg contains =GnuTLS= and =jansson=. These packages are signed and notarized with my Apple developer ID: H2PH8KNN3H.
+You can download my pre-built Emacs 26.3, 27.1, 27.2, 28.1 and HEAD with ns-inline patch. =Emacs.app= will be installed under =/Applications/Emacs-takaxp= in your macOS. The pkg contains =GnuTLS= and =jansson=. These packages are signed and notarized with my Apple developer ID: H2PH8KNN3H.
 
-*** Emacs 28 (inline)
+*** Emacs 29x (with inline patch) *unstable*
+    :PROPERTIES:
+    :ID:       9B7E9F4F-E5C7-4A09-A06B-7E1E58ADBDB9
+    :END:
+
+These packages are built based on the current development source code. So it may be unstable or broken.
+
+| Chip  | Version | Download         | macOS   | [MB] | md5                              |
+|-------+---------+------------------+---------+------+----------------------------------|
+| Apple | 29.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.pkg][pkg]] (2022-05-11) | Big Sur | 53.4 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.md5][64ed56dc508896691e610a0ce5aef451]] |
+| Intel | 29.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.pkg][pkg]] (2022-05-11) | Big Sur | 53.9 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.md5][e95687b7e323d4c89d7bf33854ca6076]] |
+
+*** Emacs 28 (with inline patch)
 | Chip  | Version | Download         | macOS             | [MB] | md5                              |
 |-------+---------+------------------+-------------------+------+----------------------------------|
 | Apple |    28.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-28.1_apple.pkg][pkg]] (2022-05-09) | Big Sur[*1]       | 55.0 | [[https://pxaka.tokyo/emacs/pkg/emacs-28.1_apple.md5][29589057e1911dfec50b7a6c8fae890f]] |
 | Intel |    28.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-28.1_intel.pkg][pkg]] (2022-05-09) | Big Sur, Monterey | 55.4 | [[https://pxaka.tokyo/emacs/pkg/emacs-28.1_intel.md5][a2823a3e929bcf90e67b144dd1db220d]] |
 
 [*1] Not tested in Monterey but it probably be installed
-*** Emacs 27 (inline)
+
+*** Emacs 27 (with inline patch)
 | Chip  | Version | Download         | macOS             | [MB] | md5                              |
 |-------+---------+------------------+-------------------+------+----------------------------------|
 | Apple |    27.2 | [[https://pxaka.tokyo/emacs/pkg/emacs-27.2_apple.pkg][pkg]] (2022-05-09) | Big Sur[*1]       | 51.4 | [[https://pxaka.tokyo/emacs/pkg/emacs-27.2_apple.md5][52fda7e597430ae86997555317ff11b2]] |
@@ -86,7 +99,7 @@ You can download my pre-built Emacs 26.3, 27.1, 27.2, and 28.1 with ns-inline pa
 
 [*2] Mojave / Catalina / Big Sur
 
-*** Emacs 26 (inline)
+*** Emacs 26 (with inline patch)
 | Chip  | Version | Download | macOS    | [MB] | md5                              |
 |-------+---------+----------+----------+------+----------------------------------|
 | Intel |    26.3 | [[https://pxaka.tokyo/emacs/pkg/emacs-26.3.pkg][pkg]]      | Catalina | 52.9 | 1868c787177f515f18f500ce6b898b05 |
