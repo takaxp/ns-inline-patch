@@ -62,7 +62,7 @@ If your environment for building Emacs is under PROXY, you can use =emacs-mirror
 
 You can download my pre-built Emacs 26.3, 27.1, 27.2, 28.1 and HEAD with ns-inline patch. =Emacs.app= will be installed under =/Applications/Emacs-takaxp= in your macOS. The pkg contains =GnuTLS= and =jansson=. These packages are signed and notarized with my Apple developer ID: H2PH8KNN3H.
 
-*** Emacs 29x (with inline patch) *unstable*
+*** Emacs 29x (with inline patch) *!unstable!*
     :PROPERTIES:
     :ID:       9B7E9F4F-E5C7-4A09-A06B-7E1E58ADBDB9
     :END:
@@ -71,8 +71,8 @@ These packages are built based on the current development source code. So it may
 
 | Chip  | Version | Download         | macOS   | [MB] | md5                              |
 |-------+---------+------------------+---------+------+----------------------------------|
-| Apple | 29.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.pkg][pkg]] (2022-05-11) | Big Sur | 53.4 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.md5][64ed56dc508896691e610a0ce5aef451]] |
-| Intel | 29.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.pkg][pkg]] (2022-05-11) | Big Sur | 53.9 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.md5][e95687b7e323d4c89d7bf33854ca6076]] |
+| Apple | 29.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.pkg][pkg]] (2022-05-14) | Big Sur | 53.4 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.md5][02471169a48b140b912f9c762cd41666]] |
+| Intel | 29.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.pkg][pkg]] (2022-05-14) | Big Sur | 53.9 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.md5][377e2c0a878c3713e52ed6cd078edf60]] |
 
 *** Emacs 28 (with inline patch)
 | Chip  | Version | Download         | macOS             | [MB] | md5                              |
