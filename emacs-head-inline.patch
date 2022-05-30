@@ -898,9 +898,9 @@ diff -crN --exclude .git emacs_origin/src/nsfns.m emacs/src/nsfns.m
   #include <IOKit/graphics/IOGraphicsLib.h>
   #include "macfont.h"
 + #include "macim.h"
-  #endif
 
-  #ifdef HAVE_NS
+  #if MAC_OS_X_VERSION_MAX_ALLOWED >= 120000
+  #include <UniformTypeIdentifiers/UniformTypeIdentifiers.h>
 ***************
 *** 3166,3171 ****
 --- 3168,3189 ----
