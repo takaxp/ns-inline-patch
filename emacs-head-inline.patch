@@ -39,16 +39,25 @@ diff -crN --exclude .git emacs_origin/lisp/term/common-win.el emacs/lisp/term/co
 *** emacs_origin/lisp/term/common-win.el	2019-12-30 01:06:56.000000000 +0900
 --- emacs/lisp/term/common-win.el	2019-12-30 07:22:13.000000000 +0900
 ***************
-*** 73,78 ****
---- 73,79 ----
-  	       (cons 12 'ns-new-frame)
-  	       (cons 13 'ns-toggle-toolbar)
-  	       (cons 14 'ns-show-prefs)
-+                (cons 15 'mac-change-input-method)
-  	       ))))
+*** 71,77 ****
+  	       (cons 11 (make-non-key-event 'ns-spi-service-call))
+  	       (cons 12 (make-non-key-event 'ns-new-frame))
+  	       (cons 13 (make-non-key-event 'ns-toggle-toolbar))
+! 	       (cons 14 (make-non-key-event 'ns-show-prefs))))))
       (set-terminal-parameter frame 'x-setup-function-keys t)))
 
+  (defvar x-invocation-args)
+--- 71,78 ----
+  	       (cons 11 (make-non-key-event 'ns-spi-service-call))
+  	       (cons 12 (make-non-key-event 'ns-new-frame))
+  	       (cons 13 (make-non-key-event 'ns-toggle-toolbar))
+! 	       (cons 14 (make-non-key-event 'ns-show-prefs))
+! 	       (cons 15 (make-non-key-event 'mac-change-input-method))))))
+      (set-terminal-parameter frame 'x-setup-function-keys t)))
+
+  (defvar x-invocation-args)
 diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win.el
+
 *** emacs_origin/lisp/term/ns-win.el	2019-12-30 01:06:56.000000000 +0900
 --- emacs/lisp/term/ns-win.el	2019-12-30 07:24:16.000000000 +0900
 ***************
