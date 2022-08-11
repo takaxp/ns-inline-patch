@@ -69,10 +69,10 @@ You can download my pre-built Emacs 26.3, 27.1, 27.2, 28.1 and HEAD with ns-inli
 
 These packages are built based on the current development source code. So it may be unstable or broken.
 
-| Chip  | Version | Download         | macOS   | [MB] | md5                              |
-|-------+---------+------------------+---------+------+----------------------------------|
-| Apple | 29.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.pkg][pkg]] (2022-08-06) | Big Sur | 54.9 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.md5][a2bc80f5d3e2a9ebc4b67fd54da50173]] |
-| Intel | 29.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.pkg][pkg]] (2022-08-06) | Big Sur | 55.4 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.md5][ebc1398d0d325bd01d2792f16d3aa313]] |
+| Chip  | Version | Download         | macOS   | md5                              |
+|-------+---------+------------------+---------+----------------------------------|
+| Apple | 29.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.pkg][pkg]] (2022-08-11) | Big Sur | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.md5][ce1f4f2961435dee4ebc2ad9ded881aa]] |
+| Intel | 29.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.pkg][pkg]] (2022-08-11) | Big Sur | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.md5][7dad0a15381b2f539f124134c48c2a06]] |
 
 *** Emacs 28 (with inline patch)
 | Chip  | Version | Download         | macOS             | [MB] | md5                              |
