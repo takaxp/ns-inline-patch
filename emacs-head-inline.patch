@@ -287,7 +287,7 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
   (defun ns-find-file ()
 ***************
 *** 909,914 ****
---- 1010,1527 ----
+--- 1010,1526 ----
                                            &context (window-system ns))
     (ns-get-selection selection-symbol target-type))
   
@@ -809,7 +809,7 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
 --- emacs/lisp/term/ns-win.el	2020-06-05 02:12:38.000000000 +0900
 ***************
 *** 1414,1419 ****
---- 1414,1438 ----
+--- 1414,1439 ----
                (toggle-input-method nil)))
         (mac-input-method-update input-source))))
 
