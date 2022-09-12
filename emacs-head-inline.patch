@@ -287,7 +287,7 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
   (defun ns-find-file ()
 ***************
 *** 909,914 ****
---- 1010,1526 ----
+--- 1010,1527 ----
                                            &context (window-system ns))
     (ns-get-selection selection-symbol target-type))
   
@@ -818,13 +818,14 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
 +   "Display build information in a buffer."
 +   (interactive)
 +   (switch-to-buffer (get-buffer-create "*Build info*"))
++   (setq tab-width 4)
 +   (let ((buffer-read-only nil))
 +     (erase-buffer)
 +     (insert (format "GNU Emacs %s\nCommit:\t\t%s\nBranch:\t\t%s\n"
 +                     emacs-version
 +                     emacs-repository-version
 +                     emacs-repository-branch))
-+     (insert (format "System:\t\t%s\nDate:\t\t\t%s\n"
++     (insert (format "System:\t\t%s\nDate:\t\t%s\n"
 +                     system-configuration
 +                     (format-time-string "%Y-%m-%d %T (%Z)" emacs-build-time)))
 +     (insert (format "Patch:\t\t%s ns-inline.patch\n"
