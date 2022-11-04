@@ -71,8 +71,8 @@ These packages are built based on the current development source code. So it may
 
 | Chip  | Version | Download         | macOS    | md5                              |
 |-------+---------+------------------+----------+----------------------------------|
-| Apple | 29.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.pkg][pkg]] (2022-10-21) | Big Sur  | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.md5][c9dc59b7b3cc4b7fc7fbae30e692f389]] |
-| Intel | 29.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.pkg][pkg]] (2022-10-21) | Monterey | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.md5][b2b36e3c126acef49daea9d99e54244d]] |
+| Apple | 29.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.pkg][⬇pkg]] (2022-10-21) | Big Sur  | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.md5][c9dc59b7b3cc4b7fc7fbae30e692f389]] |
+| Intel | 29.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.pkg][⬇pkg]] (2022-10-21) | Monterey | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.md5][b2b36e3c126acef49daea9d99e54244d]] |
 
 *** Emacs 28 (with inline patch)
 
@@ -80,34 +80,34 @@ Note: Before installing the pre-built package, please remove previous Emacs.app 
 
 | Chip  | Version | Download         | macOS             | [MB] | md5                              |
 |-------+---------+------------------+-------------------+------+----------------------------------|
-| Apple |    28.2 | [[https://pxaka.tokyo/emacs/pkg/emacs-28.2_apple.pkg][pkg]] (2022-09-13) | Big Sur[*1]       | 55.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-28.2_apple.md5][ea4f7556fbbd971af50b1671e1daf586]] |
-| Intel |    28.2 | [[https://pxaka.tokyo/emacs/pkg/emacs-28.2_intel.pkg][pkg]] (2022-09-13) | Monterey          | 55.5 | [[https://pxaka.tokyo/emacs/pkg/emacs-28.2_intel.md5][8e7ed5945fcdb2c8cad2e663e96c569b]] |
-| Apple |    28.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-28.1_apple.pkg][pkg]] (2022-05-09) | Big Sur[*1]       | 55.0 | [[https://pxaka.tokyo/emacs/pkg/emacs-28.1_apple.md5][29589057e1911dfec50b7a6c8fae890f]] |
-| Intel |    28.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-28.1_intel.pkg][pkg]] (2022-05-09) | Big Sur, Monterey | 55.4 | [[https://pxaka.tokyo/emacs/pkg/emacs-28.1_intel.md5][a2823a3e929bcf90e67b144dd1db220d]] |
+| Apple |    28.2 | [[https://pxaka.tokyo/emacs/pkg/emacs-28.2_apple.pkg][⬇pkg]] (2022-09-13) | Big Sur[*1]       | 55.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-28.2_apple.md5][ea4f7556fbbd971af50b1671e1daf586]] |
+| Intel |    28.2 | [[https://pxaka.tokyo/emacs/pkg/emacs-28.2_intel.pkg][⬇pkg]] (2022-09-13) | Monterey          | 55.5 | [[https://pxaka.tokyo/emacs/pkg/emacs-28.2_intel.md5][8e7ed5945fcdb2c8cad2e663e96c569b]] |
+| Apple |    28.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-28.1_apple.pkg][⬇pkg]] (2022-05-09) | Big Sur[*1]       | 55.0 | [[https://pxaka.tokyo/emacs/pkg/emacs-28.1_apple.md5][29589057e1911dfec50b7a6c8fae890f]] |
+| Intel |    28.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-28.1_intel.pkg][⬇pkg]] (2022-05-09) | Big Sur, Monterey | 55.4 | [[https://pxaka.tokyo/emacs/pkg/emacs-28.1_intel.md5][a2823a3e929bcf90e67b144dd1db220d]] |
 
 [*1] Not tested in Monterey but it probably be installed
 
 *** Emacs 27 (with inline patch)
 | Chip  | Version | Download         | macOS             | [MB] | md5                              |
 |-------+---------+------------------+-------------------+------+----------------------------------|
-| Apple |    27.2 | [[https://pxaka.tokyo/emacs/pkg/emacs-27.2_apple.pkg][pkg]] (2022-05-09) | Big Sur[*1]       | 51.4 | [[https://pxaka.tokyo/emacs/pkg/emacs-27.2_apple.md5][52fda7e597430ae86997555317ff11b2]] |
-| Intel |    27.2 | [[https://pxaka.tokyo/emacs/pkg/emacs-27.2_intel.pkg][pkg]] (2022-05-09) | Big Sur, Monterey | 51.8 | [[https://pxaka.tokyo/emacs/pkg/emacs-27.2_intel.md5][58f315e392a9fa893d3260eaf7424fe1]] |
-| Intel |    27.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-27.1.pkg][pkg]]              | Catalina          | 51.3 | 0c7048d147dea6fcdda638a25b161af8 |
+| Apple |    27.2 | [[https://pxaka.tokyo/emacs/pkg/emacs-27.2_apple.pkg][⬇pkg]] (2022-05-09) | Big Sur[*1]       | 51.4 | [[https://pxaka.tokyo/emacs/pkg/emacs-27.2_apple.md5][52fda7e597430ae86997555317ff11b2]] |
+| Intel |    27.2 | [[https://pxaka.tokyo/emacs/pkg/emacs-27.2_intel.pkg][⬇pkg]] (2022-05-09) | Big Sur, Monterey | 51.8 | [[https://pxaka.tokyo/emacs/pkg/emacs-27.2_intel.md5][58f315e392a9fa893d3260eaf7424fe1]] |
+| Intel |    27.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-27.1.pkg][⬇pkg]]              | Catalina          | 51.3 | 0c7048d147dea6fcdda638a25b161af8 |
 
 [*1] Not tested in Monterey but it probably be installed
 
 (previous built)
 | Chip  | Version | Download  | macOS   | [MB] | md5                              |
 |-------+---------+-----------+---------+------+----------------------------------|
-| Apple |    27.2 | [[https://pxaka.tokyo/emacs/pkg/previous/emacs-27.2_apple.pkg][pkg]] (old) | Big Sur | 51.2 | 2cc963b00c0d41c038941ebb35e18446 |
-| Intel |    27.2 | [[https://pxaka.tokyo/emacs/pkg/previous/emacs-27.2_intel.pkg][pkg]] (old) | [*2]    | 51.8 | 74e06cb24c8898a261d5778892355d3a |
+| Apple |    27.2 | [[https://pxaka.tokyo/emacs/pkg/previous/emacs-27.2_apple.pkg][⬇pkg]] (old) | Big Sur | 51.2 | 2cc963b00c0d41c038941ebb35e18446 |
+| Intel |    27.2 | [[https://pxaka.tokyo/emacs/pkg/previous/emacs-27.2_intel.pkg][⬇pkg]] (old) | [*2]    | 51.8 | 74e06cb24c8898a261d5778892355d3a |
 
 [*2] Mojave / Catalina / Big Sur
 
 *** Emacs 26 (with inline patch)
 | Chip  | Version | Download | macOS    | [MB] | md5                              |
 |-------+---------+----------+----------+------+----------------------------------|
-| Intel |    26.3 | [[https://pxaka.tokyo/emacs/pkg/emacs-26.3.pkg][pkg]]      | Catalina | 52.9 | 1868c787177f515f18f500ce6b898b05 |
+| Intel |    26.3 | [[https://pxaka.tokyo/emacs/pkg/emacs-26.3.pkg][⬇pkg]]      | Catalina | 52.9 | 1868c787177f515f18f500ce6b898b05 |
 
 *** without inline (pure)
     :PROPERTIES:
@@ -119,15 +119,15 @@ Additionally, the following package is "WITHOUT" inline-patch NS build. In this 
 #+caption: pure
 | Chip  | Version | Download              | macOS             | [MB] | md5                              |
 |-------+---------+-----------------------+-------------------+------+----------------------------------|
-| Apple |    28.2 | [[https://pxaka.tokyo/emacs/pkg/emacs-28.2_apple_pure.pkg][pure.pkg]] (2022-09-13) | Big Sur[*1]       | 55.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-28.2_apple_pure.md5][de3d302f63bbc0d03a5b9c5b64d9f916]] |
-| Intel |    28.2 | [[https://pxaka.tokyo/emacs/pkg/emacs-28.2_intel_pure.pkg][pure.pkg]] (2022-09-13) | Big Sur, Monterey | 55.5 | [[https://pxaka.tokyo/emacs/pkg/emacs-28.2_intel_pure.md5][b4475438d04c7b7601e61d18104bb0aa]] |
+| Apple |    28.2 | [[https://pxaka.tokyo/emacs/pkg/emacs-28.2_apple_pure.pkg][⬇pure.pkg]] (2022-09-13) | Big Sur[*1]       | 55.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-28.2_apple_pure.md5][de3d302f63bbc0d03a5b9c5b64d9f916]] |
+| Intel |    28.2 | [[https://pxaka.tokyo/emacs/pkg/emacs-28.2_intel_pure.pkg][⬇pure.pkg]] (2022-09-13) | Big Sur, Monterey | 55.5 | [[https://pxaka.tokyo/emacs/pkg/emacs-28.2_intel_pure.md5][b4475438d04c7b7601e61d18104bb0aa]] |
 |-------+---------+-----------------------+-------------------+------+----------------------------------|
-| Apple |    28.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-28.1_apple_pure.pkg][pure.pkg]] (2022-05-09) | Big Sur[*1]       | 55.0 | [[https://pxaka.tokyo/emacs/pkg/emacs-28.1_apple_pure.md5][e7fa6185f55d0578a236e35ee1dd0f12]] |
-| Intel |    28.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-28.1_intel_pure.pkg][pure.pkg]] (2022-05-09) | Big Sur, Monterey | 55.4 | [[https://pxaka.tokyo/emacs/pkg/emacs-28.1_intel_pure.md5][1f20caee450e46fb1afca50ffc6dfb22]] |
+| Apple |    28.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-28.1_apple_pure.pkg][⬇pure.pkg]] (2022-05-09) | Big Sur[*1]       | 55.0 | [[https://pxaka.tokyo/emacs/pkg/emacs-28.1_apple_pure.md5][e7fa6185f55d0578a236e35ee1dd0f12]] |
+| Intel |    28.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-28.1_intel_pure.pkg][⬇pure.pkg]] (2022-05-09) | Big Sur, Monterey | 55.4 | [[https://pxaka.tokyo/emacs/pkg/emacs-28.1_intel_pure.md5][1f20caee450e46fb1afca50ffc6dfb22]] |
 |-------+---------+-----------------------+-------------------+------+----------------------------------|
-| Apple |    27.2 | [[https://pxaka.tokyo/emacs/pkg/emacs-27.2_apple_pure.pkg][pure.pkg]]              | Big Sur           | 51.2 | 64583b05ebf4d9aa89e8812af980b06f |
-| Intel |    27.2 | [[https://pxaka.tokyo/emacs/pkg/emacs-27.2_intel_pure.pkg][pure.pkg]]              | [*2]              | 51.7 | 165fed95067d5b4b6d885bfacd1ff9fa |
-| Intel |    27.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-27.1_pure.pkg][pure.pkg]]              | Catalina          | 51.3 | fdd14baf87ed4f903b5b02c4e1dd022c |
+| Apple |    27.2 | [[https://pxaka.tokyo/emacs/pkg/emacs-27.2_apple_pure.pkg][⬇pure.pkg]]              | Big Sur           | 51.2 | 64583b05ebf4d9aa89e8812af980b06f |
+| Intel |    27.2 | [[https://pxaka.tokyo/emacs/pkg/emacs-27.2_intel_pure.pkg][⬇pure.pkg]]              | [*2]              | 51.7 | 165fed95067d5b4b6d885bfacd1ff9fa |
+| Intel |    27.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-27.1_pure.pkg][⬇pure.pkg]]              | Catalina          | 51.3 | fdd14baf87ed4f903b5b02c4e1dd022c |
 
 [*1] Not tested in Monterey but it probably be installed
 [*2] Mojave / Catalina / Big Sur
