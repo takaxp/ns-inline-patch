@@ -147,39 +147,39 @@ diff -crN --exclude .git emacs_origin/src/nsterm.m emacs/src/nsterm.m
 *** emacs_origin/src/nsterm.m	2019-12-30 06:49:02.000000000 +0900
 --- emacs/src/nsterm.m	2019-12-30 07:22:13.000000000 +0900
 ***************
-*** 68,73 ****
---- 68,74 ----
-
+*** 69,74 ****
+--- 69,75 ----
+  
   #ifdef NS_IMPL_COCOA
   #include "macfont.h"
 + #include "macim.h"
   #include <Carbon/Carbon.h>
+  #include <IOSurface/IOSurface.h>
   #endif
-
 ***************
-*** 5321,5326 ****
---- 5321,5330 ----
+*** 5541,5546 ****
+--- 5542,5551 ----
                                            selector: @selector (logNotification:)
                                                name: nil object: nil]; */
-
+  
 +   [[NSDistributedNotificationCenter defaultCenter] addObserver: NSApp
 +      selector: @selector (changeInputMethod:)
 +          name: @"AppleSelectedInputSourcesChangedNotification" object: nil];
-+
++ 
     dpyinfo = xzalloc (sizeof *dpyinfo);
-
+  
     ns_initialize_display_info (dpyinfo);
 ***************
-*** 5637,5642 ****
---- 5641,5661 ----
+*** 5864,5869 ****
+--- 5869,5889 ----
       NSLog (@"notification: '%@'", [notification name]);
   }
-
+  
 + - (void)changeInputMethod: (NSNotification *)notification
 + {
-+
++ 
 +   struct frame *emacsframe = SELECTED_FRAME ();
-+
++ 
 +   if (mac_store_change_input_method_event())
 +     {
 +       if (!emacs_event)
@@ -190,20 +190,20 @@ diff -crN --exclude .git emacs_origin/src/nsterm.m emacs/src/nsterm.m
 +       EV_TRAILER ((id)nil);
 +     }
 + }
-
+  
   - (void)sendEvent: (NSEvent *)theEvent
   /* --------------------------------------------------------------------------
 ***************
-*** 6362,6368 ****
-
+*** 6842,6848 ****
+  
         /* If it was a function key or had control-like modifiers, pass
            it directly to Emacs.  */
 !       if (fnKeysym || (emacs_event->modifiers
                          && (emacs_event->modifiers != shift_modifier)
                          && [[theEvent charactersIgnoringModifiers] length] > 0))
           {
---- 6381,6388 ----
-
+--- 6862,6869 ----
+  
         /* If it was a function key or had control-like modifiers, pass
            it directly to Emacs.  */
 !       if (mac_pass_key_directly_to_emacs ()
@@ -212,19 +212,19 @@ diff -crN --exclude .git emacs_origin/src/nsterm.m emacs/src/nsterm.m
                          && [[theEvent charactersIgnoringModifiers] length] > 0))
           {
 ***************
-*** 6390,6398 ****
+*** 6870,6878 ****
               }
-
+  
             emacs_event->code = code;
 !           EV_TRAILER (theEvent);
 !           processingCompose = NO;
 !           return;
           }
       }
-
---- 6410,6428 ----
+  
+--- 6891,6909 ----
               }
-
+  
             emacs_event->code = code;
 !           /* The function mac_pass_key_to_system decides
 !              whether it is passed directly to emacs or not. */
@@ -241,100 +241,100 @@ diff -crN --exclude .git emacs_origin/src/nsterm.m emacs/src/nsterm.m
 !             }
           }
       }
-
+  
 ***************
-*** 6519,6525 ****
-    ns_working_text = build_string ([workingText UTF8String]);
-
+*** 6999,7005 ****
+    ns_working_text = [workingText lispString];
+  
     emacs_event->kind = NS_TEXT_EVENT;
 !   emacs_event->code = KEY_NS_PUT_WORKING_TEXT;
     EV_TRAILER ((id)nil);
   }
-
---- 6550,6558 ----
-    ns_working_text = build_string ([workingText UTF8String]);
-
+  
+--- 7030,7038 ----
+    ns_working_text = [workingText lispString];
+  
     emacs_event->kind = NS_TEXT_EVENT;
 !   emacs_event->code = KEY_NS_PUT_MARKED_TEXT;
 !   emacs_event->arg = Fcons (make_int (selRange.location),
 !                             Fcons (make_int (selRange.length), Qnil));
     EV_TRAILER ((id)nil);
   }
-
+  
 ***************
-*** 6617,6622 ****
---- 6617,6623 ----
+*** 7092,7097 ****
+--- 7125,7131 ----
   {
     NSRect rect;
     NSPoint pt;
 +   NSPoint offset;
     struct window *win;
-
+  
     NSTRACE ("[EmacsView firstRectForCharacterRange:]");
 ***************
-*** 6624,6639 ****
+*** 7099,7114 ****
     if (NS_KEYLOG)
       NSLog (@"firstRectForCharRange request");
-
-!   if (WINDOWP (echo_area_window) && ! NILP (call0 (intern ("ns-in-echo-area"))))
+  
+!   if (WINDOWP (echo_area_window) && ns_in_echo_area ())
       win = XWINDOW (echo_area_window);
     else
       win = XWINDOW (FRAME_SELECTED_WINDOW (emacsframe));
-
+  
     rect.size.width = theRange.length * FRAME_COLUMN_WIDTH (emacsframe);
     rect.size.height = FRAME_LINE_HEIGHT (emacsframe);
 !   pt.x = WINDOW_TEXT_TO_FRAME_PIXEL_X (win, win->phys_cursor.x);
     pt.y = WINDOW_TO_FRAME_PIXEL_Y (win, win->phys_cursor.y
 !                                        +FRAME_LINE_HEIGHT (emacsframe));
-
+  
     pt = [self convertPoint: pt toView: nil];
-
---- 6625,6648 ----
+  
+--- 7133,7156 ----
     if (NS_KEYLOG)
       NSLog (@"firstRectForCharRange request");
-
+  
 !   if (NILP (Vmac_in_echo_area))
 !     win = XWINDOW (FRAME_SELECTED_WINDOW (emacsframe));
-!   else if (WINDOWP (echo_area_window))
+!   else if (WINDOWP (echo_area_window) && ns_in_echo_area ())
       win = XWINDOW (echo_area_window);
     else
       win = XWINDOW (FRAME_SELECTED_WINDOW (emacsframe));
-
+  
 +   if ( INTEGERP (Vmac_ime_panel_offset_x) )
 +     offset.x = XFIXNUM (Vmac_ime_panel_offset_x);
 +   if ( INTEGERP (Vmac_ime_panel_offset_y) )
 +     offset.y = XFIXNUM (Vmac_ime_panel_offset_y);
-+
++ 
     rect.size.width = theRange.length * FRAME_COLUMN_WIDTH (emacsframe);
     rect.size.height = FRAME_LINE_HEIGHT (emacsframe);
 !   pt.x = WINDOW_TEXT_TO_FRAME_PIXEL_X (win, win->phys_cursor.x + offset.x);
     pt.y = WINDOW_TO_FRAME_PIXEL_Y (win, win->phys_cursor.y
 !                                        +FRAME_LINE_HEIGHT (emacsframe)
 !                                        +offset.y);
-
+  
     pt = [self convertPoint: pt toView: nil];
-
+  
 ***************
-*** 9609,9614 ****
---- 9644,9661 ----
-    x_underline_at_descent_line = 0;
-    DEFSYM (Qx_underline_at_descent_line, "x-underline-at-descent-line");
-
+*** 11031,11036 ****
+--- 11073,11090 ----
+  respectively.  */);
+    Vns_drag_motion_function = Qns_handle_drag_motion;
+  
 +   DEFVAR_LISP ("mac-in-echo-area", Vmac_in_echo_area,
 +                doc: /* state of cursor in echo area. */);
 +   Vmac_in_echo_area = Qnil;
-+
++ 
 +   DEFVAR_LISP ("mac-ime-panel-offset-x", Vmac_ime_panel_offset_x,
 +                doc: /* Horizontal offset to show candidates panel. */);
 +   Vmac_ime_panel_offset_x = make_int (0);
-+
++ 
 +   DEFVAR_LISP ("mac-ime-panel-offset-y", Vmac_ime_panel_offset_y,
 +                doc: /* Vertical offset to show candidates panel. */);
 +   Vmac_ime_panel_offset_y = make_int (2);
-+
++ 
     /* Tell Emacs about this window system.  */
     Fprovide (Qns, Qnil);
-
+  
 *** emacs_origin/src/macim.h	1970-01-01 09:00:00.000000000 +0900
 --- emacs/src/macim.h	2020-01-07 14:42:30.000000000 +0900
 ***************
