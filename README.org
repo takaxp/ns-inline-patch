@@ -11,22 +11,22 @@ Note: Version 28.2 has been released. The inline patch (emacs-28.1-inline.patch)
 
 ** Supported features
 
- - avoid "M-x あ"
- - faces for composing text
- - non ja locale
- - directly change input source
+- avoid "M-x あ"
+- faces for composing text
+- non ja locale
+- directly change input source
 
 ** Supported Emacs version
 
- - Emacs HEAD (emacs-head-inline.patch)
- - Emacs 28.2, 28.1 (emacs-28.1-inline.patch)
- - Emacs 27.2, 27.1 (emacs-27.1-inline.patch)
- - Emacs 26.3, 26.2, 26.1 (emacs-25.2-inline.patch)
- - Emacs 25.3, 25.2 (emacs-25.2-inline.patch)
+- Emacs HEAD (emacs-head-inline.patch)
+- Emacs 28.2, 28.1 (emacs-28.1-inline.patch)
+- Emacs 27.2, 27.1 (emacs-27.1-inline.patch)
+- Emacs 26.3, 26.2, 26.1 (emacs-25.2-inline.patch)
+- Emacs 25.3, 25.2 (emacs-25.2-inline.patch)
 
 ** Integrated functions
 
- - M-x mac-build-info
+- M-x mac-build-info
 
 Note: This function is not valid in pre-built packages described in later section.
 
@@ -56,23 +56,23 @@ sh ./build/emacs-28.sh
 If your environment for building Emacs is under PROXY, you can use =emacs-mirror= to get Emacs source codes. Please change the URL of the git repository specified in =emacs-head.sh= and =emacs-28.sh= if needed.
 
 ** Pre-built distribution package
-   :PROPERTIES:
-   :ID:       3A8A27A7-93D9-4F4E-A621-042FC4521D14
-   :END:
+:PROPERTIES:
+:ID:       3A8A27A7-93D9-4F4E-A621-042FC4521D14
+:END:
 
 You can download my pre-built Emacs 26.3, 27.1, 27.2, 28.1, =28.2= and HEAD with ns-inline patch. =Emacs.app= will be installed under =/Applications/Emacs-takaxp= in your macOS. The pkg contains =GnuTLS= and =jansson=. These packages are signed and notarized with my Apple developer ID: H2PH8KNN3H.
 
 *** Emacs 29x (with inline patch) *!unstable!*
-    :PROPERTIES:
-    :ID:       9B7E9F4F-E5C7-4A09-A06B-7E1E58ADBDB9
-    :END:
+:PROPERTIES:
+:ID:       9B7E9F4F-E5C7-4A09-A06B-7E1E58ADBDB9
+:END:
 
 These packages are built based on the current development source code. So it may be unstable or broken.
 
 | Chip  | Version | Download         | macOS    | md5                              |
 |-------+---------+------------------+----------+----------------------------------|
-| Apple | 29.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.pkg][⬇pkg]] (2022-11-18) | Big Sur  | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.md5][c48e9f299bab1da103b7a7b83384c568]] |
-| Intel | 29.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.pkg][⬇pkg]] (2022-11-18) | Monterey | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.md5][53dfad40227c57413fe536d47944bc3d]] |
+| Apple | 29.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.pkg][⬇pkg]] (2022-11-25) | Big Sur  | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.md5][ee8ee3a35d8f5e232ab51d7eaf95fbb2]] |
+| Intel | 29.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.pkg][⬇pkg]] (2022-11-25) | Monterey | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.md5][b8d4c6eefbef965a31069bf2db12ecf6]] |
 
 *** Emacs 28 (with inline patch)
 
@@ -110,9 +110,9 @@ Note: Before installing the pre-built package, please remove previous Emacs.app 
 | Intel |    26.3 | [[https://pxaka.tokyo/emacs/pkg/emacs-26.3.pkg][⬇pkg]]      | Catalina | 52.9 | 1868c787177f515f18f500ce6b898b05 |
 
 *** without inline (pure)
-    :PROPERTIES:
-    :ID:       A7862584-8CBB-434B-86D1-8990D6D47C0D
-    :END:
+:PROPERTIES:
+:ID:       A7862584-8CBB-434B-86D1-8990D6D47C0D
+:END:
 
 Additionally, the following package is "WITHOUT" inline-patch NS build. In this case, =Emacs.app= will be installed under =/Applications/Emacs-takaxp/pure=.
 
@@ -134,17 +134,17 @@ Additionally, the following package is "WITHOUT" inline-patch NS build. In this 
 
 *** Integrated dynamic libraries:
 
- - libffi.7.dylib (or libffi.8.dylib)
- - libgmp.10.dylib
- - libgnutls.30.dylib
- - libhogweed.6.dylib
- - libidn2.0.dylib
- - libintl.8.dylib
- - libjansson.4.dylib
- - libnettle.8.dylib
- - libp11-kit.0.dylib
- - libtasn1.6.dylib
- - libunistring.2.dylib
+- libffi.7.dylib (or libffi.8.dylib)
+- libgmp.10.dylib
+- libgnutls.30.dylib
+- libhogweed.6.dylib
+- libidn2.0.dylib
+- libintl.8.dylib
+- libjansson.4.dylib
+- libnettle.8.dylib
+- libp11-kit.0.dylib
+- libtasn1.6.dylib
+- libunistring.2.dylib
 
 The =system-configuration-features= is:
 
