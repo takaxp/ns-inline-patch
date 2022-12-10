@@ -71,8 +71,8 @@ These packages are built based on the current development source code. So it may
 
 | Chip  | Version | Download          | macOS    | md5                              |
 |-------+---------+-------------------+----------+----------------------------------|
-| Apple | 30.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.pkg][⬇pkg]] (2022-12-04) | Big Sur  | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.md5][381fbdcdb082b1c5851de8eb90b05aef]] |
-| Intel | 30.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.pkg][⬇pkg]] (2022-12-04) | Monterey | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.md5][61019212546117017e496d659276f6f3]] |
+| Apple | 30.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.pkg][⬇pkg]] (2022-12-10) | Big Sur  | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.md5][f602713374ec3ce8fafa960647e27c71]] |
+| Intel | 30.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.pkg][⬇pkg]] (2022-12-10) | Monterey | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.md5][7f8a47300f6c915d3f174c167417fc05]] |
 
 *** Emacs 28 (with inline patch)
 
