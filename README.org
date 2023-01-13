@@ -144,7 +144,7 @@ Additionally, the following package is "WITHOUT" inline-patch NS build. In this 
 - libnettle.8.dylib
 - libp11-kit.0.dylib
 - libtasn1.6.dylib
-- libunistring.2.dylib
+- libunistring.5.dylib
 
 The =system-configuration-features= is:
 
