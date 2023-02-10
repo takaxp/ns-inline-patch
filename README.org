@@ -71,8 +71,10 @@ These packages are built based on the current development source code. So it may
 
 | Chip  | Version | Download          | macOS    | md5                              |
 |-------+---------+-------------------+----------+----------------------------------|
-| Apple | 30.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.pkg][⬇pkg]] (2023-02-10) | Big Sur  | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.md5][d934c3c01bbbd8e4d1b7801dbd57d262]] |
+| Apple | 30.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.pkg][⬇pkg]] (2023-02-10) | Ventura  | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.md5][d934c3c01bbbd8e4d1b7801dbd57d262]] |
 | Intel | 30.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.pkg][⬇pkg]] (2023-02-10) | Monterey | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.md5][a912d72d3786dbad2ba4af95b4c68e3a]] |
+
+Note: (2023-02-10) The package for Apple Silicon is now built in Ventura. It was previously built in Big Sur.
 
 *** Emacs 28 (with inline patch)
 
@@ -134,7 +136,7 @@ Additionally, the following package is "WITHOUT" inline-patch NS build. In this 
 
 *** Integrated dynamic libraries:
 
-- libffi.7.dylib (or libffi.8.dylib)
+- libffi.7.dylib (or libffi.8.dylib), libffi is NOT contained in HEAD pkg.
 - libgmp.10.dylib
 - libgnutls.30.dylib
 - libhogweed.6.dylib
