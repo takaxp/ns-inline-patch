@@ -71,8 +71,8 @@ These packages are built based on the current development source code. So it may
 
 | Chip  | Version | Download          | macOS    | md5                              |
 |-------+---------+-------------------+----------+----------------------------------|
-| Apple | 30.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.pkg][⬇pkg]] (2023-02-10) | Ventura  | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.md5][d934c3c01bbbd8e4d1b7801dbd57d262]] |
-| Intel | 30.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.pkg][⬇pkg]] (2023-02-10) | Monterey | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.md5][a912d72d3786dbad2ba4af95b4c68e3a]] |
+| Apple | 30.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.pkg][⬇pkg]] (2023-02-18) | Ventura  | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.md5][9202df22c0037881026a77e8ff73334b]] |
+| Intel | 30.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.pkg][⬇pkg]] (2023-02-18) | Monterey | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.md5][776a442df4fd7d1838a4cbede0fe0f72]] |
 
 Note: (2023-02-10) The package for Apple Silicon is now built in Ventura. It was previously built in Big Sur.
 
