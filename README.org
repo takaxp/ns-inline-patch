@@ -60,7 +60,7 @@ If your environment for building Emacs is under PROXY, you can use =emacs-mirror
 :ID:       3A8A27A7-93D9-4F4E-A621-042FC4521D14
 :END:
 
-You can download my pre-built Emacs 26.3, 27.1, 27.2, 28.1, =28.2= and HEAD with ns-inline patch. =Emacs.app= will be installed under =/Applications/Emacs-takaxp= in your macOS. The pkg contains =GnuTLS= and =jansson=. These packages are signed and notarized with my Apple developer ID: H2PH8KNN3H.
+You can download my pre-built Emacs 26.3, 27.1, 27.2, 28.1, =28.2= and HEAD with ns-inline patch. =Emacs.app= will be installed under =/Applications/Emacs-takaxp= in your macOS. The pkg contains =GnuTLS= and =jansson=. These packages are signed and notarized with my Apple developer ID: =H2PH8KNN3H=.
 
 *** Emacs 30x (with inline patch) *!unstable!*
 :PROPERTIES:
@@ -69,12 +69,13 @@ You can download my pre-built Emacs 26.3, 27.1, 27.2, 28.1, =28.2= and HEAD with
 
 These packages are built based on the current development source code. So it may be unstable or broken.
 
-| Chip  | Version | Download          | macOS    | md5                              |
-|-------+---------+-------------------+----------+----------------------------------|
-| Apple | 30.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.pkg][⬇pkg]] (2023-02-18) | Ventura  | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.md5][9202df22c0037881026a77e8ff73334b]] |
-| Intel | 30.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.pkg][⬇pkg]] (2023-02-18) | Monterey | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.md5][776a442df4fd7d1838a4cbede0fe0f72]] |
+| Chip  | Version | Download          | macOS   | md5                              |
+|-------+---------+-------------------+---------+----------------------------------|
+| Apple | 30.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.pkg][⬇pkg]] (2023-02-24) | Ventura | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.md5][0d8ea1827ee9e1b9ab110ac627978bdb]] |
+| Intel | 30.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.pkg][⬇pkg]] (2023-02-24) | Ventura | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.md5][b948258b5b92ef6f746022109759c63c]] |
 
-Note: (2023-02-10) The package for Apple Silicon is now built in Ventura. It was previously built in Big Sur.
+Note: (2023-02-10) The package for Apple Silicon is now built in =Ventura=. It was previously built in =Big Sur=.
+Note: (2023-02-24) The package for Intel CPU is also built in =Ventura=. It was previously built in =Monterey=.
 
 *** Emacs 28 (with inline patch)
 
