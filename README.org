@@ -7,7 +7,7 @@
 
 see https://qiita.com/takaxp/items/e07bb286d80fa9dd8e05 and https://qiita.com/takaxp/items/6a7f9b26eb1b1a8237a0
 
-Note: Version 28.2 has been released. The inline patch (emacs-28.1-inline.patch) is still applicable to Emacs 28.2. Installer packages for Intel-based Mac and Apple Silicon M1 Mac are also available. You may install them in macOS Catalina or later.
+Note: Version 28.2 has been released. The inline patch (emacs-28.1-inline.patch) is still applicable to Emacs 28.2. Installer packages for Intel-based Mac and Apple Silicon Mac are also available. You may install them in macOS Catalina or later.
 
 ** Supported features
 
@@ -71,8 +71,8 @@ These packages are built based on the current development source code. So it may
 
 | Chip  | Version | Download          | macOS   | md5                              |
 |-------+---------+-------------------+---------+----------------------------------|
-| Apple | 30.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.pkg][⬇pkg]] (2023-02-24) | Ventura | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.md5][0d8ea1827ee9e1b9ab110ac627978bdb]] |
-| Intel | 30.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.pkg][⬇pkg]] (2023-02-24) | Ventura | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.md5][b948258b5b92ef6f746022109759c63c]] |
+| Apple | 30.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.pkg][⬇pkg]] (2023-03-03) | Ventura | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.md5][a160278e27934daa4cf06a1bd01d7dd1]] |
+| Intel | 30.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.pkg][⬇pkg]] (2023-03-03) | Ventura | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.md5][1ceed9079544f71df7ac265bfd8f897e]] |
 
 Note: (2023-02-10) The package for Apple Silicon is now built in =Ventura=. It was previously built in =Big Sur=.
 Note: (2023-02-24) The package for Intel CPU is also built in =Ventura=. It was previously built in =Monterey=.
