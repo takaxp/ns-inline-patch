@@ -71,8 +71,8 @@ These packages are built based on the current development source code. So it may
 
 | Chip  | Version | Download          | macOS   | md5                              |
 |-------+---------+-------------------+---------+----------------------------------|
-| Apple | 30.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.pkg][⬇pkg]] (2023-03-03) | Ventura | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.md5][a160278e27934daa4cf06a1bd01d7dd1]] |
-| Intel | 30.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.pkg][⬇pkg]] (2023-03-03) | Ventura | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.md5][1ceed9079544f71df7ac265bfd8f897e]] |
+| Apple | 30.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.pkg][⬇pkg]] (2023-03-11) | Ventura | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.md5][b1ac0bc93a5de2ff314afbe20efe5099]] |
+| Intel | 30.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.pkg][⬇pkg]] (2023-03-11) | Ventura | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.md5][5715d019e1db22662acb01cf44284324]] |
 
 Note: (2023-02-10) The package for Apple Silicon is now built in =Ventura=. It was previously built in =Big Sur=.
 Note: (2023-02-24) The package for Intel CPU is also built in =Ventura=. It was previously built in =Monterey=.
