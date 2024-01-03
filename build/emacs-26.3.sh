@@ -20,7 +20,7 @@ cd ${WORKING_DIR}
 mkdir emacs_ns
 cd emacs_ns
 VERSION=26.3
-curl -LO ftp://ftp.gnu.org/gnu/emacs/emacs-$VERSION.tar.gz
+curl -LOk https://ftp.gnu.org/gnu/emacs/emacs-$VERSION.tar.gz
 git clone --depth 1 https://github.com/takaxp/ns-inline-patch.git
 tar zxvf emacs-$VERSION.tar.gz
 cd ./emacs-$VERSION
