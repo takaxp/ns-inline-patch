@@ -1,0 +1,18 @@
+name: "Build NS with inline-patch (emacs-29)"
+on:
+  pull_request:
+  schedule:
+  - cron: '0 8 * * *'
+
+jobs:
+  build-28:
+    runs-on: macos-latest
+    timeout-minutes: 61
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup to build
+      run: sh build/setup.sh
+    - name: Build emacs-29 with inline patch
+      run: sh build/emacs-29.sh -d ${{ github.workspace }}
+    - name: Verification
+      run: ${{ github.workspace }}/emacs/nextstep/Emacs.app/Contents/MacOS/Emacs --batch --eval="(unless (fboundp 'mac-input-method-mode) (error \"The inline-patch is NOT integrated\"))"
