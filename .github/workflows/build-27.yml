@@ -1,6 +1,7 @@
 name: "Build NS with inline-patch (emacs-27)"
 on:
   pull_request:
+  workflow_dispatch:
   schedule:
   - cron: '0 7 * * *'
 
