@@ -9,12 +9,16 @@ function install_deps () {
     brew install autoconf automake pkg-config gnutls texinfo jansson
 }
 
+function install_tool () {
+    brew install xmlstarlet
+}
 function install_xcode () {
     xcode-select --install
 }
 
 # install_xcode
 setup_homebrew
+install_tool
 install_deps
 
 echo "----------------"
