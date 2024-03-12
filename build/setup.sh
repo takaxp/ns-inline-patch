@@ -7,6 +7,7 @@ function setup_homebrew () {
 
 function install_deps () {
     brew install autoconf automake pkg-config gnutls texinfo jansson
+    brew install gcc libgccjit
 }
 
 function install_tool () {
