@@ -38,10 +38,11 @@ do
 done
 
 echo "--- Integrate GnuTLS and its dependencies into Emacs.app"
+echo "--- PRODUCT VERSION: ${PRODUCTVERSION%%.*}"
 
 if [ "$VERSION" = "" -a "$BRANCH" = "" ]; then
     echo "Please specify VERSION (-v 27.2) ov BRANCH (-b master)"
-    exit
+    exit 1
 fi
 
 if [ ! "${BRANCH}" = "" -a "${VERSION}" = "" ]; then
@@ -65,7 +66,7 @@ fi
 TARGETDIR="${APPDIR}/Emacs.app/Contents/MacOS"
 if [ ! -d "$TARGETDIR" ]; then
     echo "$TARGETDIR does NOT exist"
-    exit
+    exit 1
 fi
 
 echo "$TARGETDIR"
@@ -178,7 +179,7 @@ if [ $NATIVECOMPILE = true ]; then
     install_name_tool -change ${HOMEBREWDIR}/opt/mpfr/lib/libmpfr.6.dylib @executable_path/lib/libmpfr.6.dylib lib/libmpc.3.dylib
     install_name_tool -change ${HOMEBREWDIR}/opt/gmp/lib/libgmp.10.dylib @executable_path/lib/libgmp.10.dylib lib/libmpc.3.dylib
     # otool -L lib/libmpfr.6.dylib
-    install_name_tool -change ${HOMEBREWDIR}/opt/gmp/lib/libgmp.10.dylib @executable_path/lib/libgmp.10.dylib lib/libmpfr.6.dylib
+#    install_name_tool -change ${HOMEBREWDIR}/opt/gmp/lib/libgmp.10.dylib @executable_path/lib/libgmp.10.dylib lib/libmpfr.6.dylib
 fi
 
 chmod 444 ./lib/*.dylib
@@ -212,11 +213,16 @@ if [ ${PRODUCTVERSION%%.*} -le 12 ]; then
     verify_lib "libffi" "8"
 fi
 
-if [ $NATIVECOMPILE = true ]; then
+if [ ${NATIVECOMPILE} = true ]; then
     verify_lib "libgccjit" "0"
     verify_lib "libisl" "23"
     verify_lib "libmpc" "3"
     verify_lib "libmpfr" "6"
 fi
-# echo ${STATUS}
+
+if [ "${STATUS}" ];then
+    echo "--- ${STATUS}"
+    exit 1
+fi
+
 echo "--- done"
