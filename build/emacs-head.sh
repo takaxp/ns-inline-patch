@@ -47,7 +47,7 @@ if [ $? -ne 0 ]; then echo "FAILED"; exit 1; fi
 
 sleep 5
 ./autogen.sh
-./configure CC=clang --without-x --with-ns --with-modules --with-native-compilation=yes
+./configure CC=clang --without-x --with-ns --with-modules --with-jpeg=no --with-tiff=no --with-gif=no --with-png=no --with-lcms2=no --with-webp=no --with-native-compilation=yes
 CORES=
 #CORES=4
 make bootstrap -j$CORES

@@ -88,7 +88,7 @@ cp ${HOMEBREWDIR}/opt/gmp/lib/libgmp.10.dylib lib
 cp ${HOMEBREWDIR}/opt/gettext/lib/libintl.8.dylib lib
 cp ${HOMEBREWDIR}/opt/jansson/lib/libjansson.4.dylib lib
 if [ ${PRODUCTVERSION%%.*} -le 12 ]; then
-    cp ${HOMEBREWDIR}/opt/libffi/lib/libffi.6.dylib lib
+    cp ${HOMEBREWDIR}/opt/libffi/lib/libffi.7.dylib lib
 fi
 
 
@@ -122,7 +122,7 @@ install_name_tool -id "homebrew:gmp/lib/libgmp.10.dylib" lib/libgmp.10.dylib
 install_name_tool -id "homebrew:gettext/lib/libintl.8.dylib" lib/libintl.8.dylib
 install_name_tool -id "homebrew:jansson/lib/libjansson.4.dylib" lib/libjansson.4.dylib
 if [ ${PRODUCTVERSION%%.*} -le 12 ]; then
-    install_name_tool -id "homebrew:libffi/lib/libffi.6.dylib" lib/libffi.6.dylib
+    install_name_tool -id "homebrew:libffi/lib/libffi.7.dylib" lib/libffi.7.dylib
 fi
 
 if [ $NATIVECOMPILE = true ]; then
@@ -155,7 +155,7 @@ install_name_tool -change ${HOMEBREWDIR}/opt/gettext/lib/libintl.8.dylib @execut
 
 # otool -L lib/libp11-kit.0.dylib
 if [ ${PRODUCTVERSION%%.*} -le 12 ]; then
-    install_name_tool -change ${HOMEBREWDIR}/opt/libffi/lib/libffi.6.dylib @executable_path/lib/libffi.6.dylib lib/libp11-kit.0.dylib
+    install_name_tool -change ${HOMEBREWDIR}/opt/libffi/lib/libffi.7.dylib @executable_path/lib/libffi.7.dylib lib/libp11-kit.0.dylib
 fi
 
 # otool -L lib/libidn2.0.dylib
@@ -210,7 +210,7 @@ verify_lib "libgmp" "10"
 verify_lib "libintl" "8"
 verify_lib "libjansson" "4"
 if [ ${PRODUCTVERSION%%.*} -le 12 ]; then
-    verify_lib "libffi" "8"
+    verify_lib "libffi" "7"
 fi
 
 if [ ${NATIVECOMPILE} = true ]; then
