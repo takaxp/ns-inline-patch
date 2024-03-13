@@ -88,6 +88,7 @@ cp ${HOMEBREWDIR}/opt/gmp/lib/libgmp.10.dylib lib
 cp ${HOMEBREWDIR}/opt/gettext/lib/libintl.8.dylib lib
 cp ${HOMEBREWDIR}/opt/jansson/lib/libjansson.4.dylib lib
 if [ ${PRODUCTVERSION%%.*} -le 12 ]; then
+    brew info libffi
     cp ${HOMEBREWDIR}/opt/libffi/lib/libffi.7.dylib lib
 fi
 
