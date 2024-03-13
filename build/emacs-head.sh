@@ -22,7 +22,7 @@ if [ "${CPUARC}" = "arm64" ]; then
     export CFLAGS="$CFLAGS -I${BREW_LIBGCCJIT_PREFIX}/include"
 fi
 
-export WORKING_DIR="${HOME}/Desktop"
+WORKING_DIR="${HOME}/Desktop"
 while getopts d: opt
 do
     case ${opt} in

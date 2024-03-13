@@ -13,14 +13,15 @@ function install_deps () {
 function install_tool () {
     brew install xmlstarlet
 }
+
 function install_xcode () {
     xcode-select --install
 }
 
-# install_xcode
 setup_homebrew
 install_tool
 install_deps
+# install_xcode
 
 echo "----------------"
 echo "OK, let's start to build GNU Emacs with inline-patch."

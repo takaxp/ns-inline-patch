@@ -18,3 +18,5 @@ jobs:
       run: sh build/emacs-head.sh -d ${{ github.workspace }}
     - name: Verification
       run: ${{ github.workspace }}/emacs/nextstep/Emacs.app/Contents/MacOS/Emacs --batch --eval="(unless (fboundp 'mac-input-method-mode) (error \"The inline-patch is NOT integrated\"))"
+    - name: Portable
+      run: sh release/portable-emacs.sh -d ${{ github.workspace }}
