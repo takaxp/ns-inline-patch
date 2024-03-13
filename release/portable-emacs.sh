@@ -18,7 +18,7 @@ fi
 ###############################################################################
 
 WORKING_DIR="${HOME}/devel/emacs-head"
-while getopts v:b: opt
+while getopts v:b:d: opt
 do
     case ${opt} in
         d)
