@@ -179,7 +179,7 @@ if [ $NATIVECOMPILE = true ]; then
     install_name_tool -change ${HOMEBREWDIR}/opt/mpfr/lib/libmpfr.6.dylib @executable_path/lib/libmpfr.6.dylib lib/libmpc.3.dylib
     install_name_tool -change ${HOMEBREWDIR}/opt/gmp/lib/libgmp.10.dylib @executable_path/lib/libgmp.10.dylib lib/libmpc.3.dylib
     # otool -L lib/libmpfr.6.dylib
-#    install_name_tool -change ${HOMEBREWDIR}/opt/gmp/lib/libgmp.10.dylib @executable_path/lib/libgmp.10.dylib lib/libmpfr.6.dylib
+    install_name_tool -change ${HOMEBREWDIR}/opt/gmp/lib/libgmp.10.dylib @executable_path/lib/libgmp.10.dylib lib/libmpfr.6.dylib
 fi
 
 chmod 444 ./lib/*.dylib
