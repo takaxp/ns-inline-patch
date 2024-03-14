@@ -238,7 +238,7 @@ echo ${DEVELOPERID}
 echo "1"
 codesign --verify --sign ${DEVELOPERID} --force --verbose --keychain ${KEYCHAIN} ./Emacs.app
 echo "2"
-codesign --verify --sign ${DEVELOPERID} --force --verbose ./Emacs.app
+codesign --verify --sign ${DEVELOPERID} --force --verbose ${APPDIR}/Emacs.app
 codesign -dv ./Emacs.app
 RESULT=`pkgutil --check-signature ./Emacs.app | grep "no sign"`
 if [ "${RESULT}" ]; then
