@@ -225,4 +225,11 @@ if [ "${STATUS}" ];then
     exit 1
 fi
 
+# Codesign
+cd ${APPDIR}
+DEVELOPERID="Developer ID Application: Takaaki Ishikawa (H2PH8KNN3H)"
+codesign --verify --sign "Developer ID Application: Takaaki Ishikawa (H2PH8KNN3H)" --deep --force --verbose --option runtime --timestamp ./Emacs.app
+codesign -dvvv ./Emacs.app
+pkgutil --check-signature ./Emacs.app
+
 echo "--- done"
