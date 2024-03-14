@@ -236,9 +236,9 @@ echo ${SIGNID}
 DEVELOPERID="Developer ID Application: Takaaki Ishikawa (H2PH8KNN3H)"
 echo ${DEVELOPERID}
 echo "1"
-codesign --verify --sign ${DEVELOPERID} --deep --force --verbose --option runtime --timestamp --keychain ${KEYCHAIN} ./Emacs.app
+codesign --verify --sign ${DEVELOPERID} --force --verbose --keychain ${KEYCHAIN} ./Emacs.app
 echo "2"
-codesign --verify --sign ${DEVELOPERID} --deep --force --verbose --option runtime --timestamp ./Emacs.app
+codesign --verify --sign ${DEVELOPERID} --force --verbose ./Emacs.app
 codesign -dv ./Emacs.app
 RESULT=`pkgutil --check-signature ./Emacs.app | grep "no sign"`
 if [ "${RESULT}" ]; then
