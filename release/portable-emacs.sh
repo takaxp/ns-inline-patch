@@ -231,8 +231,10 @@ fi
 # Codesign
 cd ${APPDIR}
 SIGNID=`security find-identity -v`
-# echo ${SIGNID}
+echo ${SIGNID}
 DEVELOPERID="Developer ID Application: Takaaki Ishikawa (H2PH8KNN3H)"
+echo ${DEVELOPERID}
+security find-identity -p codesigning ${KEYCHAIN}
 codesign --verify --sign ${DEVELOPERID} --deep --force --verbose --option runtime --timestamp --keychain ${KEYCHAIN} ./Emacs.app
 codesign -dv ./Emacs.app
 pkgutil --check-signature ./Emacs.app
