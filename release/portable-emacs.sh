@@ -18,7 +18,7 @@ fi
 ###############################################################################
 
 WORKING_DIR="${HOME}/devel/emacs-head"
-while getopts v:b:d: opt
+while getopts v:b:d:k: opt
 do
     case ${opt} in
         d)
@@ -29,6 +29,9 @@ do
             ;;
         v)
             VERSION=${OPTARG}
+            ;;
+        k)
+            KEYCHAIN=${OPTARG}
             ;;
         h)
             echo ""
@@ -229,7 +232,8 @@ fi
 cd ${APPDIR}
 SIGNID=`security find-identity -v`
 echo ${SIGNID}
-echo ${KEYCHAIN_PATH}
+echo "1: ${KEYCHAIN_PATH}"
+echo "2: ${KEYCHAIN}"
 DEVELOPERID="Developer ID Application: Takaaki Ishikawa (H2PH8KNN3H)"
 codesign --verify --sign ${DEVELOPERID} --deep --force --verbose --option runtime --timestamp --keychain ${KEYCHAIN_PATH} ./Emacs.app
 codesign -dv ./Emacs.app
