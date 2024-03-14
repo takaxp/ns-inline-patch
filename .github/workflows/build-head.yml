@@ -19,11 +19,11 @@ jobs:
         P12_PASSWORD: ${{ secrets.P12_PASSWORD }}
         BUILD_PROVISION_PROFILE_BASE64: ${{ secrets.BUILD_PROVISION_PROFILE_BASE64 }}
         KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
-        KEYCHAIN_PATH: ${{ runner.temp }}/app-signing.keychain-db
       run: |
         # create variables
         CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
         PP_PATH=$RUNNER_TEMP/build_pp.provisionprofile
+        KEYCHAIN_PATH: $RUNNER_TEMP/app-signing.keychain-db
 
         # import certificate and provisioning profile from secrets
         echo -n "$BUILD_CERTIFICATE_BASE64" | base64 --decode -o $CERTIFICATE_PATH
@@ -51,7 +51,7 @@ jobs:
     - name: Verification
       run: ${{ github.workspace }}/emacs/nextstep/Emacs.app/Contents/MacOS/Emacs --batch --eval="(unless (fboundp 'mac-input-method-mode) (error \"The inline-patch is NOT integrated\"))"
     - name: Portable
-      run: sh release/portable-emacs.sh -b master -d ${{ github.workspace }} -k ${{ env.KEYCHAIN_PATH }}
+      run: sh release/portable-emacs.sh -b master -d ${{ github.workspace }} -k ${{ runner.temp }}/app-signing.keychain-db
     - name: Clean up keychain and provisioning profile
       if: ${{ always() }}
       run: |
