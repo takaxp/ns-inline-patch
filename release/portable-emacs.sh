@@ -230,6 +230,7 @@ fi
 
 # Codesign
 cd ${APPDIR}
+ls
 SIGNID=`security find-identity -v`
 echo ${SIGNID}
 DEVELOPERID="Developer ID Application: Takaaki Ishikawa (H2PH8KNN3H)"
@@ -240,7 +241,7 @@ echo "2"
 codesign --verify --sign ${DEVELOPERID} --deep --force --verbose --option runtime --timestamp ./Emacs.app
 codesign -dv ./Emacs.app
 RESULT=`pkgutil --check-signature ./Emacs.app | grep "no sign"`
-if [ $RESULT ]; then
+if [ "${RESULT}" ]; then
     exit 1
 fi
 echo "--- done"
