@@ -42,6 +42,8 @@ jobs:
         # apply provisioning profile
         mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
         cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
+
+        echo $KEYCHAIN_PATH
     - name: Setup to build
       run: sh build/setup.sh
     - name: Build HEAD with inline patch
