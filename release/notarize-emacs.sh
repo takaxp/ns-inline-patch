@@ -21,9 +21,6 @@ do
         v)
             VERSION=${OPTARG}
             ;;
-        k)
-            KEYCHAIN=${OPTARG}
-            ;;
         h)
             echo ""
             exit
@@ -39,14 +36,14 @@ elif [ "${PATCH}" = "private" ]; then
     APPINSTALLDIR="Emacs-takaxp/private"
 else
     echo "Please provide patch mode by \"-p pure\"."
-    exit
+    exit 1
 fi
 
 PKGVERSION=`date '+%Y-%m-%d'`
 if [ ! "$VERSION" -a ! "${BRANCH}" ]; then
     echo "Please specify VERSION (-v 28.2)"
     echo "Also check APPINSTALLDIR and PKGVERSION ($APPINSTALLDIR, $PKGVERSION)"
-    exit
+    exit 1
 else
     echo "Version:    $VERSION"
     echo "Branch:     $BRANCH"
@@ -80,10 +77,8 @@ if [ "${BRANCH}" = "" -a ! "${VERSION}" = "" ]; then
 fi
 cp -r ${APPDIR}/Emacs.app pkg/Applications/${APPINSTALLDIR}
 DEVELOPERID='Developer ID Application: Takaaki Ishikawa (H2PH8KNN3H)'
-if [ ${KEYCHAIN} ]; then
-    KEYCHAIN="-k ${KEYCHAIN}"
-}
-codesign --verify --sign "${DEVELOPERID}" --deep --force --verbose --option runtime --entitlements entitlements.plist --timestamp ${KEYCHAIN} ./pkg/Applications/${APPINSTALLDIR}/Emacs.app
+
+codesign --verify --sign "${DEVELOPERID}" --deep --force --verbose --option runtime --entitlements entitlements.plist --timestamp ./pkg/Applications/${APPINSTALLDIR}/Emacs.app
 
 # Check the signature
 RESULT=`pkgutil --check-signature ./pkg/Applications/${APPINSTALLDIR}/Emacs.app | grep "no sign"`
