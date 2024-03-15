@@ -77,7 +77,7 @@ if [ "${BRANCH}" = "" -a ! "${VERSION}" = "" ]; then
     echo "--- Targeting version: ${VERSION}"
 fi
 cp -r ${APPDIR}/Emacs.app pkg/Applications/${APPINSTALLDIR}
-ls ${APPINSTALLDIR}
+ls pkg/Applications/${APPINSTALLDIR}
 
 DEVELOPERID='Developer ID Application: Takaaki Ishikawa (H2PH8KNN3H)'
 codesign --verify --sign "${DEVELOPERID}" --deep --force --verbose --option runtime --entitlements entitlements.plist --timestamp ./pkg/Applications/${APPINSTALLDIR}/Emacs.app
@@ -126,7 +126,7 @@ if [ "${RESULT}" ]; then
     exit 1
 fi
 
-xcrun notarytool submit "Emacs-Distribution_SIGNED.pkg" --keychain-profile "emacs-build" --wait
+xcrun notarytool submit "Emacs-Distribution_SIGNED.pkg" --keychain-profile "github-emacs-build" --wait
 rm -f Emacs.pkg Emacs-Distribution.pkg
 
 sleep 2

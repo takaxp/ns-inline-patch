@@ -20,6 +20,8 @@ jobs:
         P12_PASSWORD: ${{ secrets.P12_PASSWORD }}
         BUILD_PROVISION_PROFILE_BASE64: ${{ secrets.BUILD_PROVISION_PROFILE_BASE64 }}
         KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
+        APP_PASSWORD: ${{ secrets.APP_PASSWORD }}
+        APPLE_ID: ${{ secrets.APPLE_ID }}
       run: |
         # create variables
         BUILD_CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
@@ -42,6 +44,8 @@ jobs:
         # apply provisioning profile
         mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
         cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
+        # register a profile to keychain for notarize
+        xcrun notarytool store-credentials "github-emacs-build" --apple-id $APPLE_ID --team-id "H2PH8KNN3H" --password $APP_PASSWORD
     - name: Setup to build
       run: sh build/setup.sh
     - name: Build HEAD with inline patch
