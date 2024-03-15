@@ -236,9 +236,9 @@ echo ${SIGNID}
 DEVELOPERID="Developer ID Application: Takaaki Ishikawa (H2PH8KNN3H)"
 echo ${DEVELOPERID}
 echo "KEYCHAIN: ${KEYCHAIN}"
-RESULT=`codesign --verify --sign ${DEVELOPERID} --force --verbose --keychain ${KEYCHAIN} ./Emacs.app`
+RESULT=`codesign --sign ${DEVELOPERID} --force --verbose --keychain ${KEYCHAIN} ./Emacs.app`
 echo "(1) ${RESULT}"
-RESULT=`codesign --verify --sign ${DEVELOPERID} --force --verbose ${APPDIR}/Emacs.app`
+RESULT=`codesign --sign ${DEVELOPERID} --force --verbose ${APPDIR}/Emacs.app`
 echo "(2) ${RESULT}"
 echo "default-keychain"
 security default-keychain
