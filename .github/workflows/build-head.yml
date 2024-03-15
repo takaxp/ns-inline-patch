@@ -51,7 +51,7 @@ jobs:
     - name: Portable
       run: sh release/portable-emacs.sh -b master -d ${{ github.workspace }}
     - name: Notarize
-      run: sh release/notarize-emacs.sh -b master -d ${{ github.workspace }} -s ${{ github.workspace }}
+      run: sh release/notarize-emacs.sh -b master -d ${{ github.workspace }} -s ${{ github.workspace }} -p inline
     - name: Clean up keychain and provisioning profile
       if: ${{ always() }}
       run: |
