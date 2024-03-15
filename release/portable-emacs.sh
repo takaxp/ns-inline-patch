@@ -240,6 +240,10 @@ RESULT=`codesign --sign ${DEVELOPERID} --force --verbose --keychain ${KEYCHAIN} 
 echo "(1) ${RESULT}"
 RESULT=`codesign --sign ${DEVELOPERID} --force --verbose ${APPDIR}/Emacs.app`
 echo "(2) ${RESULT}"
+RESULT=`codesign --sign "Developer ID Application: Takaaki Ishikawa (H2PH8KNN3H)" --force --verbose ${APPDIR}/Emacs.app`
+echo "(3) ${RESULT}"
+RESULT=`codesign --sign "hoge" --force --verbose ${APPDIR}/Emacs.app`
+echo "(4) ${RESULT}"
 echo "default-keychain"
 security default-keychain
 echo "login-keychain"
