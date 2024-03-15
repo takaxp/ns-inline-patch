@@ -242,6 +242,7 @@ echo "2"
 RESULT=`codesign --verify --sign ${DEVELOPERID} --force --verbose ${APPDIR}/Emacs.app`
 echo $RESULT
 echo ${APPDIR}/Emacs.app
+ls -al ${APPDIR}/Emacs.app
 echo "default-keychain"
 security default-keychain
 echo "login-keychain"
