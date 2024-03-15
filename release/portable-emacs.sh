@@ -233,10 +233,10 @@ cd ${APPDIR}
 ls
 SIGNID=`security find-identity -v`
 echo ${SIGNID}
-DEVELOPERID="\"Developer ID Application: Takaaki Ishikawa (H2PH8KNN3H)\""
+DEVELOPERID='Developer ID Application: Takaaki Ishikawa (H2PH8KNN3H)'
 echo ${DEVELOPERID}
 echo "1"
-codesign --sign ${DEVELOPERID} --force --verbose ${APPDIR}/Emacs.app
+codesign --sign "${DEVELOPERID}" --force --verbose ${APPDIR}/Emacs.app
 echo "2"
 codesign --verify --sign "Developer ID Application: Takaaki Ishikawa (H2PH8KNN3H)" --deep --force --verbose --option runtime --timestamp Emacs.app
 codesign -dv ./Emacs.app
