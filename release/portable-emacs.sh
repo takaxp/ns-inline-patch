@@ -238,18 +238,14 @@ echo ${DEVELOPERID}
 echo "KEYCHAIN: ${KEYCHAIN}"
 RESULT=`codesign --sign ${DEVELOPERID} --force --verbose --keychain ${KEYCHAIN} ./Emacs.app`
 echo "(1) ${RESULT}"
-RESULT=`codesign --sign ${DEVELOPERID} --force --verbose ${APPDIR}/Emacs.app`
+RESULT=`codesign --sign \"${DEVELOPERID}\" --force --verbose ${APPDIR}/Emacs.app`
 echo "(2) ${RESULT}"
 RESULT=`codesign --sign "Developer ID Application: Takaaki Ishikawa (H2PH8KNN3H)" --force --verbose ${APPDIR}/Emacs.app`
 echo "(3) ${RESULT}"
 RESULT=`codesign --sign "hoge" --force --verbose ${APPDIR}/Emacs.app`
 echo "(4) ${RESULT}"
-echo "default-keychain"
-security default-keychain
-echo "login-keychain"
-security login-keychain
-echo "list-keychains"
-security list-keychains
+RESULT=`codesign --sign \"${DEVELOPERID}\" --force --verbose ${APPDIR}/Emacs.app`
+echo "(5) ${RESULT}"
 codesign -dv ./Emacs.app
 RESULT=`pkgutil --check-signature ./Emacs.app | grep "no sign"`
 if [ "${RESULT}" ]; then
