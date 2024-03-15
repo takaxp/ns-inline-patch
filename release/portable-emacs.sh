@@ -227,15 +227,4 @@ if [ "${STATUS}" ];then
     echo "--- ${STATUS}"
     exit 1
 fi
-
-# Codesign
-cd ${APPDIR}
-# security find-identity -v
-DEVELOPERID='Developer ID Application: Takaaki Ishikawa (H2PH8KNN3H)'
-codesign --verify --sign "${DEVELOPERID}" --deep --force --verbose --option runtime --timestamp ./Emacs.app
-# codesign -dv ./Emacs.app
-RESULT=`pkgutil --check-signature ./Emacs.app | grep "no sign"`
-if [ "${RESULT}" ]; then
-    exit 1
-fi
 echo "--- done"
