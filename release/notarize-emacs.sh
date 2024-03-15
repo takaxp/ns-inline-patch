@@ -54,13 +54,13 @@ fi
 ##############################################################################
 
 # Setup working directory
-cd ~/${WORKING_DIR}
+cd ${WORKING_DIR}
 if [ -d "notarize" ]; then
     rm -rf notarize
 fi
 mkdir -p notarize/pkg/Applications/${APPINSTALLDIR}
 
-cd ~/${WORKING_DIR}/notarize
+cd ${WORKING_DIR}/notarize
 
 # Generate entitlements.plist
 rm -f entitlements.plist
@@ -87,7 +87,7 @@ if [ "${RESULT}" ]; then
 fi
 
 # Edit packages.plist
-cd ~/${WORKING_DIR}/notarize/pkg
+cd ${WORKING_DIR}/notarize/pkg
 pkgbuild --analyze --root Applications packages.plist
 
 plutil -replace 'BundleIsRelocatable' -bool false packages.plist
@@ -129,7 +129,7 @@ rm -f Emacs.pkg Emacs-Distribution.pkg
 
 sleep 2
 
-cd ~/${WORKING_DIR}/notarize/pkg
+cd ${WORKING_DIR}/notarize/pkg
 xcrun stapler staple Emacs-Distribution_SIGNED.pkg
 CPUARC=`uname -m`
 echo "--- Build for ${CPUARC}"
@@ -142,7 +142,7 @@ else
     rm -f emacs-head_apple.md5
     md5 emacs-head_apple.pkg > emacs-head_apple.md5
 fi
-cp -f *.pkg ~/${WORKING_DIR}
-cp -f *.md5 ~/${WORKING_DIR}
+cp -f *.pkg ${WORKING_DIR}
+cp -f *.md5 ${WORKING_DIR}
 
 echo "--- done"
