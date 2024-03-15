@@ -65,6 +65,7 @@ cd ${WORKING_DIR}/notarize
 # Generate entitlements.plist
 rm -f entitlements.plist
 touch entitlements.plist
+echo '<?xml version="1.0" encoding="UTF-8"?>\n<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "https://www.apple.com/DTDs/PropertyList-1.0.dtd">\n<plist version="1.0">\n    <dict>\n        <key>com.apple.security.network.client</key>\n        <true/>\n        <key>com.apple.security.cs.disable-library-validation</key>\n        <true/>\n    </dict>\n</plist>' >> entitlements.plist
 
 # Codesign
 if [ ! "${BRANCH}" = "" -a "${VERSION}" = "" ]; then
@@ -76,8 +77,9 @@ if [ "${BRANCH}" = "" -a ! "${VERSION}" = "" ]; then
     echo "--- Targeting version: ${VERSION}"
 fi
 cp -r ${APPDIR}/Emacs.app pkg/Applications/${APPINSTALLDIR}
-DEVELOPERID='Developer ID Application: Takaaki Ishikawa (H2PH8KNN3H)'
+ls ${APPINSTALLDIR}
 
+DEVELOPERID='Developer ID Application: Takaaki Ishikawa (H2PH8KNN3H)'
 codesign --verify --sign "${DEVELOPERID}" --deep --force --verbose --option runtime --entitlements entitlements.plist --timestamp ./pkg/Applications/${APPINSTALLDIR}/Emacs.app
 
 # Check the signature
