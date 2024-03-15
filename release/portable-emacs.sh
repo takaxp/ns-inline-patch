@@ -235,22 +235,17 @@ SIGNID=`security find-identity -v`
 echo ${SIGNID}
 DEVELOPERID="Developer ID Application: Takaaki Ishikawa (H2PH8KNN3H)"
 echo ${DEVELOPERID}
-echo "1"
+echo "KEYCHAIN: ${KEYCHAIN}"
 RESULT=`codesign --verify --sign ${DEVELOPERID} --force --verbose --keychain ${KEYCHAIN} ./Emacs.app`
-echo $RESULT
-echo "2"
+echo "(1) ${RESULT}"
 RESULT=`codesign --verify --sign ${DEVELOPERID} --force --verbose ${APPDIR}/Emacs.app`
-echo $RESULT
-echo ${APPDIR}/Emacs.app
-ls -al ${APPDIR}/Emacs.app
+echo "(2) ${RESULT}"
 echo "default-keychain"
 security default-keychain
 echo "login-keychain"
 security login-keychain
 echo "list-keychains"
 security list-keychains
-echo "KEYCHAIN"
-echo "${KEYCHAIN}"
 codesign -dv ./Emacs.app
 RESULT=`pkgutil --check-signature ./Emacs.app | grep "no sign"`
 if [ "${RESULT}" ]; then
