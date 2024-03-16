@@ -68,8 +68,8 @@ jobs:
         echo -n "$ORZ_ID_BASE64" | base64 --decode -o $ID_PATH
         echo -n "ORZ_KNOWN_BASE64" | base64 --decode -o ~/.ssh/known_hosts
         chmod 600 $ID_PATH ~/.ssh/known_hosts
-        echo bye | sftp -i $ID_PATH -P $ORZ_PORT github-ci@$ORZ_HOST
-        sftp -b release/upload.bat -i $ID_PATH -P $ORZ_PORT github-ci@$ORZ_HOST
+        # echo bye | sftp -i $ID_PATH -P $ORZ_PORT github-ci@$ORZ_HOST
+        sftp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -b release/upload.bat -i $ID_PATH -P $ORZ_PORT github-ci@$ORZ_HOST
     - name: Clean up keychain and provisioning profile
       if: ${{ always() }}
       run: |
