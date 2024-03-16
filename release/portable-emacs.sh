@@ -61,9 +61,12 @@ fi
 NATIVEAP=`${APPDIR}/Emacs.app/Contents/MacOS/Emacs -Q --batch --eval="(princ (when (fboundp 'native-comp-available-p) (native-comp-available-p)))"`
 
 if [ "${NATIVEAP}" == "t" ]; then
-    NATIVEAP=true
+    NATIVECOMPILE=true
+    if [ ! -f ${HOMEBREWDIR}/opt/libgccjit/include/libgccjit.h ]; then
+        NATIVECOMPILE=false
+    fi
 else
-    NATIVEAP=false
+    NATIVECOMPILE=false
 fi
 
 TARGETDIR="${APPDIR}/Emacs.app/Contents/MacOS"
@@ -93,16 +96,6 @@ cp ${HOMEBREWDIR}/opt/jansson/lib/libjansson.4.dylib lib
 # if [ ${PRODUCTVERSION%%.*} -le 12 ]; then
 #     cp ${HOMEBREWDIR}/opt/libffi/lib/libffi.7.dylib lib
 # fi
-
-
-NATIVECOMPILE=false
-if [ -f ${HOMEBREWDIR}/opt/libgccjit/include/libgccjit.h ]; then
-    NATIVECOMPILE=true
-fi
-
-if [ ! ${NATIVEAP} ]; then
-    NATIVECOMPILE=false
-fi
 
 if [ $NATIVECOMPILE = true ]; then
     cp ${HOMEBREWDIR}/opt/libgccjit/lib/gcc/current/libgccjit.0.dylib lib
