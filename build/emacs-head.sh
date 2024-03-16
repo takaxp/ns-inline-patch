@@ -25,7 +25,7 @@ fi
 WORKING_DIR="${HOME}/Desktop"
 CORES=4
 NATIVE="no"
-while getopts d:j:n opt
+while getopts d:j:ng opt
 do
     case ${opt} in
         n)
@@ -37,14 +37,24 @@ do
         d)
             WORKING_DIR=${OPTARG}
             ;;
+        g)
+            SV_HOST=true
+            ;;
     esac
 done
 
 cd ${WORKING_DIR}
 
-# Please select emacs-mirror if you have any connection troubles.
-# git clone --depth 1 https://github.com/emacs-mirror/emacs.git
-git clone --depth 1 git://git.sv.gnu.org/emacs.git
+echo "DIR: ${WORKING_DIR}"
+echo "NativeComp: ${NATIVE}"
+echo "Cores: ${CORES}"
+if [ $SV_HOST ]; then
+    echo "Source: git://git.sv.gnu.org/emacs.git"
+    git clone --depth 1 git://git.sv.gnu.org/emacs.git
+else
+    echo "Source: https://github.com/emacs-mirror/emacs.git"
+    git clone --depth 1 https://github.com/emacs-mirror/emacs.git
+fi
 
 # inline-patch
 git clone --depth 1 https://github.com/takaxp/ns-inline-patch.git
