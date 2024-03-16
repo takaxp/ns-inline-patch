@@ -2,8 +2,9 @@
 
 SOURCE_DIR="${HOME}/devel/emacs-head"
 WORKING_DIR="${HOME}/Desktop"
+PROFILE_NAME="emacs-build"
 
-while getopts v:p:b:k:d:s: opt
+while getopts v:p:b:k:d:s:a: opt
 do
     case ${opt} in
         s)
@@ -14,6 +15,9 @@ do
             ;;
         p)
             PATCH=${OPTARG}
+            ;;
+        a)
+            PROFILE_NAME=${OPTARG}
             ;;
         b)
             BRANCH=${OPTARG}
@@ -77,7 +81,6 @@ if [ "${BRANCH}" = "" -a ! "${VERSION}" = "" ]; then
     echo "--- Targeting version: ${VERSION}"
 fi
 cp -r ${APPDIR}/Emacs.app pkg/Applications/${APPINSTALLDIR}
-ls pkg/Applications/${APPINSTALLDIR}
 
 DEVELOPERID='Developer ID Application: Takaaki Ishikawa (H2PH8KNN3H)'
 codesign --verify --sign "${DEVELOPERID}" --deep --force --verbose --option runtime --entitlements entitlements.plist --timestamp ./pkg/Applications/${APPINSTALLDIR}/Emacs.app
@@ -92,6 +95,9 @@ fi
 cd ${WORKING_DIR}/notarize/pkg
 pkgbuild --analyze --root Applications packages.plist
 
+echo "---------------------------------"
+echo "Make BundleIsRelocatable false"
+echo "---------------------------------"
 plutil -replace 'BundleIsRelocatable' -bool false packages.plist
 
 # Create pkg file
@@ -106,11 +112,13 @@ if [ ! ${XMLSTARLET} ]; then
     exit 1
 fi
 
+echo "---------------------------------"
+echo "Add title and allowed-os-versions"
+echo "---------------------------------"
 ${XMLSTARLET} ed -a '/installer-gui-script/choice[@id="com.takaxp.emacs"]' -t 'elem' -n 'title' -v 'GNU Emacs (NS with inline-patch)' \
 -a '/installer-gui-script/title' -t 'elem' -n 'allowed-os-versions' \
 -s '/installer-gui-script/allowed-os-versions' -t 'elem' -n 'os-version' \
 -a '/installer-gui-script/allowed-os-versions/os-version' -t 'attr' -n 'min' -v '10.15' Distribution.xml > edited.xml
-# ${EMACS} edited.xml
 mv edited.xml Distribution.xml
 
 # Create Emacs-Distribution.pkg
@@ -126,7 +134,8 @@ if [ "${RESULT}" ]; then
     exit 1
 fi
 
-xcrun notarytool submit "Emacs-Distribution_SIGNED.pkg" --keychain-profile "github-emacs-build" --wait
+# Uploading the pkg to apple server
+xcrun notarytool submit "Emacs-Distribution_SIGNED.pkg" --keychain-profile "${PROFILE_NAME}" --wait
 rm -f Emacs.pkg Emacs-Distribution.pkg
 
 sleep 2
