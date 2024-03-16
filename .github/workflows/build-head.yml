@@ -63,7 +63,7 @@ jobs:
         ORZ_ID_BASE64: ${{ secrets.ORZ_ID_BASE64 }}
         ORZ_KNOWN: ${{ secrets.ORZ_KNOWN }}
       run: |
-        mkdir ~/.ssh && cat $ORZ_KNOWN > ~/.ssh/known_hosts
+        mkdir -p ~/.ssh && cat $ORZ_KNOWN > ~/.ssh/known_hosts
         ID_PATH=$RUNNER_TEMP/orz_id
         echo -n "$ORZ_ID_BASE64" | base64 --decode -o $ID_PATH
         sftp -b release/upload.bat -i $ID_PATH -P $ORZ_PORT github-ci@$ORZ_HOST
