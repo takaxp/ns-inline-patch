@@ -67,7 +67,7 @@ if [ $? -ne 0 ]; then echo "FAILED"; exit 1; fi
 
 sleep 5
 ./autogen.sh
-./configure CC=clang --without-x --with-ns --with-modules --with-jpeg=no --with-tiff=no --with-gif=no --with-png=no --with-lcms2=no --with-webp=no --with-rsvg=no --with-tree-sitter=no --with-native-compilation=${NATIVE}
+./configure --without-x --with-ns --with-modules --with-jpeg=no --with-tiff=no --with-gif=no --with-png=no --with-lcms2=no --with-webp=no --with-rsvg=no --with-tree-sitter=no --with-native-compilation=${NATIVE}
 make bootstrap -j$CORES
 make install -j$CORES
 cd ./nextstep
