@@ -8,7 +8,7 @@ on:
 
 jobs:
   build-head:
-    runs-on: macos-13-xlarge
+    runs-on: macos-14
     timeout-minutes: 60
     steps:
     - name: Checkout repository
