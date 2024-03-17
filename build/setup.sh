@@ -7,7 +7,10 @@ function setup_homebrew () {
 
 function install_deps () {
     brew install autoconf automake pkg-config gnutls texinfo jansson
+    # Required to install for Native Comp
     brew install gcc libgccjit
+    brew info gcc
+    brew info libgccjit
 }
 
 function install_tool () {
@@ -30,4 +33,3 @@ echo "  sh emacs-****.sh"
 echo "Or you can install Emacs by runing pkg file located"
 echo "      in https://github.com/takaxp/ns-inline-patch."
 echo "----------------"
-ls
