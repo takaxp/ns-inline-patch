@@ -8,15 +8,7 @@ if [ ${PRODUCTVERSION%%.*} -lt 11 ]; then
     NETTLEVERSION=3.6 # for Mojave actually
 fi
 
-###############################################################################
-CPUARC=`uname -m`
-if [ "${CPUARC}" = "x86_64" ]; then
-    HOMEBREWDIR="/usr/local" # Intel
-else
-    HOMEBREWDIR="/opt/homebrew" # Apple Silicon
-fi
-###############################################################################
-
+HOMEBREWDIR=`brew --prefix`
 WORKING_DIR="${HOME}/devel/emacs-head"
 while getopts v:b:d:k: opt
 do
