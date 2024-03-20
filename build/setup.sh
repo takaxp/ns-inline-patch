@@ -11,15 +11,17 @@ function setup_homebrew () {
         (echo 'eval "$(/usr/local/bin/brew shellenv)"') >> ${HOME}/.zprofile
         eval "$(/usr/local/bin/brew shellenv)"
     fi
-    echo $(brew shellenv)
+    echo $HOMEBREW_PREFIX
+    echo $HOMEBREW_CELLAR
+    echo $HOMEBREW_REPOSITORY
+    echo $PATH
+    echo $MANPATH
+    echo $INFOPATH
 }
-
 function install_deps () {
     brew install autoconf automake pkg-config gnutls texinfo jansson
     # Required to install for Native Comp
     brew install gcc libgccjit
-    brew info gcc
-    brew info libgccjit
 }
 
 function install_tool () {
