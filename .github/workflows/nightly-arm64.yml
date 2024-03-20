@@ -1,14 +1,17 @@
 name: "Build NS with inline-patch (HEAD) for Apple Silicon"
 on:
   push:
+  pull_request:
   workflow_dispatch:
   schedule:
-  - cron: '30 0 * * *'
+  - cron: '0 5 * * *'
 
 jobs:
-  nightly-arm64:
-    runs-on: macos-14
+  build-arm64:
+#    runs-on: macos-14
+    runs-on: macos-13
     timeout-minutes: 60
+    steps:
     - name: Checkout repository
       uses: actions/checkout@v4
     - name: Install the Apple certificate and provisioning profile
