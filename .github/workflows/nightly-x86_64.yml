@@ -5,7 +5,7 @@ on:
   - cron: '0 0 * * *'
 
 jobs:
-  nightly-build-x86_64:
+  nightly-x86_64:
     runs-on: macos-13
     timeout-minutes: 60
     - name: Checkout repository
