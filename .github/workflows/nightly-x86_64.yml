@@ -1,5 +1,6 @@
 name: "Build NS with inline-patch (HEAD) for Intel Chips"
 on:
+  push:
   workflow_dispatch:
   schedule:
   - cron: '0 0 * * *'
