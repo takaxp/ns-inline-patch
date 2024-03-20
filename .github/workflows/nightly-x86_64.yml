@@ -2,7 +2,7 @@ name: "Build NS with inline-patch (HEAD) for Intel Chips"
 on:
   workflow_dispatch:
   schedule:
-  - cron: '0 1 * * *'
+  - cron: '0 2 * * *'
 
 jobs:
   nightly-x86_64:
