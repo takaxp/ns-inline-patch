@@ -11,7 +11,7 @@ function setup_homebrew () {
         (echo 'eval "$(/usr/local/bin/brew shellenv)"') >> ${HOME}/.zprofile
         eval "$(/usr/local/bin/brew shellenv)"
     fi
-    brew shellenv
+    echo $(brew shellenv)
 }
 
 function install_deps () {
