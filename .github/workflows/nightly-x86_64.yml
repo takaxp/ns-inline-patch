@@ -1,12 +1,11 @@
 name: "Build NS with inline-patch (HEAD) for Intel Chips"
 on:
-  push:
   workflow_dispatch:
   schedule:
-  - cron: '0 0 * * *'
+  - cron: '0 1 * * *'
 
 jobs:
-  build-head:
+  nightly-x86_64:
     runs-on: macos-13
     timeout-minutes: 60
     - name: Checkout repository
