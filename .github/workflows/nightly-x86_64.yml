@@ -8,6 +8,7 @@ jobs:
   nightly-x86_64:
     runs-on: macos-13
     timeout-minutes: 60
+    steps:
     - name: Checkout repository
       uses: actions/checkout@v4
     - name: Install the Apple certificate and provisioning profile
