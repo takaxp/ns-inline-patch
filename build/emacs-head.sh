@@ -26,7 +26,7 @@ WORKING_DIR="${HOME}/Desktop"
 CORES=4
 NATIVE="no"
 BRANCH=master
-while getopts d:j:ng opt
+while getopts d:j:ngb: opt
 do
     case ${opt} in
         n)
