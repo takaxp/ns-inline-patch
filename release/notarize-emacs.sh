@@ -162,6 +162,8 @@ mv Emacs-Distribution_SIGNED.pkg ${FILENAME}${VENDER}${PURE}.pkg
 rm -f ${FILENAME}${VENDER}${PURE}.md5
 md5 ${FILENAME}${VENDER}${PURE}.pkg > ${FILENAME}${VENDER}${PURE}.md5
 
+echo "--- ${FILENAME}${VENDER}${PURE}.pkg and md5 are generaed"
+
 cp -f *.pkg ${WORKING_DIR}
 cp -f *.md5 ${WORKING_DIR}
 
