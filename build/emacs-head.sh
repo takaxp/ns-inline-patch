@@ -25,6 +25,7 @@ fi
 WORKING_DIR="${HOME}/Desktop"
 CORES=4
 NATIVE="no"
+BRANCH=master
 while getopts d:j:ng opt
 do
     case ${opt} in
@@ -40,6 +41,8 @@ do
         g)
             SV_HOST=true
             ;;
+        b)
+            BRANCH=${OPTARG}
     esac
 done
 
@@ -62,7 +65,18 @@ echo "---------------------------------"
 git clone --depth 1 https://github.com/takaxp/ns-inline-patch.git
 
 cd emacs
-patch -p1 < ../ns-inline-patch/emacs-head-inline.patch
+git checkout -f ${BRANCH}
+
+if [ "${BRANCH}" = "emacs-29" ]; then
+    patch -p1 < ../ns-inline-patch/emacs-29.1-inline.patch
+elif [ "${BRANCH}" = "emacs-28" ]; then
+    patch -p1 < ../ns-inline-patch/emacs-28.1-inline.patch
+elif [ "${BRANCH}" = "emacs-27" ]; then
+    patch -p1 < ../ns-inline-patch/emacs-27.1-inline.patch
+else
+    patch -p1 < ../ns-inline-patch/emacs-head-inline.patch
+fi
+
 if [ $? -ne 0 ]; then echo "FAILED"; exit 1; fi
 
 sleep 5
