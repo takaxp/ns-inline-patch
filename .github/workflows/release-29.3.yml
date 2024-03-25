@@ -48,7 +48,7 @@ jobs:
     - name: Build HEAD with inline patch
       run: sh build/emacs-29.sh -d ${{ github.workspace }} -p inline
     - name: Verification
-      run: ${{ github.workspace }}/emacs/nextstep/Emacs.app/Contents/MacOS/Emacs --batch --eval="(unless (fboundp 'mac-input-method-mode) (error \"The inline-patch is NOT integrated\"))"
+      run: ${{ github.workspace }}/emacs-${VERSION}/nextstep/Emacs.app/Contents/MacOS/Emacs --batch --eval="(unless (fboundp 'mac-input-method-mode) (error \"The inline-patch is NOT integrated\"))"
     - name: Portable
       run: sh release/portable-emacs.sh -v 29.3 -d ${{ github.workspace }}
     - name: Notarize
