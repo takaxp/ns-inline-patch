@@ -1,14 +1,12 @@
-name: "Build NS with inline-patch (emacs-29)"
+name: "Build NS with inline-patch (HEAD) for Intel Chips"
 on:
-  pull_request:
   workflow_dispatch:
-  schedule:
-  - cron: '0 8 * * *'
 
 jobs:
-  build-29:
-    runs-on: macos-latest
-    timeout-minutes: 61
+  nightly-x86_64:
+    runs-on: macos-13
+#    runs-on: macos-14
+    timeout-minutes: 60
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -47,14 +45,14 @@ jobs:
         xcrun notarytool store-credentials "github-emacs-build" --apple-id $APPLE_ID --team-id "H2PH8KNN3H" --password $APP_PASSWORD
     - name: Setup to build
       run: sh build/setup.sh
-    - name: Build emacs-29 with inline patch
-      run: sh build/emacs-29.sh -d ${{ github.workspace }} -p inline
+    - name: Build HEAD with inline patch
+      run: sh build/emacs-head.sh -d ${{ github.workspace }}
     - name: Verification
       run: ${{ github.workspace }}/emacs/nextstep/Emacs.app/Contents/MacOS/Emacs --batch --eval="(unless (fboundp 'mac-input-method-mode) (error \"The inline-patch is NOT integrated\"))"
     - name: Portable
-      run: sh release/portable-emacs.sh -v 29.3 -d ${{ github.workspace }}
+      run: sh release/portable-emacs.sh -b master -d ${{ github.workspace }}
     - name: Notarize
-      run: sh release/notarize-emacs.sh -v 29.3 -d ${{ github.workspace }} -s ${{ github.workspace }} -p inline -a "github-emacs-build"
+      run: sh release/notarize-emacs.sh -b master -d ${{ github.workspace }} -s ${{ github.workspace }} -p inline -a "github-emacs-build"
     - name: Export
       env:
         ORZ_HOST: ${{ secrets.ORZ_HOST }}

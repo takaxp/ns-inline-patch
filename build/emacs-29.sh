@@ -1,5 +1,7 @@
 #!/bin/sh
 
+VERSION=29.3
+
 # LIBXML2 for Catalina
 MACSDK=`xcrun --show-sdk-path`
 export LIBXML2_CFLAGS="-I${MACSDK}/usr/include/libxml2"
@@ -37,8 +39,8 @@ do
         d)
             WORKING_DIR=${OPTARG}
             ;;
-        g)
-            SV_HOST=true
+        p)
+            PATCH=${OPTARG}
             ;;
     esac
 done
@@ -49,26 +51,19 @@ echo "---------------------------------"
 echo "WorkingDir: ${WORKING_DIR}"
 echo "NativeComp: ${NATIVE}"
 echo "Cores: ${CORES}"
-if [ $SV_HOST ]; then
-    echo "Source: git://git.sv.gnu.org/emacs.git"
-    git clone --depth 1 git://git.sv.gnu.org/emacs.git
-else
-    echo "Source: https://github.com/emacs-mirror/emacs.git"
-    git clone --depth 1 https://github.com/emacs-mirror/emacs.git
-fi
+curl -LO ftp://ftp.gnu.org/gnu/emacs/emacs-$VERSION.tar.gz
+tar zcvf emacs-$VERSION.tar.gz
+
 echo "---------------------------------"
 
-# inline-patch
-git clone --depth 1 https://github.com/takaxp/ns-inline-patch.git
+if [ "${PATCH}" = "inline" ]; then
+    # inline-patch
+    git clone --depth 1 https://github.com/takaxp/ns-inline-patch.git
 
-cd emacs
-git checkout --track origin/emacs-29
-patch -p1 < ../ns-inline-patch/emacs-29.1-inline.patch
-if [ $? -ne 0 ]; then echo "FAILED"; exit 1; fi
-# patch -p1 < ../ns-inline-patch/revert-89d0c445.patch
-# if [ $? -ne 0 ]; then echo "FAILED"; exit 1; fi
-# patch -p1 < ../$PATCH/ns-inline-patch/fix-working-text.patch
-# if [ $? -ne 0 ]; then echo "FAILED"; exit 1; fi
+    cd emacs-${VERSION}
+    patch -p1 < ../ns-inline-patch/emacs-29.1-inline.patch
+    if [ $? -ne 0 ]; then echo "FAILED"; exit 1; fi
+fi
 
 sleep 5
 ./autogen.sh
