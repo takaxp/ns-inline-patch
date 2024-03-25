@@ -154,14 +154,13 @@ elif [ "${VERSION}" ]; then
     FILENAME="emacs-${VERSION}"
 fi
 
-VENDER="apple"
-if [ ${CPUARC} = "x86_64" ]; then
-    VENDER="intel"
-fi
+VENDER="_apple"
+[ "${CPUARC}" = "x86_64" ] && VENDER="_intel"
+[ "${PATCH}" = "pure" ] && PURE="_pure"
 
-mv Emacs-Distribution_SIGNED.pkg ${FILENAME}_${VENDER}.pkg
-rm -f ${FILENAME}_${VENDER}.md5
-md5 ${FILENAME}_intel.pkg > ${FILENAME}_${VENDER}.md5
+mv Emacs-Distribution_SIGNED.pkg ${FILENAME}${VENDER}${PURE}.pkg
+rm -f ${FILENAME}${VENDER}${PURE}.md5
+md5 ${FILENAME}${VENDER}${PURE}.pkg > ${FILENAME}${VENDER}${PURE}.md5
 
 cp -f *.pkg ${WORKING_DIR}
 cp -f *.md5 ${WORKING_DIR}
