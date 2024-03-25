@@ -67,6 +67,8 @@ if [ "${PATCH}" = "inline" ]; then
     cd emacs-${VERSION}
     patch -p1 < ../ns-inline-patch/emacs-29.1-inline.patch
     if [ $? -ne 0 ]; then echo "FAILED"; exit 1; fi
+else
+    cd emacs-${VERSION}
 fi
 
 sleep 5
