@@ -27,7 +27,7 @@ fi
 WORKING_DIR="${HOME}/Desktop"
 CORES=4
 NATIVE="no"
-while getopts d:j:ng opt
+while getopts d:j:ngp: opt
 do
     case ${opt} in
         n)
@@ -52,7 +52,12 @@ echo "WorkingDir: ${WORKING_DIR}"
 echo "NativeComp: ${NATIVE}"
 echo "Cores: ${CORES}"
 curl -LO ftp://ftp.gnu.org/gnu/emacs/emacs-$VERSION.tar.gz
-tar zcvf emacs-$VERSION.tar.gz
+if [ -d "emacs-$VERSION" ]; then
+    tar zcvf emacs-$VERSION.tar.gz
+else
+    echo "missing emacs-$VERSION/"
+    exit 1
+fi
 
 echo "---------------------------------"
 
