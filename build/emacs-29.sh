@@ -52,9 +52,8 @@ echo "WorkingDir: ${WORKING_DIR}"
 echo "NativeComp: ${NATIVE}"
 echo "Cores: ${CORES}"
 curl -LO ftp://ftp.gnu.org/gnu/emacs/emacs-$VERSION.tar.gz
-if [ -d "emacs-$VERSION" ]; then
-    tar zcvf emacs-$VERSION.tar.gz
-else
+tar zcvf emacs-$VERSION.tar.gz
+if [ ! -d "emacs-$VERSION" ]; then
     echo "missing emacs-$VERSION/"
     exit 1
 fi
