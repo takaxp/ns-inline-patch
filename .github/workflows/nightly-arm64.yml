@@ -6,7 +6,7 @@ on:
 
 jobs:
   nightly-arm64:
-    runs-on: macos-14
+    runs-on: macos-14-arm64
     timeout-minutes: 60
     steps:
     - name: Checkout repository
