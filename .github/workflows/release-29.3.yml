@@ -1,9 +1,9 @@
-name: "Build NS with inline-patch (HEAD) for Intel Chips"
+name: "Build NS with inline-patch (29.3) for Intel Chips (Release)"
 on:
   workflow_dispatch:
 
 jobs:
-  nightly-x86_64:
+  release_x86_64:
     runs-on: macos-13
 #    runs-on: macos-14
     timeout-minutes: 60
