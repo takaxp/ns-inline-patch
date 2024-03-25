@@ -144,15 +144,25 @@ cd ${WORKING_DIR}/notarize/pkg
 xcrun stapler staple Emacs-Distribution_SIGNED.pkg
 CPUARC=`uname -m`
 echo "--- Build for ${CPUARC}"
-if [ ${CPUARC} = "x86_64" ]; then
-    mv Emacs-Distribution_SIGNED.pkg emacs-head_intel.pkg
-    rm -f emacs-head_intel.md5
-    md5 emacs-head_intel.pkg > emacs-head_intel.md5
-else
-    mv Emacs-Distribution_SIGNED.pkg emacs-head_apple.pkg
-    rm -f emacs-head_apple.md5
-    md5 emacs-head_apple.pkg > emacs-head_apple.md5
+
+if [ "${BRANCH}" ]; then
+    FILENAME="${BRANCH}"
+    if [ "${BRANCH}" = "master" ]; then
+        FILENAME="emacs-head"
+    fi
+elif [ "${VERSION}" ]; then
+    FILENAME="emacs-${VERSION}"
 fi
+
+VENDER="apple"
+if [ ${CPUARC} = "x86_64" ]; then
+    VENDER="intel"
+fi
+
+mv Emacs-Distribution_SIGNED.pkg ${FILENAME}_${VENDER}.pkg
+rm -f ${FILENAME}_${VENDER}.md5
+md5 ${FILENAME}_intel.pkg > ${FILENAME}_${VENDER}.md5
+
 cp -f *.pkg ${WORKING_DIR}
 cp -f *.md5 ${WORKING_DIR}
 
