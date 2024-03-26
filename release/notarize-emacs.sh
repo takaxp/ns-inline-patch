@@ -43,7 +43,7 @@ else
     exit 1
 fi
 
-PKGVERSION=`date '+%Y-%m-%d'`
+PKGVERSION=`date '+%Y%m%d%H%M'`
 if [ ! "$VERSION" -a ! "${BRANCH}" ]; then
     echo "Please specify VERSION (-v 28.2)"
     echo "Also check APPINSTALLDIR and PKGVERSION ($APPINSTALLDIR, $PKGVERSION)"
