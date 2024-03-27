@@ -73,8 +73,8 @@ These packages are built based on the current development source code. So it may
 
 | Chip  | Version | Download         | macOS   | md5                              |
 |-------+---------+------------------+---------+----------------------------------|
-| Apple | 30.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.pkg][⬇pkg]] (20MAR2024) | Sonoma  | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.md5][5b9cee7346662bfed518050f9ec8b2b4]] |
-| Intel | 30.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.pkg][⬇pkg]] (20MAR2024) | Ventura | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.md5][7c10227eaa94d97771d2ca32b74a0871]] |
+| Apple | 30.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.pkg][⬇pkg]] (27MAR2024) | Sonoma  | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.md5][d363dc2defbdce1b03e5d45b2bc90a03]] |
+| Intel | 30.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.pkg][⬇pkg]] (27MAR2024) | Ventura | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.md5][2ebadd12a5479bf7554418306be2f79e]] |
 
 *** Emacs 29 (with inline patch)
 :PROPERTIES:
