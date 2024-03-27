@@ -71,13 +71,10 @@ You can download my pre-built Emacs 26.3, 27.1, 27.2, 28.1, 28.2, 29.1, 29.2, =2
 
 These packages are built based on the current development source code. So it may be unstable or broken.
 
-| Chip  | Version | Download         | macOS  | md5                              |
-|-------+---------+------------------+--------+----------------------------------|
-| Apple | 30.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.pkg][⬇pkg]] (20MAR2024) | Sonoma | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.md5][5b9cee7346662bfed518050f9ec8b2b4]] |
-| Intel | 30.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.pkg][⬇pkg]] (20MAR2024) | Sonoma | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.md5][7c10227eaa94d97771d2ca32b74a0871]] |
-
-Note: (2023-10-09) The package for Apple Silicon is now built in =Sonoma=. It was previously built in =Ventura=.
-Note: (2023-02-24) The package for Intel CPU is also built in =Ventura=. It was previously built in =Monterey=.
+| Chip  | Version | Download         | macOS   | md5                              |
+|-------+---------+------------------+---------+----------------------------------|
+| Apple | 30.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.pkg][⬇pkg]] (20MAR2024) | Sonoma  | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.md5][5b9cee7346662bfed518050f9ec8b2b4]] |
+| Intel | 30.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.pkg][⬇pkg]] (20MAR2024) | Ventura | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.md5][7c10227eaa94d97771d2ca32b74a0871]] |
 
 *** Emacs 29 (with inline patch)
 :PROPERTIES:

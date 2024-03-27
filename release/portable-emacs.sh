@@ -10,7 +10,7 @@ fi
 
 HOMEBREWDIR=`brew --prefix`
 WORKING_DIR="${HOME}/devel/emacs-head"
-while getopts v:b:d:k:h opt
+while getopts v:b:d:h opt
 do
     case ${opt} in
         d)
@@ -21,9 +21,6 @@ do
             ;;
         v)
             VERSION=${OPTARG}
-            ;;
-        k)
-            KEYCHAIN=${OPTARG}
             ;;
         h)
             echo ""

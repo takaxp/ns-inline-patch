@@ -37,7 +37,7 @@ if [ "${PATCH}" = "pure" ]; then
 elif [ "${PATCH}" = "inline" ]; then
     APPINSTALLDIR="Emacs-takaxp"
 elif [ "${PATCH}" = "private" ]; then
-    APPINSTALLDIR="Emacs-takaxp/private"
+    APPINSTALLDIR="" # Emacs-takaxp/private
 else
     echo "Please provide patch mode by \"-p pure\"."
     exit 1
