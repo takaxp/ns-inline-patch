@@ -2,7 +2,6 @@
 
 # 10.14.* Mojave, 10.15.* Catalina
 # 11.* Big Sur, 12.* Monterey, 13.* Ventura, 14.* Sonoma
-ARCH=$(uname -m)
 PRODUCTVERSION=`sw_vers -ProductVersion`
 NETTLEVERSION="3.9.1" # "3.7.3", "3.8.1"
 if [ ${PRODUCTVERSION%%.*} -lt 11 ]; then
@@ -92,10 +91,7 @@ if [ $NATIVECOMPILE = true ]; then
     cp ${HOMEBREWDIR}/opt/isl/lib/libisl.23.dylib lib
     cp ${HOMEBREWDIR}/opt/libmpc/lib/libmpc.3.dylib lib
     cp ${HOMEBREWDIR}/opt/mpfr/lib/libmpfr.6.dylib lib
-    # /usr/lib/libz.1.dylib
-    if [ "${ARCH}" = "x86_64" ]; then
-        cp ${HOMEBREWDIR}/opt/zstd/lib/libzstd.1.dylib lib
-    fi
+    cp ${HOMEBREWDIR}/opt/zstd/lib/libzstd.1.dylib lib
 #    cp ${HOMEBREWDIR}/opt/gcc/lib/gcc/current/libgcc_s.1.1.dylib lib
 fi
 
@@ -120,10 +116,7 @@ if [ $NATIVECOMPILE = true ]; then
     install_name_tool -id "homebrew:isl/lib/libisl.23.dylib" lib/libisl.23.dylib
     install_name_tool -id "homebrew:libmpc/lib/libmpc.3.dylib" lib/libmpc.3.dylib
     install_name_tool -id "homebrew:mpfr/lib/libmpfr.6.dylib" lib/libmpfr.6.dylib
-    # /usr/lib/libz.1.dylib
-    if [ "${ARCH}" = "x86_64" ]; then
-        install_name_tool -id "homebrew:zstd/lib/libzstd.1.dylib" lib/libzstd.1.dylib
-    fi
+    install_name_tool -id "homebrew:zstd/lib/libzstd.1.dylib" lib/libzstd.1.dylib
 #    install_name_tool -id "homebrew:gmp/lib/libgmp.10.dylib" lib/libgmp.10.dylib
 #    install_name_tool -id "homebrew:gcc/lib/gcc/current/libgcc_s.1.1.dylib" lib/libgcc_s.1.1.dylib
 fi
@@ -167,10 +160,7 @@ install_name_tool -change ${HOMEBREWDIR}/Cellar/nettle/${NETTLEVERSION}/lib/libn
     install_name_tool -change ${HOMEBREWDIR}/opt/libmpc/lib/libmpc.3.dylib @executable_path/lib/libmpc.3.dylib lib/libgccjit.0.dylib
     install_name_tool -change ${HOMEBREWDIR}/opt/mpfr/lib/libmpfr.6.dylib @executable_path/lib/libmpfr.6.dylib lib/libgccjit.0.dylib
     install_name_tool -change ${HOMEBREWDIR}/opt/gmp/lib/libgmp.10.dylib @executable_path/lib/libgmp.10.dylib lib/libgccjit.0.dylib
-    # /usr/lib/libz.1.dylib
-    if [ "${ARCH}" = "x86_64" ]; then
-        install_name_tool -change ${HOMEBREWDIR}/opt/zstd/lib/libzstd.1.dylib @executable_path/lib/libzstd.1.dylib lib/libgccjit.0.dylib
-    fi
+    install_name_tool -change ${HOMEBREWDIR}/opt/zstd/lib/libzstd.1.dylib @executable_path/lib/libzstd.1.dylib lib/libgccjit.0.dylib
     # otool -L lib/libisl.23.dylib
     install_name_tool -change ${HOMEBREWDIR}/opt/gmp/lib/libgmp.10.dylib @executable_path/lib/libgmp.10.dylib lib/libisl.23.dylib
     # otool -L lib/libmpc.3.dylib
@@ -216,6 +206,7 @@ if [ ${NATIVECOMPILE} = true ]; then
     verify_lib "libisl" "23"
     verify_lib "libmpc" "3"
     verify_lib "libmpfr" "6"
+    verify_lib "libzstd" "1"
 #    verify_lib "libgcc_s" "1.1"
 fi
 

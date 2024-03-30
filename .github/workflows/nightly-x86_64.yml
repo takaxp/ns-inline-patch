@@ -73,7 +73,7 @@ jobs:
         rm $RUNNER_TEMP/orz_id
   nightly-native-x86_64:
     runs-on: macos-13
-    timeout-minutes: 60
+    timeout-minutes: 90
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
