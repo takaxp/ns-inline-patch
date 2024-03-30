@@ -4,7 +4,7 @@ SOURCE_DIR="${HOME}/devel/emacs-head"
 WORKING_DIR="${HOME}/Desktop"
 PROFILE_NAME="emacs-build"
 
-while getopts v:p:b:k:d:s:a:n opt
+while getopts v:p:b:k:d:s:a: opt
 do
     case ${opt} in
         s)
@@ -24,9 +24,6 @@ do
             ;;
         v)
             VERSION=${OPTARG}
-            ;;
-        n)
-            NATIVE=yes
             ;;
         h)
             echo ""
@@ -160,7 +157,16 @@ fi
 VENDER="_apple"
 [ "${CPUARC}" = "x86_64" ] && VENDER="_intel"
 [ "${PATCH}" = "pure" ] && PURE="_pure"
-[ "${NATIVE}" = "yes" ] && NATIVE="_nc"
+NATIVEAP=`${APPDIR}/Emacs.app/Contents/MacOS/Emacs -Q --batch --eval="(princ (when (fboundp 'native-comp-available-p) (native-comp-available-p)))"`
+if [ "${NATIVEAP}" == "t" ]; then
+    NATIVEAP=true
+    if [ ! -f ${HOMEBREWDIR}/opt/libgccjit/include/libgccjit.h ]; then
+        NATIVEAP=false
+    fi
+else
+    NATIVEAP=false
+fi
+[ "${NATIVEAP}" = "true" ] && NATIVE="_nc"
 
 mv Emacs-Distribution_SIGNED.pkg ${FILENAME}${VENDER}${PURE}${NATIVE}.pkg
 rm -f ${FILENAME}${VENDER}${PURE}${NATIVE}.md5

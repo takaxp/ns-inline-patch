@@ -50,12 +50,12 @@ fi
 NATIVEAP=`${APPDIR}/Emacs.app/Contents/MacOS/Emacs -Q --batch --eval="(princ (when (fboundp 'native-comp-available-p) (native-comp-available-p)))"`
 
 if [ "${NATIVEAP}" == "t" ]; then
-    NATIVECOMPILE=true
+    NATIVEAP=true
     if [ ! -f ${HOMEBREWDIR}/opt/libgccjit/include/libgccjit.h ]; then
-        NATIVECOMPILE=false
+        NATIVEAP=false
     fi
 else
-    NATIVECOMPILE=false
+    NATIVEAP=false
 fi
 
 TARGETDIR="${APPDIR}/Emacs.app/Contents/MacOS"
