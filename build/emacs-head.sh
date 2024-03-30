@@ -16,11 +16,11 @@ else
 fi
 
 # Native compilation
-if [ "${CPUARC}" = "arm64" ]; then
-    BREW=`which brew`
-    BREW_LIBGCCJIT_PREFIX=`$BREW --prefix --installed libgccjit 2>/dev/null`
-    export CFLAGS="$CFLAGS -I${BREW_LIBGCCJIT_PREFIX}/include"
-fi
+BREW=`which brew`
+BREW_PREFIX=`$BREW --prefix`
+BREW_LIBGCCJIT_PREFIX=`$BREW --prefix --installed libgccjit 2>/dev/null`
+export CFLAGS="$CFLAGS -I${BREW_LIBGCCJIT_PREFIX}/include"
+export LIBRARY_PATH=${BREW_PREFIX}/lib/gcc/current
 
 WORKING_DIR="${HOME}/Desktop"
 CORES=4
@@ -30,7 +30,7 @@ while getopts d:j:ngb: opt
 do
     case ${opt} in
         n)
-            NATIVE="yes"
+            NATIVE="aot"
             ;;
         j)
             CORES=${OPTARG}

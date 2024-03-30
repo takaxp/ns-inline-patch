@@ -4,7 +4,7 @@ SOURCE_DIR="${HOME}/devel/emacs-head"
 WORKING_DIR="${HOME}/Desktop"
 PROFILE_NAME="emacs-build"
 
-while getopts v:p:b:k:d:s:a: opt
+while getopts v:p:b:k:d:s:a:n opt
 do
     case ${opt} in
         s)
@@ -24,6 +24,9 @@ do
             ;;
         v)
             VERSION=${OPTARG}
+            ;;
+        n)
+            NATIVE=yes
             ;;
         h)
             echo ""
@@ -157,12 +160,13 @@ fi
 VENDER="_apple"
 [ "${CPUARC}" = "x86_64" ] && VENDER="_intel"
 [ "${PATCH}" = "pure" ] && PURE="_pure"
+[ "${NATIVE}" = "yes" ] && NATIVE="_nc"
 
-mv Emacs-Distribution_SIGNED.pkg ${FILENAME}${VENDER}${PURE}.pkg
-rm -f ${FILENAME}${VENDER}${PURE}.md5
-md5 ${FILENAME}${VENDER}${PURE}.pkg > ${FILENAME}${VENDER}${PURE}.md5
+mv Emacs-Distribution_SIGNED.pkg ${FILENAME}${VENDER}${PURE}${NATIVE}.pkg
+rm -f ${FILENAME}${VENDER}${PURE}${NATIVE}.md5
+md5 ${FILENAME}${VENDER}${PURE}${NATIVE}.pkg > ${FILENAME}${VENDER}${PURE}${NATIVE}.md5
 
-echo "--- ${FILENAME}${VENDER}${PURE}.pkg and md5 are generaed"
+echo "--- ${FILENAME}${VENDER}${PURE}${NATIVE}.pkg and md5 are generaed"
 
 cp -f *.pkg ${WORKING_DIR}
 cp -f *.md5 ${WORKING_DIR}

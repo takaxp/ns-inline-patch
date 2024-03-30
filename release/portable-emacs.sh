@@ -91,7 +91,9 @@ if [ $NATIVECOMPILE = true ]; then
     cp ${HOMEBREWDIR}/opt/isl/lib/libisl.23.dylib lib
     cp ${HOMEBREWDIR}/opt/libmpc/lib/libmpc.3.dylib lib
     cp ${HOMEBREWDIR}/opt/mpfr/lib/libmpfr.6.dylib lib
-    cp ${HOMEBREWDIR}/opt/zstd/lib/libzstd.1.dylib lib
+    # /usr/lib/libz.1.dylib
+#    cp ${HOMEBREWDIR}/opt/zstd/lib/libzstd.1.dylib lib
+#    cp ${HOMEBREWDIR}/opt/gcc/lib/gcc/current/libgcc_s.1.1.dylib lib
 fi
 
 chmod 644 ./lib/*.dylib
@@ -115,8 +117,10 @@ if [ $NATIVECOMPILE = true ]; then
     install_name_tool -id "homebrew:isl/lib/libisl.23.dylib" lib/libisl.23.dylib
     install_name_tool -id "homebrew:libmpc/lib/libmpc.3.dylib" lib/libmpc.3.dylib
     install_name_tool -id "homebrew:mpfr/lib/libmpfr.6.dylib" lib/libmpfr.6.dylib
-    install_name_tool -id "homebrew:zstd/lib/libzstd.1.dylib" lib/libzstd.1.dylib
-    install_name_tool -id "homebrew:gmp/lib/libgmp.10.dylib" lib/libgmp.10.dylib
+    # /usr/lib/libz.1.dylib
+#    install_name_tool -id "homebrew:zstd/lib/libzstd.1.dylib" lib/libzstd.1.dylib
+#    install_name_tool -id "homebrew:gmp/lib/libgmp.10.dylib" lib/libgmp.10.dylib
+#    install_name_tool -id "homebrew:gcc/lib/gcc/current/libgcc_s.1.1.dylib" lib/libgcc_s.1.1.dylib
 fi
 
 # otool -L Emacs
@@ -126,6 +130,7 @@ install_name_tool -change ${HOMEBREWDIR}/opt/jansson/lib/libjansson.4.dylib @exe
 install_name_tool -change ${HOMEBREWDIR}/Cellar/nettle/${NETTLEVERSION}/lib/libnettle.8.dylib @executable_path/lib/libnettle.8.dylib Emacs
 if [ $NATIVECOMPILE = true ]; then
     install_name_tool -change ${HOMEBREWDIR}/opt/libgccjit/lib/gcc/current/libgccjit.0.dylib @executable_path/lib/libgccjit.0.dylib Emacs
+#    install_name_tool -change ${HOMEBREWDIR}/opt/gcc/lib/gcc/current/libgcc_s.1.1.dylib @executable_path/lib/libgcc_s.1.1.dylib Emacs
 fi
 
 # otool -L lib/libgnutls.30.dylib
@@ -151,13 +156,14 @@ install_name_tool -change ${HOMEBREWDIR}/opt/libunistring/lib/libunistring.5.dyl
 install_name_tool -change ${HOMEBREWDIR}/opt/gmp/lib/libgmp.10.dylib @executable_path/lib/libgmp.10.dylib lib/libhogweed.6.dylib
 install_name_tool -change ${HOMEBREWDIR}/Cellar/nettle/${NETTLEVERSION}/lib/libnettle.8.dylib @executable_path/lib/libnettle.8.dylib lib/libhogweed.6.dylib
 
-if [ $NATIVECOMPILE = true ]; then
+# if [ $NATIVECOMPILE = true ]; then
     # otool -L lib/libgccjit.0.dylib
     install_name_tool -change ${HOMEBREWDIR}/opt/isl/lib/libisl.23.dylib @executable_path/lib/libisl.23.dylib lib/libgccjit.0.dylib
     install_name_tool -change ${HOMEBREWDIR}/opt/libmpc/lib/libmpc.3.dylib @executable_path/lib/libmpc.3.dylib lib/libgccjit.0.dylib
     install_name_tool -change ${HOMEBREWDIR}/opt/mpfr/lib/libmpfr.6.dylib @executable_path/lib/libmpfr.6.dylib lib/libgccjit.0.dylib
     install_name_tool -change ${HOMEBREWDIR}/opt/gmp/lib/libgmp.10.dylib @executable_path/lib/libgmp.10.dylib lib/libgccjit.0.dylib
-    install_name_tool -change ${HOMEBREWDIR}/opt/zstd/lib/libzstd.1.dylib @executable_path/lib/libzstd.1.dylib lib/libgccjit.0.dylib
+    # /usr/lib/libz.1.dylib
+    # install_name_tool -change ${HOMEBREWDIR}/opt/zstd/lib/libzstd.1.dylib @executable_path/lib/libzstd.1.dylib lib/libgccjit.0.dylib
     # otool -L lib/libisl.23.dylib
     install_name_tool -change ${HOMEBREWDIR}/opt/gmp/lib/libgmp.10.dylib @executable_path/lib/libgmp.10.dylib lib/libisl.23.dylib
     # otool -L lib/libmpc.3.dylib
@@ -165,7 +171,7 @@ if [ $NATIVECOMPILE = true ]; then
     install_name_tool -change ${HOMEBREWDIR}/opt/gmp/lib/libgmp.10.dylib @executable_path/lib/libgmp.10.dylib lib/libmpc.3.dylib
     # otool -L lib/libmpfr.6.dylib
     install_name_tool -change ${HOMEBREWDIR}/opt/gmp/lib/libgmp.10.dylib @executable_path/lib/libgmp.10.dylib lib/libmpfr.6.dylib
-fi
+# fi
 
 chmod 444 ./lib/*.dylib
 
@@ -203,6 +209,7 @@ if [ ${NATIVECOMPILE} = true ]; then
     verify_lib "libisl" "23"
     verify_lib "libmpc" "3"
     verify_lib "libmpfr" "6"
+#    verify_lib "libgcc_s" "1.1"
 fi
 
 if [ "${STATUS}" ];then
