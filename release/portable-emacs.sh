@@ -47,15 +47,15 @@ if [ "${BRANCH}" = "" -a ! "${VERSION}" = "" ]; then
     echo "--- Targeting version: ${VERSION}"
 fi
 
-NATIVEAP=`${APPDIR}/Emacs.app/Contents/MacOS/Emacs -Q --batch --eval="(princ (when (fboundp 'native-comp-available-p) (native-comp-available-p)))"`
+NATIVEP=`${APPDIR}/Emacs.app/Contents/MacOS/Emacs -Q --batch --eval="(princ (when (fboundp 'native-comp-available-p) (native-comp-available-p)))"`
 
-if [ "${NATIVEAP}" == "t" ]; then
-    NATIVEAP=true
+if [ "${NATIVEP}" == "t" ]; then
+    NATIVEP=true
     if [ ! -f ${HOMEBREWDIR}/opt/libgccjit/include/libgccjit.h ]; then
-        NATIVEAP=false
+        NATIVEP=false
     fi
 else
-    NATIVEAP=false
+    NATIVEP=false
 fi
 
 TARGETDIR="${APPDIR}/Emacs.app/Contents/MacOS"
@@ -86,7 +86,7 @@ cp ${HOMEBREWDIR}/opt/jansson/lib/libjansson.4.dylib lib
 #     cp ${HOMEBREWDIR}/opt/libffi/lib/libffi.7.dylib lib
 # fi
 
-if [ $NATIVECOMPILE = true ]; then
+if [ $NATIVEP = true ]; then
     cp ${HOMEBREWDIR}/opt/libgccjit/lib/gcc/current/libgccjit.0.dylib lib
     cp ${HOMEBREWDIR}/opt/isl/lib/libisl.23.dylib lib
     cp ${HOMEBREWDIR}/opt/libmpc/lib/libmpc.3.dylib lib
@@ -111,7 +111,7 @@ install_name_tool -id "homebrew:jansson/lib/libjansson.4.dylib" lib/libjansson.4
 #     install_name_tool -id "homebrew:libffi/lib/libffi.7.dylib" lib/libffi.7.dylib
 # fi
 
-if [ $NATIVECOMPILE = true ]; then
+if [ $NATIVEP = true ]; then
     install_name_tool -id "homebrew:libgccjit/lib/gcc/current/libgccjit.0.dylib" lib/libgccjit.0.dylib
     install_name_tool -id "homebrew:isl/lib/libisl.23.dylib" lib/libisl.23.dylib
     install_name_tool -id "homebrew:libmpc/lib/libmpc.3.dylib" lib/libmpc.3.dylib
@@ -126,7 +126,7 @@ install_name_tool -change ${HOMEBREWDIR}/opt/gnutls/lib/libgnutls.30.dylib @exec
 install_name_tool -change ${HOMEBREWDIR}/opt/gmp/lib/libgmp.10.dylib @executable_path/lib/libgmp.10.dylib Emacs
 install_name_tool -change ${HOMEBREWDIR}/opt/jansson/lib/libjansson.4.dylib @executable_path/lib/libjansson.4.dylib Emacs
 install_name_tool -change ${HOMEBREWDIR}/Cellar/nettle/${NETTLEVERSION}/lib/libnettle.8.dylib @executable_path/lib/libnettle.8.dylib Emacs
-if [ $NATIVECOMPILE = true ]; then
+if [ $NATIVEP = true ]; then
     install_name_tool -change ${HOMEBREWDIR}/opt/libgccjit/lib/gcc/current/libgccjit.0.dylib @executable_path/lib/libgccjit.0.dylib Emacs
 #    install_name_tool -change ${HOMEBREWDIR}/opt/gcc/lib/gcc/current/libgcc_s.1.1.dylib @executable_path/lib/libgcc_s.1.1.dylib Emacs
 fi
@@ -154,7 +154,7 @@ install_name_tool -change ${HOMEBREWDIR}/opt/libunistring/lib/libunistring.5.dyl
 install_name_tool -change ${HOMEBREWDIR}/opt/gmp/lib/libgmp.10.dylib @executable_path/lib/libgmp.10.dylib lib/libhogweed.6.dylib
 install_name_tool -change ${HOMEBREWDIR}/Cellar/nettle/${NETTLEVERSION}/lib/libnettle.8.dylib @executable_path/lib/libnettle.8.dylib lib/libhogweed.6.dylib
 
-# if [ $NATIVECOMPILE = true ]; then
+# if [ $NATIVEP = true ]; then
     # otool -L lib/libgccjit.0.dylib
     install_name_tool -change ${HOMEBREWDIR}/opt/isl/lib/libisl.23.dylib @executable_path/lib/libisl.23.dylib lib/libgccjit.0.dylib
     install_name_tool -change ${HOMEBREWDIR}/opt/libmpc/lib/libmpc.3.dylib @executable_path/lib/libmpc.3.dylib lib/libgccjit.0.dylib
@@ -201,7 +201,7 @@ verify_lib "libjansson" "4"
 #     verify_lib "libffi" "7"
 # fi
 
-if [ ${NATIVECOMPILE} = true ]; then
+if [ ${NATIVEP} = true ]; then
     verify_lib "libgccjit" "0"
     verify_lib "libisl" "23"
     verify_lib "libmpc" "3"

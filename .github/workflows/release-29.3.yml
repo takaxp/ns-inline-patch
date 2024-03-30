@@ -137,7 +137,7 @@ jobs:
         rm $RUNNER_TEMP/orz_id
   release_native_x86_64:
     runs-on: macos-13
-    timeout-minutes: 60
+    timeout-minutes: 120
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -183,7 +183,7 @@ jobs:
     - name: Portable
       run: sh release/portable-emacs.sh -v 29.3 -d ${{ github.workspace }}
     - name: Notarize
-      run: sh release/notarize-emacs.sh -v 29.3 -d ${{ github.workspace }} -s ${{ github.workspace }} -p inline -a "github-emacs-build" -n
+      run: sh release/notarize-emacs.sh -v 29.3 -d ${{ github.workspace }} -s ${{ github.workspace }} -p inline -a "github-emacs-build"
     - name: Export
       env:
         ORZ_HOST: ${{ secrets.ORZ_HOST }}
@@ -203,7 +203,7 @@ jobs:
         rm $RUNNER_TEMP/orz_id
   release_native_arm64:
     runs-on: macos-14
-    timeout-minutes: 60
+    timeout-minutes: 120
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -249,7 +249,7 @@ jobs:
     - name: Portable
       run: sh release/portable-emacs.sh -v 29.3 -d ${{ github.workspace }}
     - name: Notarize
-      run: sh release/notarize-emacs.sh -v 29.3 -d ${{ github.workspace }} -s ${{ github.workspace }} -p inline -a "github-emacs-build" -n
+      run: sh release/notarize-emacs.sh -v 29.3 -d ${{ github.workspace }} -s ${{ github.workspace }} -p inline -a "github-emacs-build"
     - name: Export
       env:
         ORZ_HOST: ${{ secrets.ORZ_HOST }}

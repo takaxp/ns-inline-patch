@@ -70,7 +70,7 @@ jobs:
         rm ~/Library/MobileDevice/Provisioning\ Profiles/build_pp.provisionprofile
         rm $RUNNER_TEMP/orz_id
   release_arm64:
-    runs-on: macos-14-arm64
+    runs-on: macos-14
     timeout-minutes: 60
     steps:
     - name: Checkout repository
