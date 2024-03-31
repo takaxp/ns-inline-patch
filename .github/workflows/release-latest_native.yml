@@ -1,4 +1,4 @@
-name: "Build NS with inline-patch (release: 29.3)"
+name: "Build NS with inline-patch (release: 29.3, NativeComp)"
 on:
   workflow_dispatch:
 
