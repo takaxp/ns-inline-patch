@@ -71,6 +71,8 @@ else
     cd emacs-${VERSION}
 fi
 
+rm -rf ./emacs
+
 sleep 5
 ./autogen.sh
 ./configure --without-x --with-ns --with-modules --with-jpeg=no --with-tiff=no --with-gif=no --with-png=no --with-lcms2=no --with-webp=no --with-rsvg=no --with-tree-sitter=no --with-native-compilation=${NATIVE}

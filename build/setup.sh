@@ -19,6 +19,7 @@ function setup_homebrew () {
     echo "MANPATH:  $MANPATH"
     echo "INFOPATH: $INFOPATH"
 }
+
 function install_deps () {
     brew install autoconf automake pkg-config gnutls texinfo jansson
     # Required to support NativeComp
