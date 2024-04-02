@@ -1,15 +1,70 @@
-#!/bin/sh
+#!/bin/bash
 
-# 10.14.* Mojave, 10.15.* Catalina
-# 11.* Big Sur, 12.* Monterey, 13.* Ventura, 14.* Sonoma
-PRODUCTVERSION=`sw_vers -ProductVersion`
-NETTLEVERSION="3.9.1" # "3.7.3", "3.8.1"
-if [ ${PRODUCTVERSION%%.*} -lt 11 ]; then
-    NETTLEVERSION=3.6 # for Mojave actually
-fi
-
-HOMEBREWDIR=`brew --prefix`
+BREW_DIR=$(brew --prefix)
 WORKING_DIR="${HOME}/devel/emacs-head"
+GLOBAL_LIB_LIST=()
+
+function lib_in_list () {
+    for lib in ${GLOBAL_LIB_LIST[@]}
+    do
+        [ "$lib" = "$1" ] && return 0
+    done
+
+    return 1
+}
+
+function colloect_deps_lib () {
+    LOCAL_LIB_LIST=()
+    count=0
+    local _RESULT=$(otool -L $1 | grep ${BREW_DIR})
+    if [ ! "$1" = "Emacs" ]; then
+        _RESULT=$(echo "$_RESULT" | sed -r "s/.*dylib:(.*)/\1/")
+    fi
+
+    _IFS="$IFS"
+    IFS=$'\n'
+    for lib in ${_RESULT[@]}
+    do
+        count=$(expr $count + 1)
+        if [ ! "$1" = "Emacs" -a "$2" -a $count = 1 ]; then
+            continue
+        fi
+        regexp="^.*${BREW_DIR}/(.*).dylib"
+        if [[ $lib =~ $regexp ]]; then
+            DYLIB=${BASH_REMATCH[1]}
+
+            if [ "$2" = "copy" ]; then
+                lib_in_list $DYLIB
+                if [ $? = 0 ]; then
+                    continue
+                else
+                    GLOBAL_LIB_LIST+=("$DYLIB")
+                    colloect_deps_lib "${BREW_DIR}/${DYLIB}.dylib" "copy"
+                fi
+            else
+                LOCAL_LIB_LIST+=("$DYLIB")
+            fi
+        fi
+    done
+    IFS="$_IFS"
+
+    return 0
+}
+
+function verify_lib () {
+    echo "-L "$1
+    if [ "$1" = "Emacs" ]; then
+        RESULT=$(otool -L $1 | grep ${BREW_DIR})
+    else
+        RESULT=$(otool -L ${EMACS_EXEC_DIR}/lib/$1.dylib | grep ${BREW_DIR})
+    fi
+    if [ ${#RESULT} -gt 0 ]; then
+        STATUS="${STATUS}\n${RESULT}"
+    fi
+
+    return 0
+}
+
 while getopts v:b:d:h opt
 do
     case ${opt} in
@@ -29,8 +84,7 @@ do
     esac
 done
 
-echo "--- Integrate GnuTLS and its dependencies into Emacs.app"
-echo "--- PRODUCT VERSION: ${PRODUCTVERSION%%.*}"
+echo "--- Integrate libraries and its dependencies into Emacs.app"
 
 if [ "$VERSION" = "" -a "$BRANCH" = "" ]; then
     echo "Please specify VERSION (-v 27.2) ov BRANCH (-b master)"
@@ -38,180 +92,92 @@ if [ "$VERSION" = "" -a "$BRANCH" = "" ]; then
 fi
 
 if [ ! "${BRANCH}" = "" -a "${VERSION}" = "" ]; then
-    APPDIR="${WORKING_DIR}/emacs/nextstep"
-    echo "--- Targeting branch: ${BRANCH}"
+    APP_DIR="${WORKING_DIR}/emacs/nextstep"
+    echo "--- Target branch: ${BRANCH}"
 fi
 
 if [ "${BRANCH}" = "" -a ! "${VERSION}" = "" ]; then
-    APPDIR="${WORKING_DIR}/emacs-${VERSION}/nextstep"
-    echo "--- Targeting version: ${VERSION}"
+    APP_DIR="${WORKING_DIR}/emacs-${VERSION}/nextstep"
+    echo "--- Target version: ${VERSION}"
 fi
 
-NATIVEP=`${APPDIR}/Emacs.app/Contents/MacOS/Emacs -Q --batch --eval="(princ (when (fboundp 'native-comp-available-p) (native-comp-available-p)))"`
+# EMACSVERSION=`${APP_DIR}/Emacs.app/Contents/MacOS/Emacs -Q --batch --eval="(princ emacs-version)"`
+NATIVEP=`${APP_DIR}/Emacs.app/Contents/MacOS/Emacs -Q --batch --eval="(princ (when (fboundp 'native-comp-available-p) (native-comp-available-p)))"`
 
 if [ "${NATIVEP}" == "t" ]; then
     NATIVEP=true
-    if [ ! -f ${HOMEBREWDIR}/opt/libgccjit/include/libgccjit.h ]; then
+    if [ ! -f ${BREW_DIR}/opt/libgccjit/include/libgccjit.h ]; then
         NATIVEP=false
     fi
 else
     NATIVEP=false
 fi
 
-TARGETDIR="${APPDIR}/Emacs.app/Contents/MacOS"
-if [ ! -d "$TARGETDIR" ]; then
-    echo "$TARGETDIR does NOT exist"
+EMACS_EXEC_DIR="${APP_DIR}/Emacs.app/Contents/MacOS"
+if [ ! -d "$EMACS_EXEC_DIR" ]; then
+    echo "$EMACS_EXEC_DIR does NOT exist"
     exit 1
 fi
 
-echo "$TARGETDIR"
-cd "$TARGETDIR"
+cd "$EMACS_EXEC_DIR"
+mkdir -p ${EMACS_EXEC_DIR}/lib
 
-if [ -d "lib" ]; then
-    rm -rf lib
-fi
-
-mkdir lib
-cp ${HOMEBREWDIR}/opt/gnutls/lib/libgnutls.30.dylib lib
-cp ${HOMEBREWDIR}/opt/p11-kit/lib/libp11-kit.0.dylib lib
-cp ${HOMEBREWDIR}/opt/libidn2/lib/libidn2.0.dylib lib
-cp ${HOMEBREWDIR}/opt/libunistring/lib/libunistring.5.dylib lib
-cp ${HOMEBREWDIR}/opt/libtasn1/lib/libtasn1.6.dylib lib
-cp ${HOMEBREWDIR}/opt/nettle/lib/libnettle.8.dylib lib
-cp ${HOMEBREWDIR}/opt/nettle/lib/libhogweed.6.dylib lib
-cp ${HOMEBREWDIR}/opt/gmp/lib/libgmp.10.dylib lib
-cp ${HOMEBREWDIR}/opt/gettext/lib/libintl.8.dylib lib
-cp ${HOMEBREWDIR}/opt/jansson/lib/libjansson.4.dylib lib
-# if [ ${PRODUCTVERSION%%.*} -le 12 ]; then
-#     cp ${HOMEBREWDIR}/opt/libffi/lib/libffi.7.dylib lib
-# fi
-
-if [ $NATIVEP = true ]; then
-    cp ${HOMEBREWDIR}/opt/libgccjit/lib/gcc/current/libgccjit.0.dylib lib
-    cp ${HOMEBREWDIR}/opt/isl/lib/libisl.23.dylib lib
-    cp ${HOMEBREWDIR}/opt/libmpc/lib/libmpc.3.dylib lib
-    cp ${HOMEBREWDIR}/opt/mpfr/lib/libmpfr.6.dylib lib
-    cp ${HOMEBREWDIR}/opt/zstd/lib/libzstd.1.dylib lib
-#    cp ${HOMEBREWDIR}/opt/gcc/lib/gcc/current/libgcc_s.1.1.dylib lib
-fi
-
-chmod 644 ./lib/*.dylib
-
-install_name_tool -id "homebrew:gnutls/lib/libgnutls.30.dylib" lib/libgnutls.30.dylib
-install_name_tool -id "homebrew:p11-kit/lib/libp11-kit.0.dylib" lib/libp11-kit.0.dylib
-install_name_tool -id "homebrew:libidn2/lib/libidn2.0.dylib" lib/libidn2.0.dylib
-install_name_tool -id "homebrew:libunistring/lib/libunistring.5.dylib" lib/libunistring.5.dylib
-install_name_tool -id "homebrew:libtasn1/lib/libtasn1.6.dylib" lib/libtasn1.6.dylib
-install_name_tool -id "homebrew:nettle/lib/libnettle.8.dylib" lib/libnettle.8.dylib
-install_name_tool -id "homebrew:nettle/lib/libhogweed.6.dylib" lib/libhogweed.6.dylib
-install_name_tool -id "homebrew:gmp/lib/libgmp.10.dylib" lib/libgmp.10.dylib
-install_name_tool -id "homebrew:gettext/lib/libintl.8.dylib" lib/libintl.8.dylib
-install_name_tool -id "homebrew:jansson/lib/libjansson.4.dylib" lib/libjansson.4.dylib
-# if [ ${PRODUCTVERSION%%.*} -le 12 ]; then
-#     install_name_tool -id "homebrew:libffi/lib/libffi.7.dylib" lib/libffi.7.dylib
-# fi
-
-if [ $NATIVEP = true ]; then
-    install_name_tool -id "homebrew:libgccjit/lib/gcc/current/libgccjit.0.dylib" lib/libgccjit.0.dylib
-    install_name_tool -id "homebrew:isl/lib/libisl.23.dylib" lib/libisl.23.dylib
-    install_name_tool -id "homebrew:libmpc/lib/libmpc.3.dylib" lib/libmpc.3.dylib
-    install_name_tool -id "homebrew:mpfr/lib/libmpfr.6.dylib" lib/libmpfr.6.dylib
-    install_name_tool -id "homebrew:zstd/lib/libzstd.1.dylib" lib/libzstd.1.dylib
-#    install_name_tool -id "homebrew:gmp/lib/libgmp.10.dylib" lib/libgmp.10.dylib
-#    install_name_tool -id "homebrew:gcc/lib/gcc/current/libgcc_s.1.1.dylib" lib/libgcc_s.1.1.dylib
-fi
-
-# otool -L Emacs
-install_name_tool -change ${HOMEBREWDIR}/opt/gnutls/lib/libgnutls.30.dylib @executable_path/lib/libgnutls.30.dylib Emacs
-install_name_tool -change ${HOMEBREWDIR}/opt/gmp/lib/libgmp.10.dylib @executable_path/lib/libgmp.10.dylib Emacs
-install_name_tool -change ${HOMEBREWDIR}/opt/jansson/lib/libjansson.4.dylib @executable_path/lib/libjansson.4.dylib Emacs
-install_name_tool -change ${HOMEBREWDIR}/Cellar/nettle/${NETTLEVERSION}/lib/libnettle.8.dylib @executable_path/lib/libnettle.8.dylib Emacs
-if [ $NATIVEP = true ]; then
-    install_name_tool -change ${HOMEBREWDIR}/opt/libgccjit/lib/gcc/current/libgccjit.0.dylib @executable_path/lib/libgccjit.0.dylib Emacs
-#    install_name_tool -change ${HOMEBREWDIR}/opt/gcc/lib/gcc/current/libgcc_s.1.1.dylib @executable_path/lib/libgcc_s.1.1.dylib Emacs
-fi
-
-# otool -L lib/libgnutls.30.dylib
-install_name_tool -change ${HOMEBREWDIR}/opt/p11-kit/lib/libp11-kit.0.dylib @executable_path/lib/libp11-kit.0.dylib lib/libgnutls.30.dylib
-install_name_tool -change ${HOMEBREWDIR}/opt/libidn2/lib/libidn2.0.dylib @executable_path/lib/libidn2.0.dylib lib/libgnutls.30.dylib
-install_name_tool -change ${HOMEBREWDIR}/opt/libunistring/lib/libunistring.5.dylib @executable_path/lib/libunistring.5.dylib lib/libgnutls.30.dylib
-install_name_tool -change ${HOMEBREWDIR}/opt/libtasn1/lib/libtasn1.6.dylib @executable_path/lib/libtasn1.6.dylib lib/libgnutls.30.dylib
-install_name_tool -change ${HOMEBREWDIR}/opt/nettle/lib/libnettle.8.dylib @executable_path/lib/libnettle.8.dylib lib/libgnutls.30.dylib
-install_name_tool -change ${HOMEBREWDIR}/opt/nettle/lib/libhogweed.6.dylib @executable_path/lib/libhogweed.6.dylib lib/libgnutls.30.dylib
-install_name_tool -change ${HOMEBREWDIR}/opt/gmp/lib/libgmp.10.dylib @executable_path/lib/libgmp.10.dylib lib/libgnutls.30.dylib
-install_name_tool -change ${HOMEBREWDIR}/opt/gettext/lib/libintl.8.dylib @executable_path/lib/libintl.8.dylib lib/libgnutls.30.dylib
-
-# otool -L lib/libp11-kit.0.dylib
-# if [ ${PRODUCTVERSION%%.*} -le 12 ]; then
-#     install_name_tool -change ${HOMEBREWDIR}/opt/libffi/lib/libffi.7.dylib @executable_path/lib/libffi.7.dylib lib/libp11-kit.0.dylib
-# fi
-
-# otool -L lib/libidn2.0.dylib
-install_name_tool -change ${HOMEBREWDIR}/opt/gettext/lib/libintl.8.dylib @executable_path/lib/libintl.8.dylib lib/libidn2.0.dylib
-install_name_tool -change ${HOMEBREWDIR}/opt/libunistring/lib/libunistring.5.dylib @executable_path/lib/libunistring.5.dylib lib/libidn2.0.dylib
-
-# otool -L lib/libhogweed.6.dylib
-install_name_tool -change ${HOMEBREWDIR}/opt/gmp/lib/libgmp.10.dylib @executable_path/lib/libgmp.10.dylib lib/libhogweed.6.dylib
-install_name_tool -change ${HOMEBREWDIR}/Cellar/nettle/${NETTLEVERSION}/lib/libnettle.8.dylib @executable_path/lib/libnettle.8.dylib lib/libhogweed.6.dylib
-
-# if [ $NATIVEP = true ]; then
-    # otool -L lib/libgccjit.0.dylib
-    install_name_tool -change ${HOMEBREWDIR}/opt/isl/lib/libisl.23.dylib @executable_path/lib/libisl.23.dylib lib/libgccjit.0.dylib
-    install_name_tool -change ${HOMEBREWDIR}/opt/libmpc/lib/libmpc.3.dylib @executable_path/lib/libmpc.3.dylib lib/libgccjit.0.dylib
-    install_name_tool -change ${HOMEBREWDIR}/opt/mpfr/lib/libmpfr.6.dylib @executable_path/lib/libmpfr.6.dylib lib/libgccjit.0.dylib
-    install_name_tool -change ${HOMEBREWDIR}/opt/gmp/lib/libgmp.10.dylib @executable_path/lib/libgmp.10.dylib lib/libgccjit.0.dylib
-    install_name_tool -change ${HOMEBREWDIR}/opt/zstd/lib/libzstd.1.dylib @executable_path/lib/libzstd.1.dylib lib/libgccjit.0.dylib
-    # otool -L lib/libisl.23.dylib
-    install_name_tool -change ${HOMEBREWDIR}/opt/gmp/lib/libgmp.10.dylib @executable_path/lib/libgmp.10.dylib lib/libisl.23.dylib
-    # otool -L lib/libmpc.3.dylib
-    install_name_tool -change ${HOMEBREWDIR}/opt/mpfr/lib/libmpfr.6.dylib @executable_path/lib/libmpfr.6.dylib lib/libmpc.3.dylib
-    install_name_tool -change ${HOMEBREWDIR}/opt/gmp/lib/libgmp.10.dylib @executable_path/lib/libgmp.10.dylib lib/libmpc.3.dylib
-    # otool -L lib/libmpfr.6.dylib
-    install_name_tool -change ${HOMEBREWDIR}/opt/gmp/lib/libgmp.10.dylib @executable_path/lib/libgmp.10.dylib lib/libmpfr.6.dylib
-# fi
-
-chmod 444 ./lib/*.dylib
-
-function verify_lib () {
-    echo "-L "$1
-    if [ "$2" ]; then
-        RESULT=`otool -L lib/$1.$2.dylib | grep ${HOMEBREWDIR}`
-    else
-        RESULT=`otool -L $1 | grep ${HOMEBREWDIR}`
+echo "--- Copying libraries, and applying modification"
+colloect_deps_lib "Emacs" "copy"
+for lib in ${GLOBAL_LIB_LIST[@]}
+do
+    cp -f "${BREW_DIR}/${lib}.dylib" ${EMACS_EXEC_DIR}/lib
+    regexp=".+/(.+)"
+    if [[ $lib =~ $regexp ]]; then
+        # echo "install_name_tool -id "homebrew:$lib.dylib" lib/${BASH_REMATCH[1]}.dylib"
+        install_name_tool -id "homebrew:$lib.dylib" lib/${BASH_REMATCH[1]}.dylib > /dev/null 2>&1
     fi
-    if [ ${#RESULT} -gt 0 ]; then
-        # echo ${RESULT}
-        STATUS="${STATUS}\n${RESULT}"
+done
+
+echo "--- Linking dependent libraries"
+colloect_deps_lib "Emacs"
+for deps in ${LOCAL_LIB_LIST[@]}
+do
+    regexp=".+/(.+)"
+    if [[ $deps =~ $regexp ]]; then
+        install_name_tool -change ${BREW_DIR}/${deps}.dylib @executable_path/lib/${BASH_REMATCH[1]}.dylib Emacs> /dev/null 2>&1
     fi
-}
+done
+
+for lib in ${GLOBAL_LIB_LIST[@]}
+do
+    regexp=".+/(.+)"
+    if [[ $lib =~ $regexp ]]; then
+        TARGET_LIB=${BASH_REMATCH[1]}
+        # echo ">>> $TARGET_LIB.dylib"
+
+        colloect_deps_lib "lib/$TARGET_LIB.dylib"
+        for deps in ${LOCAL_LIB_LIST[@]}
+        do
+            regexp=".+/(.+)"
+            if [[ $deps =~ $regexp ]]; then
+                install_name_tool -change "${BREW_DIR}/${deps}.dylib" "@executable_path/lib/${BASH_REMATCH[1]}.dylib" "lib/${TARGET_LIB}.dylib"> /dev/null 2>&1
+            fi
+        done
+    fi
+done
+
+chmod 644 ${EMACS_EXEC_DIR}/lib/*.dylib
 
 # Verifying - If ok then nothing will be displayed except the lib names
+for lib in ${GLOBAL_LIB_LIST[@]}
+do
+    regexp=".+/(.+)"
+    if [[ $lib =~ $regexp ]]; then
+        verify_lib "${BASH_REMATCH[1]}"
+    fi
+done
 verify_lib "Emacs"
-verify_lib "libgnutls" "30"
-verify_lib "libp11-kit" "0"
-verify_lib "libidn2" "0"
-verify_lib "libunistring" "5"
-verify_lib "libtasn1" "6"
-verify_lib "libnettle" "8"
-verify_lib "libhogweed" "6"
-verify_lib "libgmp" "10"
-verify_lib "libintl" "8"
-verify_lib "libjansson" "4"
-# if [ ${PRODUCTVERSION%%.*} -le 12 ]; then
-#     verify_lib "libffi" "7"
-# fi
 
-if [ ${NATIVEP} = true ]; then
-    verify_lib "libgccjit" "0"
-    verify_lib "libisl" "23"
-    verify_lib "libmpc" "3"
-    verify_lib "libmpfr" "6"
-    verify_lib "libzstd" "1"
-#    verify_lib "libgcc_s" "1.1"
-fi
-
+# Return false for Github Actions if needed
 if [ "${STATUS}" ];then
     echo "--- ${STATUS}"
     exit 1
 fi
+
 echo "--- done"
