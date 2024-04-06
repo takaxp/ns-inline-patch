@@ -71,10 +71,37 @@ You can download my pre-built Emacs 26.3, 27.1, 27.2, 28.1, 28.2, 29.1, 29.2, =2
 
 These packages are built based on the current development source code. So it may be unstable or broken.
 
+#+caption: HEAD(master)
 | Chip  | Version | Download         | macOS   | md5                              |
 |-------+---------+------------------+---------+----------------------------------|
-| Apple | 30.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.pkg][⬇pkg]] (27MAR2024) | Sonoma  | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.md5][d363dc2defbdce1b03e5d45b2bc90a03]] |
-| Intel | 30.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.pkg][⬇pkg]] (27MAR2024) | Ventura | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.md5][2ebadd12a5479bf7554418306be2f79e]] |
+| Apple | 30.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.pkg][⬇pkg]] (06APR2024) | Sonoma  | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.md5][0a2898479dbdb734370ef47de2f4f895]] |
+| Intel | 30.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.pkg][⬇pkg]] (06APR2024) | Ventura | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.md5][940b1662786d029b5238781b1539efef]] |
+
+You can also try to use an Emacs supporting =NativeComp= by downloading pkg by the following links. Integrated lisp code are natively compiled so the package size increased compared to that of the normal package. Currently, installing =gcc= by brew is required to compile additional lisp code by the installed Emacs. And adding the following configuration will be needed to your =early-init.el= or beginning of =init.el= when you face a warning like *Warning (comp): libgccjit.so: error: error invoking gcc driver*.
+
+#+caption: HEAD(master) build with Native Comp
+| Chip  | Version | Download             | macOS   | md5                              |
+|-------+---------+----------------------+---------+----------------------------------|
+| Apple | 30.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc.pkg][⬇pkg(NC)]] (06APR2024) | Sonoma  | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc.md5][fe9d3ed88f6327bae4dc771680337f43]] |
+| Intel | 30.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel_nc.pkg][⬇pkg(NC)]] (06APR2024) | Ventura | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel_nc.md5][6833f120791477ef07f7027566d8b0f7]] |
+
+#+begin_src emacs-lisp
+(setenv "LIBRARY_PATH"
+        (string-join
+         '("/opt/homebrew/opt/gcc/lib/gcc/13"
+           "/opt/homebrew/opt/libgccjit/lib/gcc/13"
+           "/opt/homebrew/opt/gcc/lib/gcc/13/gcc/aarch64-apple-darwin23/13")
+         ":"))
+#+end_src
+
+**** install gcc by grew
+
+#+begin_src sh
+# setup grew
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+# install gcc
+brew install gcc
+#+end_src
 
 *** Emacs 29 (with inline patch)
 :PROPERTIES:
