@@ -3,6 +3,7 @@
 BREW_DIR=$(brew --prefix)
 WORKING_DIR="${HOME}/devel/emacs-head"
 GLOBAL_LIB_LIST=()
+DIRECT_DEPS_LIST=()
 
 function lib_in_list () {
     for lib in ${GLOBAL_LIB_LIST[@]}
@@ -14,7 +15,7 @@ function lib_in_list () {
 }
 
 function colloect_deps_lib () {
-    LOCAL_LIB_LIST=()
+    DIRECT_DEPS_LIST=()
     count=0
     local _RESULT=$(otool -L $1 | grep ${BREW_DIR})
     if [ ! "$1" = "Emacs" ]; then
@@ -29,6 +30,9 @@ function colloect_deps_lib () {
         if [ ! "$1" = "Emacs" -a "$2" -a $count = 1 ]; then
             continue
         fi
+
+        # includes "/opt/.../hoge.dylib" and "/Cellar/.../hoge.dylib"
+        # both cases should be supported for "install_name_tool -change"
         regexp="^.*${BREW_DIR}/(.*).dylib"
         if [[ $lib =~ $regexp ]]; then
             DYLIB=${BASH_REMATCH[1]}
@@ -42,7 +46,7 @@ function colloect_deps_lib () {
                     colloect_deps_lib "${BREW_DIR}/${DYLIB}.dylib" "copy"
                 fi
             else
-                LOCAL_LIB_LIST+=("$DYLIB")
+                DIRECT_DEPS_LIST+=("$DYLIB")
             fi
         fi
     done
@@ -65,7 +69,7 @@ function verify_lib () {
     return 0
 }
 
-while getopts v:b:d:h opt
+while getopts v:b:d:ha: opt
 do
     case ${opt} in
         d)
@@ -77,6 +81,9 @@ do
         v)
             VERSION=${OPTARG}
             ;;
+        a)
+            APP_DIR=${OPTARG}
+            ;;
         h)
             echo ""
             exit
@@ -86,7 +93,7 @@ done
 
 echo "--- Integrate libraries and its dependencies into Emacs.app"
 
-if [ "$VERSION" = "" -a "$BRANCH" = "" ]; then
+if [ "$VERSION" = "" -a "$BRANCH" = "" -a "$APP_DIR" = "" ]; then
     echo "Please specify VERSION (-v 27.2) ov BRANCH (-b master)"
     exit 1
 fi
@@ -122,40 +129,38 @@ fi
 cd "$EMACS_EXEC_DIR"
 mkdir -p ${EMACS_EXEC_DIR}/lib
 
+libname_regexp=".+/(.+)"
+
 echo "--- Copying libraries, and applying modification"
 colloect_deps_lib "Emacs" "copy"
 for lib in ${GLOBAL_LIB_LIST[@]}
 do
     cp -f "${BREW_DIR}/${lib}.dylib" ${EMACS_EXEC_DIR}/lib
-    regexp=".+/(.+)"
-    if [[ $lib =~ $regexp ]]; then
+    if [[ $lib =~ $libname_regexp ]]; then
         # echo "install_name_tool -id "homebrew:$lib.dylib" lib/${BASH_REMATCH[1]}.dylib"
         install_name_tool -id "homebrew:$lib.dylib" lib/${BASH_REMATCH[1]}.dylib > /dev/null 2>&1
     fi
 done
 
-echo "--- Linking dependent libraries"
+echo "--- Linking dependent libraries (${#GLOBAL_LIB_LIST[@]})"
 colloect_deps_lib "Emacs"
-for deps in ${LOCAL_LIB_LIST[@]}
+for deps in ${DIRECT_DEPS_LIST[@]}
 do
-    regexp=".+/(.+)"
-    if [[ $deps =~ $regexp ]]; then
-        install_name_tool -change ${BREW_DIR}/${deps}.dylib @executable_path/lib/${BASH_REMATCH[1]}.dylib Emacs> /dev/null 2>&1
+    if [[ $deps =~ $libname_regexp ]]; then
+        install_name_tool -change "${BREW_DIR}/${deps}.dylib" "@executable_path/lib/${BASH_REMATCH[1]}.dylib" Emacs> /dev/null 2>&1
     fi
 done
 
 for lib in ${GLOBAL_LIB_LIST[@]}
 do
-    regexp=".+/(.+)"
-    if [[ $lib =~ $regexp ]]; then
+    if [[ $lib =~ $libname_regexp ]]; then
         TARGET_LIB=${BASH_REMATCH[1]}
         # echo ">>> $TARGET_LIB.dylib"
 
         colloect_deps_lib "lib/$TARGET_LIB.dylib"
-        for deps in ${LOCAL_LIB_LIST[@]}
+        for deps in ${DIRECT_DEPS_LIST[@]}
         do
-            regexp=".+/(.+)"
-            if [[ $deps =~ $regexp ]]; then
+            if [[ $deps =~ $libname_regexp ]]; then
                 install_name_tool -change "${BREW_DIR}/${deps}.dylib" "@executable_path/lib/${BASH_REMATCH[1]}.dylib" "lib/${TARGET_LIB}.dylib"> /dev/null 2>&1
             fi
         done
@@ -167,8 +172,7 @@ chmod 644 ${EMACS_EXEC_DIR}/lib/*.dylib
 # Verifying - If ok then nothing will be displayed except the lib names
 for lib in ${GLOBAL_LIB_LIST[@]}
 do
-    regexp=".+/(.+)"
-    if [[ $lib =~ $regexp ]]; then
+    if [[ $lib =~ $libname_regexp ]]; then
         verify_lib "${BASH_REMATCH[1]}"
     fi
 done

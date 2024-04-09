@@ -1,4 +1,4 @@
-name: "Build NS with inline-patch (HEAD) for Intel Chips"
+name: "Experiment master (HEAD) for Intel Chips"
 on:
   workflow_dispatch:
   schedule:

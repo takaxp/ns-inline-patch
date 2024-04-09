@@ -1,4 +1,4 @@
-name: "Build NS with inline-patch (HEAD) for Apple Silicon"
+name: "Experiment master (HEAD) for Apple Silicon"
 on:
   workflow_dispatch:
   schedule:

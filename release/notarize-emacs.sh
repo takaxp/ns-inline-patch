@@ -34,25 +34,25 @@ do
 done
 
 if [ "${PATCH}" = "pure" ]; then
-    APPINSTALLDIR="Emacs-takaxp/pure" # APPINSTALLDIR="Emacs-takaxp"
+    APPINSTALL_DIR="Emacs-takaxp/pure" # APPINSTALL_DIR="Emacs-takaxp"
 elif [ "${PATCH}" = "inline" ]; then
-    APPINSTALLDIR="Emacs-takaxp"
+    APPINSTALL_DIR="Emacs-takaxp"
 elif [ "${PATCH}" = "private" ]; then
-    APPINSTALLDIR="" # Emacs-takaxp/private
+    APPINSTALL_DIR="" # Emacs-takaxp/private
 else
     echo "Please provide patch mode by \"-p pure\"."
     exit 1
 fi
 
-PKGVERSION=`date '+%Y%m%d%H%M'`
+PKGVERSION=$(date '+%Y%m%d%H%M')
 if [ ! "$VERSION" -a ! "${BRANCH}" ]; then
     echo "Please specify VERSION (-v 28.2)"
-    echo "Also check APPINSTALLDIR and PKGVERSION ($APPINSTALLDIR, $PKGVERSION)"
+    echo "Also check APPINSTALL_DIR and PKGVERSION ($APPINSTALL_DIR, $PKGVERSION)"
     exit 1
 else
     echo "Version:    $VERSION"
     echo "Branch:     $BRANCH"
-    echo "APPINSTALLDIR:     $APPINSTALLDIR"
+    echo "APPINSTALL_DIR:     $APPINSTALL_DIR"
     echo "PKGVERSION: $PKGVERSION"
 fi
 
@@ -63,7 +63,8 @@ cd ${WORKING_DIR}
 if [ -d "notarize" ]; then
     rm -rf notarize
 fi
-mkdir -p notarize/pkg/Applications/${APPINSTALLDIR}
+PKG_APPINSTALL_DIR="pkg/Applications/${APPINSTALL_DIR}"
+mkdir -p notarize/${PKG_APPINSTALL_DIR}
 
 cd ${WORKING_DIR}/notarize
 
@@ -74,20 +75,20 @@ echo '<?xml version="1.0" encoding="UTF-8"?>\n<!DOCTYPE plist PUBLIC "-//Apple//
 
 # Codesign
 if [ ! "${BRANCH}" = "" -a "${VERSION}" = "" ]; then
-    APPDIR="${SOURCE_DIR}/emacs/nextstep"
+    APP_DIR="${SOURCE_DIR}/emacs/nextstep"
     echo "--- Targeting branch: ${BRANCH}"
 fi
 if [ "${BRANCH}" = "" -a ! "${VERSION}" = "" ]; then
-    APPDIR="${SOURCE_DIR}/emacs-${VERSION}/nextstep"
+    APP_DIR="${SOURCE_DIR}/emacs-${VERSION}/nextstep"
     echo "--- Targeting version: ${VERSION}"
 fi
-cp -r ${APPDIR}/Emacs.app pkg/Applications/${APPINSTALLDIR}
+cp -r ${APP_DIR}/Emacs.app ${PKG_APPINSTALL_DIR}
 
 DEVELOPERID='Developer ID Application: Takaaki Ishikawa (H2PH8KNN3H)'
-codesign --verify --sign "${DEVELOPERID}" --deep --force --verbose --option runtime --entitlements entitlements.plist --timestamp ./pkg/Applications/${APPINSTALLDIR}/Emacs.app
+codesign --verify --sign "${DEVELOPERID}" --deep --force --verbose --option runtime --entitlements entitlements.plist --timestamp ./${PKG_APPINSTALL_DIR}/Emacs.app
 
 # Check the signature
-RESULT=`pkgutil --check-signature ./pkg/Applications/${APPINSTALLDIR}/Emacs.app | grep "no sign"`
+RESULT=$(pkgutil --check-signature ./${PKG_APPINSTALL_DIR}/Emacs.app | grep "no sign")
 if [ "${RESULT}" ]; then
     exit 1
 fi
@@ -107,7 +108,7 @@ pkgbuild Emacs.pkg --root Applications --component-plist packages.plist --identi
 # Edit Distribution.xml
 productbuild --synthesize --package Emacs.pkg Distribution.xml
 
-XMLSTARLET=`which xmlstarlet`
+XMLSTARLET=$(which xmlstarlet)
 if [ ! ${XMLSTARLET} ]; then
     echo "xmlstarlet shall be instaled."
     exit 1
@@ -130,7 +131,7 @@ DEVELOPERID='Developer ID Installer: Takaaki Ishikawa (H2PH8KNN3H)'
 productsign --sign "${DEVELOPERID}" Emacs-Distribution.pkg Emacs-Distribution_SIGNED.pkg
 
 # Check the signature
-RESULT=`pkgutil --check-signature Emacs-Distribution_SIGNED.pkg | grep "no sign"`
+RESULT=$(pkgutil --check-signature Emacs-Distribution_SIGNED.pkg | grep "no sign")
 if [ "${RESULT}" ]; then
     exit 1
 fi
@@ -143,7 +144,7 @@ sleep 2
 
 cd ${WORKING_DIR}/notarize/pkg
 xcrun stapler staple Emacs-Distribution_SIGNED.pkg
-CPUARC=`uname -m`
+CPUARC=$(uname -m)
 echo "--- Build for ${CPUARC}"
 
 if [ "${BRANCH}" ]; then
@@ -158,7 +159,7 @@ fi
 VENDER="_apple"
 [ "${CPUARC}" = "x86_64" ] && VENDER="_intel"
 [ "${PATCH}" = "pure" ] && PURE="_pure"
-if [ -f ./Applications/${APPINSTALLDIR}/Emacs.app/Contents/MacOS/lib/${LIBGCCJIT} ]; then
+if [ -f ./Applications/${APPINSTALL_DIR}/Emacs.app/Contents/MacOS/lib/${LIBGCCJIT} ]; then
     NATIVE="_nc"
 fi
 
@@ -170,5 +171,6 @@ echo "--- ${FILENAME}${VENDER}${PURE}${NATIVE}.pkg and md5 are generaed"
 
 cp -f *.pkg ${WORKING_DIR}
 cp -f *.md5 ${WORKING_DIR}
+rm -rf ${WORKING_DIR}/notarize
 
 echo "--- done"

@@ -1,4 +1,4 @@
-name: "Build NS (release: 29.3)"
+name: "Release v29.3 (pure)"
 on:
   workflow_dispatch:
 
