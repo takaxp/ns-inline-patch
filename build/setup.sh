@@ -25,6 +25,7 @@ function install_deps () {
     # Required to support NativeComp
     brew install gcc libgccjit
 
+    echo "$(uname -m)"
     if [ $(uname -m) = "x86_64" ]; then
         echo "--- Hot fix for libgccjit 14.1 on x86_64"
         cd /usr/local/opt/libgccjit/lib/gcc/current
