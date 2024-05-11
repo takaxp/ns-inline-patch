@@ -45,7 +45,7 @@ jobs:
         # register a profile to keychain for notarize
         xcrun notarytool store-credentials "github-emacs-build" --apple-id $APPLE_ID --team-id "H2PH8KNN3H" --password $APP_PASSWORD
     - name: Setup to build
-      run: sh build/setup.sh && brew install libcurses
+      run: sh build/setup.sh
     - name: Build HEAD with inline patch
       run: sh build/emacs-head.sh -d ${{ github.workspace }}
     - name: Verification
@@ -111,7 +111,7 @@ jobs:
         # register a profile to keychain for notarize
         xcrun notarytool store-credentials "github-emacs-build" --apple-id $APPLE_ID --team-id "H2PH8KNN3H" --password $APP_PASSWORD
     - name: Setup to build
-      run: sh build/setup.sh
+      run: sh build/setup.sh && brew install libcurses
     - name: Build HEAD with inline patch
       run: sh build/emacs-head.sh -d ${{ github.workspace }} -n
     - name: Verification
