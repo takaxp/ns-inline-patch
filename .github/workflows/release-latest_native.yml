@@ -1,4 +1,4 @@
-name: "Release v29.3 (NativeComp)"
+name: "Release v29.4 (NativeComp)"
 on:
   workflow_dispatch:
 
@@ -44,14 +44,14 @@ jobs:
         xcrun notarytool store-credentials "github-emacs-build" --apple-id $APPLE_ID --team-id "H2PH8KNN3H" --password $APP_PASSWORD
     - name: Setup to build
       run: sh build/setup.sh
-    - name: Build Emacs 29.3 with inline patch
+    - name: Build Emacs 29.4 with inline patch
       run: sh build/emacs-29.sh -d ${{ github.workspace }} -p inline -n
     - name: Verification
-      run: ${{ github.workspace }}/emacs-29.3/nextstep/Emacs.app/Contents/MacOS/Emacs --batch --eval="(unless (fboundp 'mac-input-method-mode) (error \"The inline-patch is NOT integrated\"))"
+      run: ${{ github.workspace }}/emacs-29.4/nextstep/Emacs.app/Contents/MacOS/Emacs --batch --eval="(unless (fboundp 'mac-input-method-mode) (error \"The inline-patch is NOT integrated\"))"
     - name: Portable
-      run: sh release/portable-emacs.sh -v 29.3 -d ${{ github.workspace }}
+      run: sh release/portable-emacs.sh -v 29.4 -d ${{ github.workspace }}
     - name: Notarize
-      run: sh release/notarize-emacs.sh -v 29.3 -d ${{ github.workspace }} -s ${{ github.workspace }} -p inline -a "github-emacs-build"
+      run: sh release/notarize-emacs.sh -v 29.4 -d ${{ github.workspace }} -s ${{ github.workspace }} -p inline -a "github-emacs-build"
     - name: Export
       env:
         ORZ_HOST: ${{ secrets.ORZ_HOST }}
@@ -110,14 +110,14 @@ jobs:
         xcrun notarytool store-credentials "github-emacs-build" --apple-id $APPLE_ID --team-id "H2PH8KNN3H" --password $APP_PASSWORD
     - name: Setup to build
       run: sh build/setup.sh
-    - name: Build Emacs 29.3 with inline patch
+    - name: Build Emacs 29.4 with inline patch
       run: sh build/emacs-29.sh -d ${{ github.workspace }} -p inline -n
     - name: Verification
-      run: ${{ github.workspace }}/emacs-29.3/nextstep/Emacs.app/Contents/MacOS/Emacs --batch --eval="(unless (fboundp 'mac-input-method-mode) (error \"The inline-patch is NOT integrated\"))"
+      run: ${{ github.workspace }}/emacs-29.4/nextstep/Emacs.app/Contents/MacOS/Emacs --batch --eval="(unless (fboundp 'mac-input-method-mode) (error \"The inline-patch is NOT integrated\"))"
     - name: Portable
-      run: sh release/portable-emacs.sh -v 29.3 -d ${{ github.workspace }}
+      run: sh release/portable-emacs.sh -v 29.4 -d ${{ github.workspace }}
     - name: Notarize
-      run: sh release/notarize-emacs.sh -v 29.3 -d ${{ github.workspace }} -s ${{ github.workspace }} -p inline -a "github-emacs-build"
+      run: sh release/notarize-emacs.sh -v 29.4 -d ${{ github.workspace }} -s ${{ github.workspace }} -p inline -a "github-emacs-build"
     - name: Export
       env:
         ORZ_HOST: ${{ secrets.ORZ_HOST }}
