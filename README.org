@@ -99,7 +99,9 @@ Currently, installing =gcc= by brew is required to compile additional lisp code 
          ":"))
 #+end_src
 
-Note: =14= specified in the above paths may have to be aligned to your environment.
+Note:
+- =14= specified in the above paths may have to be aligned to your environment.
+- For Intel mac user, please replace "aarch64-apple-darwin" with "x86_64-apple-darwin".
 
 **** install gcc by grew
 
