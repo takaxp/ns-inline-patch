@@ -8,7 +8,7 @@
 
 see https://qiita.com/takaxp/items/e07bb286d80fa9dd8e05 and https://qiita.com/takaxp/items/6a7f9b26eb1b1a8237a0
 
-Note: Version 29.3 has been released. The inline patch (emacs-29.1-inline.patch) is applicable to Emacs 29.3. Installer packages for Intel-based Mac and Apple Silicon Mac are also available. You may install them in macOS Catalina or later.
+Note: Version 29.4 has been released. The inline patch (emacs-29.1-inline.patch) is applicable to Emacs 29.4. Installer packages for Intel-based Mac and Apple Silicon Mac are also available. You may install them in macOS Catalina or later.
 
 ** Supported features
 
@@ -20,7 +20,7 @@ Note: Version 29.3 has been released. The inline patch (emacs-29.1-inline.patch)
 ** Supported Emacs version
 
 - Emacs HEAD (emacs-head-inline.patch)
-- Emacs 29.1, 29.2, 29.3 (emacs-29.1-inline.patch)
+- Emacs 29.1, 29.2, 29.3, 29.4 (emacs-29.1-inline.patch)
 - Emacs 28.2, 28.1 (emacs-28.1-inline.patch)
 - Emacs 27.2, 27.1 (emacs-27.1-inline.patch)
 - Emacs 26.3, 26.2, 26.1 (emacs-25.2-inline.patch)
@@ -62,7 +62,7 @@ If your environment for building Emacs is under PROXY, you can use =emacs-mirror
 :ID:       3A8A27A7-93D9-4F4E-A621-042FC4521D14
 :END:
 
-You can download my pre-built Emacs 26.3, 27.1, 27.2, 28.1, 28.2, 29.1, 29.2, =29.3= and HEAD with ns-inline patch. =Emacs.app= will be installed under =/Applications/Emacs-takaxp= in your macOS. The pkg contains =GnuTLS= and =jansson=. These packages are signed and notarized with my Apple developer ID: =H2PH8KNN3H=.
+You can download my pre-built Emacs 26.3, 27.1, 27.2, 28.1, 28.2, 29.1, 29.2, 29.3, =29.4= and HEAD with ns-inline patch. =Emacs.app= will be installed under =/Applications/Emacs-takaxp= in your macOS. The pkg contains =GnuTLS= and =jansson=. These packages are signed and notarized with my Apple developer ID: =H2PH8KNN3H=.
 
 *** Emacs 30x (with inline patch) *!unstable!*
 :PROPERTIES:
@@ -86,15 +86,20 @@ Currently, installing =gcc= by brew is required to compile additional lisp code 
 |-------+---------+----------------------+---------+----------------------------------|
 | Apple | 31.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc.pkg][⬇pkg(NC)]] (08AUG2024) | Sonoma  | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc.md5][b24f2501ff169c6cc343899fd4407e81]] |
 | Intel | 31.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel_nc.pkg][⬇pkg(NC)]] (08AUG2024) | Ventura | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel_nc.md5][9debc9f8a6f429ff70c1510cec225770]] |
+|-------+---------+----------------------+---------+----------------------------------|
+| Apple |    29.4 | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_apple_nc.pkg][⬇pkg(NC)]] (13AUG2024) | Sonoma  | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_apple_nc.md5][909bca461aab416c4ed8a3971531685c]] |
+| Intel |    29.4 | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_intel_nc.pkg][⬇pkg(NC)]] (13AUG2024) | Ventura | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_intel_nc.md5][ede9e15e84926b4d834dd21029fde595]] |
 
 #+begin_src emacs-lisp
 (setenv "LIBRARY_PATH"
         (string-join
-         '("/opt/homebrew/opt/gcc/lib/gcc/13"
-           "/opt/homebrew/opt/libgccjit/lib/gcc/13"
-           "/opt/homebrew/opt/gcc/lib/gcc/13/gcc/aarch64-apple-darwin23/13")
+         '("/opt/homebrew/opt/gcc/lib/gcc/14"
+           "/opt/homebrew/opt/libgccjit/lib/gcc/14"
+           "/opt/homebrew/opt/gcc/lib/gcc/14/gcc/aarch64-apple-darwin23/14")
          ":"))
 #+end_src
+
+Note: =14= specified in the above paths may have to be aligned to your environment.
 
 **** install gcc by grew
 
@@ -113,6 +118,9 @@ brew install gcc
 Note: Before installing the pre-built package, please remove previous Emacs.app from the installed directory if you have installed Emacs 29x. If the previously installed Emacs.app is not removed, the installation may fail.
 
 | Chip  | Version | Download          | macOS   | [MB] | md5                              |
+|-------+---------+-------------------+---------+------+----------------------------------|
+| Apple |    29.4 | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_apple.pkg][⬇pkg]] (2024-08-13) | Sonoma  | 59.3 | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_apple.md5][122378bfe6c89eb8e29d292e6d982758]] |
+| Intel |    29.4 | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_intel.pkg][⬇pkg]] (2024-08-13) | Ventura | 59.6 | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_intel.md5][4871fb28c204254733de5f92fb2b2609]] |
 |-------+---------+-------------------+---------+------+----------------------------------|
 | Apple |    29.3 | [[https://pxaka.tokyo/emacs/pkg/emacs-29.3_apple.pkg][⬇pkg]] (2024-03-26) | Sonoma  | 59.3 | [[https://pxaka.tokyo/emacs/pkg/emacs-29.3_apple.md5][00e6c45e8ca4701a2c14c68fcee3ac63]] |
 | Intel |    29.3 | [[https://pxaka.tokyo/emacs/pkg/emacs-29.3_intel.pkg][⬇pkg]] (2024-03-26) | Ventura | 59.7 | [[https://pxaka.tokyo/emacs/pkg/emacs-29.3_intel.md5][309c842fa1b4f9be822e2fb20433716b]] |
@@ -170,6 +178,9 @@ Additionally, the following package is "WITHOUT" inline-patch NS build. In this 
 
 #+caption: pure
 | Chip  | Version | Download               | macOS             | [MB] | md5                              |
+|-------+---------+------------------------+-------------------+------+----------------------------------|
+| Apple |    29.4 | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_apple_pure.pkg][⬇pure.pkg]] (2024-08-13) | Sonoma[*1]        | 59.2 | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_apple_pure.md5][a85a6bd9a2d7e39b546d264dce08368a]] |
+| Intel |    29.4 | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_intel_pure.pkg][⬇pure.pkg]] (2024-08-13) | Ventura[*1]       | 59.5 | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_intel_pure.md5][cb8a0c621c293c11aa1a273eb85dbe88]] |
 |-------+---------+------------------------+-------------------+------+----------------------------------|
 | Apple |    29.3 | [[https://pxaka.tokyo/emacs/pkg/emacs-29.3_apple_pure.pkg][⬇pure.pkg]] (2024-03-26) | Sonoma[*1]        | 59.2 | [[https://pxaka.tokyo/emacs/pkg/emacs-29.3_apple_pure.md5][f526b3d89d192e3ecfb927deb3fd057a]] |
 | Intel |    29.3 | [[https://pxaka.tokyo/emacs/pkg/emacs-29.3_intel_pure.pkg][⬇pure.pkg]] (2024-03-26) | Ventura[*1]       | 59.7 | [[https://pxaka.tokyo/emacs/pkg/emacs-29.3_intel_pure.md5][af8d8ef6881ff7f548afd7caa1e266bf]] |
