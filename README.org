@@ -74,8 +74,8 @@ These packages are built based on the current development source code. So it may
 #+caption: HEAD(master)
 | Chip  | Version | Download         | macOS   | md5                              |
 |-------+---------+------------------+---------+----------------------------------|
-| Apple | 31.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.pkg][⬇pkg]] (31AUG2024)  | Sonoma  | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.md5][48d67162712e43f78dc3580a401e9403]] |
-| Intel | 31.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.pkg][⬇pkg]] (31AUG2024) | Ventura | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.md5][999b42c1715fb0f90b6fb530f8bc5589]] |
+| Apple | 31.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.pkg][⬇pkg]] (07SEP2024) | Sonoma  | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.md5][8fde280482e3bbdd606f5520697e02ad]] |
+| Intel | 31.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.pkg][⬇pkg]] (07SEP2024) | Ventura | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.md5][7b570c15312fe6831e8310b2ce12286c]] |
 
 You can also try to use an Emacs supporting =NativeComp= by downloading pkg from the following links. Integrated lisp code are natively compiled so the pkg size is increased compared to that of the normal pkg file.
 
@@ -84,8 +84,8 @@ Currently, installing =gcc= by brew is required to compile additional lisp code 
 #+caption: HEAD(master) build with Native Comp
 | Chip  | Version | Download             | macOS   | md5                              |
 |-------+---------+----------------------+---------+----------------------------------|
-| Apple | 31.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc.pkg][⬇pkg(NC)]] (31AUG2024) | Sonoma  | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc.md5][7cb5cd6b232fac26f6f23eb0358da693]] |
-| Intel | 31.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel_nc.pkg][⬇pkg(NC)]] (31AUG2024) | Ventura | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel_nc.md5][9887d520c2d0a796e1397d3c4af0754b]] |
+| Apple | 31.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc.pkg][⬇pkg(NC)]] (07SEP2024) | Sonoma  | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc.md5][188e5acf08371e14467345ca5da6ecf5]] |
+| Intel | 31.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel_nc.pkg][⬇pkg(NC)]] (07SEP2024) | Ventura | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel_nc.md5][62ccadebd8c9d7244b26d8378c59c0b4]] |
 |-------+---------+----------------------+---------+----------------------------------|
 | Apple |    29.4 | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_apple_nc.pkg][⬇pkg(NC)]] (13AUG2024) | Sonoma  | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_apple_nc.md5][909bca461aab416c4ed8a3971531685c]] |
 | Intel |    29.4 | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_intel_nc.pkg][⬇pkg(NC)]] (13AUG2024) | Ventura | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_intel_nc.md5][ede9e15e84926b4d834dd21029fde595]] |
