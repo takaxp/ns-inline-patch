@@ -17,7 +17,7 @@ jobs:
     - name: Build emacs-29 with inline patch
       run: sh build/emacs-29.sh -d ${{ github.workspace }} -p inline
     - name: Verification
-      run: ${{ github.workspace }}/emacs-29/nextstep/Emacs.app/Contents/MacOS/Emacs --batch --eval="(unless (fboundp 'mac-input-method-mode) (error \"The inline-patch is NOT integrated\"))"
+      run: ${{ github.workspace }}/emacs/nextstep/Emacs.app/Contents/MacOS/Emacs --batch --eval="(unless (fboundp 'mac-input-method-mode) (error \"The inline-patch is NOT integrated\"))"
   build-28:
     runs-on: macos-latest
     timeout-minutes: 60
