@@ -1,649 +1,82 @@
 diff -crN --exclude .git emacs_origin/configure.ac emacs/configure.ac
-*** emacs_origin/configure.ac	2019-12-30 01:06:49.000000000 +0900
---- emacs/configure.ac	2019-12-30 07:22:13.000000000 +0900
+*** emacs_origin/configure.ac	Sun Dec 22 18:32:58 2024
+--- emacs/configure.ac	Sun Dec 22 18:33:13 2024
 ***************
-*** 2073,2079 ****
+*** 3064,3070 ****
        INSTALL_ARCH_INDEP_EXTRA=
     fi
-
+  
 !   NS_OBJC_OBJ="nsterm.o nsfns.o nsmenu.o nsselect.o nsimage.o $ns_fontfile"
   fi
   CFLAGS="$tmp_CFLAGS"
   CPPFLAGS="$tmp_CPPFLAGS"
---- 2073,2079 ----
+--- 3064,3070 ----
        INSTALL_ARCH_INDEP_EXTRA=
     fi
-
+  
 !   NS_OBJC_OBJ="nsterm.o nsfns.o nsmenu.o nsselect.o nsimage.o macim.o $ns_fontfile"
   fi
   CFLAGS="$tmp_CFLAGS"
   CPPFLAGS="$tmp_CPPFLAGS"
 ***************
-*** 5459,5465 ****
-
+*** 7523,7529 ****
+  
     darwin)
      if test "$HAVE_NS" = "yes"; then
 !      libs_nsgui="-framework AppKit"
        if test "$NS_IMPL_COCOA" = "yes"; then
-          libs_nsgui="$libs_nsgui -framework IOKit -framework Carbon"
-       fi
---- 5459,5465 ----
-
+          libs_nsgui="$libs_nsgui -framework IOKit -framework Carbon \
+                      -framework IOSurface -framework QuartzCore"
+--- 7523,7529 ----
+  
     darwin)
      if test "$HAVE_NS" = "yes"; then
 !      libs_nsgui="-framework AppKit -framework Carbon"
        if test "$NS_IMPL_COCOA" = "yes"; then
-          libs_nsgui="$libs_nsgui -framework IOKit -framework Carbon"
-       fi
-diff -crN --exclude .git emacs_origin/lisp/term/common-win.el emacs/lisp/term/common-win.el
-*** emacs_origin/lisp/term/common-win.el	2019-12-30 01:06:56.000000000 +0900
---- emacs/lisp/term/common-win.el	2019-12-30 07:22:13.000000000 +0900
-***************
-*** 71,77 ****
-  	       (cons 11 (make-non-key-event 'ns-spi-service-call))
-  	       (cons 12 (make-non-key-event 'ns-new-frame))
-  	       (cons 13 (make-non-key-event 'ns-toggle-toolbar))
-! 	       (cons 14 (make-non-key-event 'ns-show-prefs))))))
-      (set-terminal-parameter frame 'x-setup-function-keys t)))
-
-  (defvar x-invocation-args)
---- 71,78 ----
-  	       (cons 11 (make-non-key-event 'ns-spi-service-call))
-  	       (cons 12 (make-non-key-event 'ns-new-frame))
-  	       (cons 13 (make-non-key-event 'ns-toggle-toolbar))
-! 	       (cons 14 (make-non-key-event 'ns-show-prefs))
-! 	       (cons 15 (make-non-key-event 'mac-change-input-method))))))
-      (set-terminal-parameter frame 'x-setup-function-keys t)))
-
-  (defvar x-invocation-args)
-diff -crN --exclude .git emacs_origin/src/Makefile.in emacs/src/Makefile.in
-*** emacs_origin/src/Makefile.in	2019-12-30 01:10:55.000000000 +0900
---- emacs/src/Makefile.in	2019-12-30 07:22:13.000000000 +0900
-***************
-*** 433,440 ****
-  SOME_MACHINE_OBJECTS = dosfns.o msdos.o \
-    xterm.o xfns.o xmenu.o xselect.o xrdb.o xsmfns.o fringe.o image.o \
-    fontset.o dbusbind.o cygw32.o \
-!   nsterm.o nsfns.o nsmenu.o nsselect.o nsimage.o nsfont.o macfont.o \
-    nsxwidget.o \
-    w32.o w32console.o w32cygwinx.o w32fns.o w32heap.o w32inevt.o w32notify.o \
-    w32menu.o w32proc.o w32reg.o w32select.o w32term.o w32xfns.o \
-    w16select.o widget.o xfont.o ftfont.o xftfont.o ftxfont.o gtkutil.o \
---- 433,440 ----
-  SOME_MACHINE_OBJECTS = dosfns.o msdos.o \
-    xterm.o xfns.o xmenu.o xselect.o xrdb.o xsmfns.o fringe.o image.o \
-    fontset.o dbusbind.o cygw32.o \
-!   nsterm.o nsfns.o nsmenu.o nsselect.o nsimage.o nsfont.o macfont.o macim.o \
-    nsxwidget.o \
-    w32.o w32console.o w32cygwinx.o w32fns.o w32heap.o w32inevt.o w32notify.o \
-    w32menu.o w32proc.o w32reg.o w32select.o w32term.o w32xfns.o \
-    w16select.o widget.o xfont.o ftfont.o xftfont.o ftxfont.o gtkutil.o \
-diff -crN --exclude .git emacs_origin/src/nsfns.m emacs/src/nsfns.m
-*** emacs_origin/src/nsfns.m	2019-12-30 01:10:54.000000000 +0900
---- emacs/src/nsfns.m	2019-12-30 07:22:13.000000000 +0900
-***************
-*** 47,52 ****
---- 47,53 ----
-  #ifdef NS_IMPL_COCOA
-  #include <IOKit/graphics/IOGraphicsLib.h>
-  #include "macfont.h"
-+ #include "macim.h"
-
-  #if MAC_OS_X_VERSION_MAX_ALLOWED >= 120000
-  #include <UniformTypeIdentifiers/UniformTypeIdentifiers.h>
-***************
-*** 3166,3171 ****
---- 3168,3189 ----
-  Default is t.  */);
-    ns_use_proxy_icon = true;
-
-+   DEFVAR_LISP ("ns-shift-key-mask", Vns_shift_key_mask,
-+   doc: /* Shift key mask defined in system. */);
-+   Vns_shift_key_mask = make_fixnum (NSEventModifierFlagShift);
-+
-+   DEFVAR_LISP ("ns-control-key-mask", Vns_control_key_mask,
-+   doc: /* Control key mask defined in system. */);
-+   Vns_control_key_mask = make_fixnum (NSEventModifierFlagControl);
-+
-+   DEFVAR_LISP ("ns-alternate-key-mask", Vns_alternate_key_mask,
-+   doc: /* Alternate key mask defined in system. */);
-+   Vns_alternate_key_mask = make_fixnum (NSEventModifierFlagOption);
-+
-+   DEFVAR_LISP ("ns-command-key-mask", Vns_command_key_mask,
-+   doc: /* Command key mask defined in system. */);
-+   Vns_command_key_mask = make_fixnum (NSEventModifierFlagCommand);
-+
-    defsubr (&Sns_read_file_name);
-    defsubr (&Sns_get_resource);
-    defsubr (&Sns_set_resource);
-***************
-*** 3212,3217 ****
---- 3228,3237 ----
-    defsubr (&Sns_popup_font_panel);
-    defsubr (&Sns_popup_color_panel);
-
-+   #ifdef NS_IMPL_COCOA
-+     mac_init_input_method ();
-+   #endif
-+
-    defsubr (&Sx_show_tip);
-    defsubr (&Sx_hide_tip);
-
-diff -crN --exclude .git emacs_origin/src/nsterm.h emacs/src/nsterm.h
-*** emacs_origin/src/nsterm.h	2019-12-30 01:10:54.000000000 +0900
---- emacs/src/nsterm.h	2019-12-30 07:22:13.000000000 +0900
-***************
-*** 754,759 ****
---- 754,761 ----
-  #define KEY_NS_NEW_FRAME               ((1<<28)|(0<<16)|12)
-  #define KEY_NS_TOGGLE_TOOLBAR          ((1<<28)|(0<<16)|13)
-  #define KEY_NS_SHOW_PREFS              ((1<<28)|(0<<16)|14)
-+ #define KEY_MAC_CHANGE_INPUT_METHOD    ((1<<28)|(0<<16)|15)
-+ #define KEY_NS_PUT_MARKED_TEXT         ((1<<28)|(0<<16)|16)
-
-  /* Could use list to store these, but rest of emacs has a big infrastructure
-     for managing a table of bitmap "records".  */
-diff -crN --exclude .git emacs_origin/src/nsterm.m emacs/src/nsterm.m
-*** emacs_origin/src/nsterm.m	2019-12-30 06:49:02.000000000 +0900
---- emacs/src/nsterm.m	2019-12-30 07:22:13.000000000 +0900
-***************
-*** 69,74 ****
---- 69,75 ----
-  
-  #ifdef NS_IMPL_COCOA
-  #include "macfont.h"
-+ #include "macim.h"
-  #include <Carbon/Carbon.h>
-  #include <IOSurface/IOSurface.h>
-  #endif
-***************
-*** 5541,5546 ****
---- 5542,5551 ----
-                                           selector: @selector (logNotification:)
-                                               name: nil object: nil]; */
-  
-+   [[NSDistributedNotificationCenter defaultCenter] addObserver: NSApp
-+      selector: @selector (changeInputMethod:)
-+          name: @"AppleSelectedInputSourcesChangedNotification" object: nil];
-+ 
-    dpyinfo = xzalloc (sizeof *dpyinfo);
-  
-    ns_initialize_display_info (dpyinfo);
-***************
-*** 5864,5869 ****
---- 5869,5889 ----
-      NSLog (@"notification: '%@'", [notification name]);
-  }
-  
-+ - (void)changeInputMethod: (NSNotification *)notification
-+ {
-+ 
-+   struct frame *emacsframe = SELECTED_FRAME ();
-+ 
-+   if (mac_store_change_input_method_event())
-+     {
-+       if (!emacs_event)
-+ 	return;
-+       emacs_event->kind = NS_NONKEY_EVENT;
-+       emacs_event->code = KEY_MAC_CHANGE_INPUT_METHOD;
-+       emacs_event->modifiers = 0;
-+       EV_TRAILER ((id)nil);
-+     }
-+ }
-  
-  - (void)sendEvent: (NSEvent *)theEvent
-  /* --------------------------------------------------------------------------
-***************
-*** 6842,6848 ****
-  
-        /* If it was a function key or had control-like modifiers, pass
-           it directly to Emacs.  */
-!       if (fnKeysym || (emacs_event->modifiers
-                         && (emacs_event->modifiers != shift_modifier)
-                         && [[theEvent charactersIgnoringModifiers] length] > 0))
-          {
---- 6862,6869 ----
-  
-        /* If it was a function key or had control-like modifiers, pass
-           it directly to Emacs.  */
-!       if (mac_pass_key_directly_to_emacs ()
-!           || fnKeysym || (emacs_event->modifiers
-                         && (emacs_event->modifiers != shift_modifier)
-                         && [[theEvent charactersIgnoringModifiers] length] > 0))
-          {
-***************
-*** 6870,6878 ****
-              }
-  
-            emacs_event->code = code;
-!           EV_TRAILER (theEvent);
-!           processingCompose = NO;
-!           return;
-          }
-      }
-  
---- 6891,6909 ----
-              }
-  
-            emacs_event->code = code;
-!           /* The function mac_pass_key_to_system decides
-!              whether it is passed directly to emacs or not. */
-!           if (emacs_event->kind == NON_ASCII_KEYSTROKE_EVENT
-!               || !mac_pass_key_to_system (code, flags
-!                                           & (NSEventModifierFlagShift
-!                                              | NSEventModifierFlagControl
-!                                              | NSEventModifierFlagOption
-!                                              | NSEventModifierFlagCommand)))
-!             {
-!               EV_TRAILER (theEvent);
-!               processingCompose = NO;
-!               return;
-!             }
-          }
-      }
-  
-***************
-*** 6999,7005 ****
-    ns_working_text = [workingText lispString];
-  
-    emacs_event->kind = NS_TEXT_EVENT;
-!   emacs_event->code = KEY_NS_PUT_WORKING_TEXT;
-    EV_TRAILER ((id)nil);
-  }
-  
---- 7030,7038 ----
-    ns_working_text = [workingText lispString];
-  
-    emacs_event->kind = NS_TEXT_EVENT;
-!   emacs_event->code = KEY_NS_PUT_MARKED_TEXT;
-!   emacs_event->arg = Fcons (make_int (selRange.location),
-!                             Fcons (make_int (selRange.length), Qnil));
-    EV_TRAILER ((id)nil);
-  }
-  
-***************
-*** 7092,7097 ****
---- 7125,7131 ----
-  {
-    NSRect rect;
-    NSPoint pt;
-+   NSPoint offset;
-    struct window *win;
-  
-    NSTRACE ("[EmacsView firstRectForCharacterRange:]");
-***************
-*** 7099,7114 ****
-    if (NS_KEYLOG)
-      NSLog (@"firstRectForCharRange request");
-  
-!   if (WINDOWP (echo_area_window) && ns_in_echo_area ())
-      win = XWINDOW (echo_area_window);
-    else
-      win = XWINDOW (FRAME_SELECTED_WINDOW (emacsframe));
-  
-    rect.size.width = theRange.length * FRAME_COLUMN_WIDTH (emacsframe);
-    rect.size.height = FRAME_LINE_HEIGHT (emacsframe);
-!   pt.x = WINDOW_TEXT_TO_FRAME_PIXEL_X (win, win->phys_cursor.x);
-    pt.y = WINDOW_TO_FRAME_PIXEL_Y (win, win->phys_cursor.y
-!                                        +FRAME_LINE_HEIGHT (emacsframe));
-  
-    pt = [self convertPoint: pt toView: nil];
-  
---- 7133,7156 ----
-    if (NS_KEYLOG)
-      NSLog (@"firstRectForCharRange request");
-  
-!   if (NILP (Vmac_in_echo_area))
-!     win = XWINDOW (FRAME_SELECTED_WINDOW (emacsframe));
-!   else if (WINDOWP (echo_area_window) && ns_in_echo_area ())
-      win = XWINDOW (echo_area_window);
-    else
-      win = XWINDOW (FRAME_SELECTED_WINDOW (emacsframe));
-  
-+   if ( INTEGERP (Vmac_ime_panel_offset_x) )
-+     offset.x = XFIXNUM (Vmac_ime_panel_offset_x);
-+   if ( INTEGERP (Vmac_ime_panel_offset_y) )
-+     offset.y = XFIXNUM (Vmac_ime_panel_offset_y);
-+ 
-    rect.size.width = theRange.length * FRAME_COLUMN_WIDTH (emacsframe);
-    rect.size.height = FRAME_LINE_HEIGHT (emacsframe);
-!   pt.x = WINDOW_TEXT_TO_FRAME_PIXEL_X (win, win->phys_cursor.x + offset.x);
-    pt.y = WINDOW_TO_FRAME_PIXEL_Y (win, win->phys_cursor.y
-!                                        +FRAME_LINE_HEIGHT (emacsframe)
-!                                        +offset.y);
-  
-    pt = [self convertPoint: pt toView: nil];
-  
-***************
-*** 11031,11036 ****
---- 11073,11090 ----
-  respectively.  */);
-    Vns_drag_motion_function = Qns_handle_drag_motion;
-  
-+   DEFVAR_LISP ("mac-in-echo-area", Vmac_in_echo_area,
-+                doc: /* state of cursor in echo area. */);
-+   Vmac_in_echo_area = Qnil;
-+ 
-+   DEFVAR_LISP ("mac-ime-panel-offset-x", Vmac_ime_panel_offset_x,
-+                doc: /* Horizontal offset to show candidates panel. */);
-+   Vmac_ime_panel_offset_x = make_int (0);
-+ 
-+   DEFVAR_LISP ("mac-ime-panel-offset-y", Vmac_ime_panel_offset_y,
-+                doc: /* Vertical offset to show candidates panel. */);
-+   Vmac_ime_panel_offset_y = make_int (2);
-+ 
-    /* Tell Emacs about this window system.  */
-    Fprovide (Qns, Qnil);
-  
-*** emacs_origin/src/macim.h	1970-01-01 09:00:00.000000000 +0900
---- emacs/src/macim.h	2020-01-07 14:42:30.000000000 +0900
-***************
-*** 0 ****
---- 1,11 ----
-+ /* Implementation of Input Method Extension for macOS.
-+    Copyright (C) 2020
-+    Takaaki Ishikawa <takaxp@ieee.org>
-+ */
-+ #ifdef NS_IMPL_COCOA
-+ void mac_init_input_method ();
-+ int mac_pass_key_to_system (int code, int modifiers);
-+ int mac_pass_key_directly_to_emacs ();
-+ int mac_store_change_input_method_event ();
-+ NSString* mac_get_locale ();
-+ #endif
-*** emacs_origin/src/macim.m	1970-01-01 09:00:00.000000000 +0900
---- emacs/src/macim.m	2020-01-07 14:42:53.000000000 +0900
-***************
-*** 0 ****
---- 1,229 ----
-+ /* Implementation of Input Method Extension for macOS.
-+    Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011
-+    Taiichi Hashimoto <taiichi2@mac.com>.
-+
-+    2019
-+    enhanced by Takaaki Ishikawa <takaxp@ieee.org>
-+ */
-+
-+ #include "config.h"
-+
-+ #ifdef NS_IMPL_COCOA
-+
-+ #include <math.h>
-+ #include <sys/types.h>
-+ #include <time.h>
-+ #include <signal.h>
-+ #include <unistd.h>
-+
-+ #include <Carbon/Carbon.h>
-+
-+ #include "lisp.h"
-+ #include "blockinput.h"
-+
-+ #include "termhooks.h"
-+ #include "keyboard.h"
-+ #include "buffer.h"
-+
-+ #include "macim.h"
-+
-+ //extern Lisp_Object Qcurrent_input_method;
-+ //extern int cursor_in_echo_area;
-+ static Lisp_Object Qmac_keys_passed_to_system;
-+
-+ DEFUN ("mac-input-source-is-ascii-capable", Fmac_input_source_is_ascii_capable, Smac_input_source_is_ascii_capable,
-+        0, 0, 0,
-+        doc: /* Is current input source ascii capable? */)
-+      (void)
-+ {
-+   TISInputSourceRef is = TISCopyCurrentKeyboardInputSource();
-+   CFBooleanRef ret = TISGetInputSourceProperty(is, kTISPropertyInputSourceIsASCIICapable);
-+
-+   return CFBooleanGetValue(ret)? Qt : Qnil;
-+ }
-+
-+ DEFUN ("mac-get-locale-input-source", Fmac_get_locale_input_source, Smac_get_locale_input_source,
-+        0, 0, 0,
-+        doc: /* get input source based on locale */)
-+      (void)
-+ {
-+   NSString *locale = mac_get_locale();
-+   // locale = @"ja-JP";
-+   // NSLog(@"%@", locale);
-+
-+   TISInputSourceRef is = TISCopyInputSourceForLanguage((CFStringRef)locale);
-+   NSString *id = (NSString *)TISGetInputSourceProperty(is, kTISPropertyInputSourceID);
-+
-+   return make_string([id UTF8String],
-+                      [id lengthOfBytesUsingEncoding:NSUTF8StringEncoding]);
-+ }
-+
-+ DEFUN ("mac-get-input-source-list", Fmac_get_input_source_list, Smac_get_input_source_list,
-+        0, 0, 0,
-+        doc: /* get input source list on macOS */)
-+      (void)
-+ {
-+   NSArray *is_list = (NSArray *)TISCreateInputSourceList(NULL, false);
-+   int list_size = [is_list count];
-+   Lisp_Object list[list_size];
-+   int i;
-+
-+   for (i = 0; i < list_size; i++) {
-+     TISInputSourceRef is = (TISInputSourceRef)[is_list objectAtIndex:i];
-+     NSString *id = (NSString *)TISGetInputSourceProperty(is, kTISPropertyInputSourceID);
-+     list[i] = make_string([id UTF8String],
-+                           [id lengthOfBytesUsingEncoding:NSUTF8StringEncoding]);
-+   }
-+
-+   return Flist(list_size, list);
-+ }
-+
-+ DEFUN ("mac-get-current-input-source", Fmac_get_current_input_source, Smac_get_current_input_source,
-+        0, 0, 0,
-+        doc: /* get current input source on macOS */)
-+      (void)
-+ {
-+   TISInputSourceRef is = TISCopyCurrentKeyboardInputSource();
-+   NSString *id = (NSString *)TISGetInputSourceProperty(is, kTISPropertyInputSourceID);
-+
-+   return make_string([id UTF8String],
-+                      [id lengthOfBytesUsingEncoding:NSUTF8StringEncoding]);
-+ }
-+
-+ DEFUN ("mac-toggle-input-source", Fmac_toggle_input_source, Smac_toggle_input_source,
-+        1, 1, 0,
-+        doc: /* toggle input source on macOS */)
-+      (arg)
-+      Lisp_Object arg;
-+ {
-+   TISInputSourceRef is = NULL;
-+   Lisp_Object Vinput_source = Qnil;
-+   if (NILP (arg)) {
-+     Vinput_source = Vmac_default_input_ascii;
-+   } else {
-+     Vinput_source = Vmac_default_input_source;
-+   }
-+
-+   if ( NILP (Vinput_source) || !STRINGP (Vinput_source) ){
-+     if (NILP (arg)) {
-+       is = TISCopyCurrentASCIICapableKeyboardInputSource();
-+     } else {
-+       NSString *locale = mac_get_locale();
-+       if ( [locale hasPrefix:@"ja"] ) {
-+         is = TISCopyInputSourceForLanguage((CFStringRef)locale);
-+       }
-+     }
-+
-+     if (is) TISSelectInputSource(is);
-+     return arg;
-+   }
-+
-+   NSString *targetID = [NSString stringWithUTF8String: SSDATA (Vinput_source)];
-+   if ( targetID == nil) {
-+     return arg;
-+   }
-+   NSArray *is_list = (NSArray *)TISCreateInputSourceList(NULL, false);
-+   int list_size = [is_list count];
-+   for(int i=0; i< list_size; i++) {
-+     NSString *id = (NSString *)TISGetInputSourceProperty((TISInputSourceRef)[is_list objectAtIndex:i], kTISPropertyInputSourceID);
-+     if ( [id compare:targetID] == NSOrderedSame ) {
-+       is = (TISInputSourceRef)[is_list objectAtIndex:i];
-+       break;
-+     }
-+   }
-+
-+   if (is) TISSelectInputSource(is);
-+   return arg;
-+ }
-+
-+ NSString*
-+ mac_get_locale ()
-+ {
-+   NSString *locale = NULL;
-+   NSArray *languages = [NSLocale preferredLanguages];
-+   if (languages != nil) {
-+     locale = [languages objectAtIndex:0];
-+   } else {
-+     locale = [[NSLocale currentLocale]
-+               objectForKey:NSLocaleLanguageCode];
-+   }
-+   return locale;
-+ }
-+
-+ int
-+ mac_store_change_input_method_event ()
-+ {
-+   Lisp_Object dim;
-+   int ret = FALSE;
-+
-+   dim = Fsymbol_value (intern ("default-input-method"));
-+   if (STRINGP (dim) && (strcmp(SDATA (dim), "MacOSX") == 0
-+                         || strcmp(SDATA (dim), "macOS") == 0))
-+     {
-+       ret = TRUE;
-+     }
-+
-+   return ret;
-+ }
-+
-+ int
-+ mac_pass_key_to_system (int code, int modifiers)
-+ {
-+   Lisp_Object keys = Fsymbol_value (Qmac_keys_passed_to_system);
-+   Lisp_Object m, k;
-+
-+   while (!NILP (keys))
-+     {
-+       m = XCAR (XCAR (keys));
-+       k = XCDR (XCAR (keys));
-+       keys = XCDR (keys);
-+
-+       if (NUMBERP (m) && modifiers == XFIXNUM (m))
-+         if (NILP (k)
-+             || (NUMBERP (k) && code == XFIXNUM (k)))
-+           return TRUE;
-+     }
-+
-+   return FALSE;
-+ }
-+
-+ int
-+ mac_pass_key_directly_to_emacs (void)
-+ {
-+
-+   if (NILP (Fmac_input_source_is_ascii_capable()))
-+     {
-+       if (NILP (Vmac_use_input_method_on_system)
-+           || this_command_key_count
-+           || cursor_in_echo_area
-+           || !NILP (BVAR (current_buffer, read_only)))
-+         return TRUE;
-+     }
-+
-+   return FALSE;
-+ }
-+
-+ void mac_init_input_method (void)
-+ {
-+   Qmac_keys_passed_to_system = intern ("mac-keys-passed-to-system");
-+   staticpro (&Qmac_keys_passed_to_system);
-+
-+   DEFVAR_LISP ("mac-use-input-method-on-system", Vmac_use_input_method_on_system,
-+                doc: /* If it is non-nil, use input method on system. */);
-+   Vmac_use_input_method_on_system = Qt;
-+
-+   DEFVAR_LISP ("mac-default-input-source", Vmac_default_input_source,
-+                doc: /* The default input source. */);
-+   Vmac_default_input_source = Qnil;
-+
-+   DEFVAR_LISP ("mac-default-input-ascii", Vmac_default_input_ascii,
-+                doc: /* The default input source for ASCII. */);
-+   Vmac_default_input_ascii = Qnil;
-+
-+   defsubr (&Smac_input_source_is_ascii_capable);
-+   defsubr (&Smac_get_input_source_list);
-+   defsubr (&Smac_get_current_input_source);
-+   defsubr (&Smac_get_locale_input_source);
-+   defsubr (&Smac_toggle_input_source);
-+ }
-+ #endif
-*** emacs_origin/src/keyboard.c	2020-01-06 14:04:20.000000000 +0900
---- emacs/src/keyboard.c	2020-01-08 11:03:02.000000000 +0900
-***************
-*** 5523,5531 ****
-
-  #ifdef HAVE_NS
-      case NS_TEXT_EVENT:
-!       return list1 (intern (event->code == KEY_NS_PUT_WORKING_TEXT
-!                             ? "ns-put-working-text"
-!                             : "ns-unput-working-text"));
-
-        /* NS_NONKEY_EVENTs are just like NON_ASCII_KEYSTROKE_EVENTs,
-  	 except that they are non-key events (last-nonmenu-event is nil).  */
---- 5523,5534 ----
-
-  #ifdef HAVE_NS
-      case NS_TEXT_EVENT:
-!       if (event->code == KEY_NS_PUT_WORKING_TEXT)
-!         return list1 (intern ("ns-put-working-text"));
-!       else if (event->code == KEY_NS_PUT_MARKED_TEXT)
-!         return Fcons (intern ("ns-put-marked-text"), event->arg);
-!       else
-!         return list1 (intern ("ns-unput-working-text"));
-
-        /* NS_NONKEY_EVENTs are just like NON_ASCII_KEYSTROKE_EVENTs,
-  	 except that they are non-key events (last-nonmenu-event is nil).  */
-***************
-*** 12767,12772 ****
---- 12767,12774 ----
-  #endif
-    initial_define_lispy_key (Vspecial_event_map, "ns-put-working-text",
-  			    "ns-put-working-text");
-+   initial_define_lispy_key (Vspecial_event_map, "ns-put-marked-text",
-+ 			    "ns-put-marked-text");
-    initial_define_lispy_key (Vspecial_event_map, "ns-unput-working-text",
-  			    "ns-unput-working-text");
-    /* Here we used to use `ignore-event' which would simple set prefix-arg to
+          libs_nsgui="$libs_nsgui -framework IOKit -framework Carbon \
+                      -framework IOSurface -framework QuartzCore"
 diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win.el
-*** emacs_origin/lisp/term/ns-win.el	2019-12-30 01:06:56.000000000 +0900
---- emacs/lisp/term/ns-win.el	2019-12-30 07:24:16.000000000 +0900
+*** emacs_origin/lisp/term/ns-win.el	Sun Dec 22 18:32:59 2024
+--- emacs/lisp/term/ns-win.el	Sun Dec 22 18:34:09 2024
 ***************
-*** 179,185 ****
+*** 186,192 ****
+           (cons 11 (make-non-key-event 'ns-spi-service-call))
+           (cons 12 (make-non-key-event 'ns-new-frame))
+           (cons 13 (make-non-key-event 'ns-toggle-toolbar))
+!          (cons 14 (make-non-key-event 'ns-show-prefs)))))
+  (ns-setup-special-keys)
+  
+  ;; Special Nextstep-generated events are converted to function keys.  Here
+--- 186,193 ----
+           (cons 11 (make-non-key-event 'ns-spi-service-call))
+           (cons 12 (make-non-key-event 'ns-new-frame))
+           (cons 13 (make-non-key-event 'ns-toggle-toolbar))
+!          (cons 14 (make-non-key-event 'ns-show-prefs))
+!          (cons 15 (make-non-key-event 'mac-change-input-method)))))
+  (ns-setup-special-keys)
+  
+  ;; Special Nextstep-generated events are converted to function keys.  Here
+***************
+*** 200,207 ****
   (define-key global-map [ns-new-frame] 'make-frame)
   (define-key global-map [ns-toggle-toolbar] 'ns-toggle-toolbar)
   (define-key global-map [ns-show-prefs] 'customize)
-! 
   
+- 
   ;; Set up a number of aliases and other layers to pretend we're using
   ;; the Choi/Mitsuharu Carbon port.
---- 179,185 ----
+  
+--- 201,208 ----
   (define-key global-map [ns-new-frame] 'make-frame)
   (define-key global-map [ns-toggle-toolbar] 'ns-toggle-toolbar)
   (define-key global-map [ns-show-prefs] 'customize)
-! (define-key global-map [mac-change-input-method] 'mac-change-input-method)
++ (define-key global-map [mac-change-input-method] 'mac-change-input-method)
   
   ;; Set up a number of aliases and other layers to pretend we're using
   ;; the Choi/Mitsuharu Carbon port.
+  
 ***************
-*** 273,282 ****
+*** 294,303 ****
   ;; editing window.)
   
   (defface ns-working-text-face
@@ -654,7 +87,7 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
   (defvar ns-working-overlay nil
     "Overlay used to highlight working text during compose sequence insert.
   When text is in th echo area, this just stores the length of the working text.")
---- 273,295 ----
+--- 295,317 ----
   ;; editing window.)
   
   (defface ns-working-text-face
@@ -679,7 +112,7 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
     "Overlay used to highlight working text during compose sequence insert.
   When text is in th echo area, this just stores the length of the working text.")
 ***************
-*** 288,304 ****
+*** 309,336 ****
   (defun ns-in-echo-area ()
     "Whether, for purposes of inserting working composition text, the minibuffer
   is currently being used."
@@ -697,7 +130,18 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
   
   ;; The 'interactive' here stays for subinvocations, so the ns-in-echo-area
   ;; always returns nil for some reason.  If this WASN'T the case, we could
---- 301,323 ----
+  ;; map this to [ns-insert-working-text] and eliminate Fevals in nsterm.m.
+  ;; These functions test whether in echo area and delegate accordingly.
+  (defun ns-put-working-text ()
+    (interactive)
+    (if (ns-in-echo-area) (ns-echo-working-text) (ns-insert-working-text)))
+  (defun ns-unput-working-text ()
+    (interactive)
+!   (ns-delete-working-text))
+  
+  (defun ns-insert-working-text ()
+    "Insert contents of `ns-working-text' as UTF-8 string and mark with
+--- 323,364 ----
   (defun ns-in-echo-area ()
     "Whether, for purposes of inserting working composition text, the minibuffer
   is currently being used."
@@ -714,26 +158,14 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
 !                           (eq (get-char-property (1- (point)) 'composition)
 !                               (get-char-property (point) 'composition)))))))
 !   mac-in-echo-area)
-! 
-! (defvar ns-put-text-p nil)
-! (defvar mac-ime-before-put-text-hook nil)
-! (defvar mac-ime-after-put-text-hook nil)
   
++ (defvar ns-put-text-p nil)
++ (defvar mac-ime-before-put-text-hook nil)
++ (defvar mac-ime-after-put-text-hook nil)
++ 
   ;; The 'interactive' here stays for subinvocations, so the ns-in-echo-area
   ;; always returns nil for some reason.  If this WASN'T the case, we could
-***************
-*** 306,315 ****
-  ;; These functions test whether in echo area and delegate accordingly.
-  (defun ns-put-working-text ()
-    (interactive)
-    (if (ns-in-echo-area) (ns-echo-working-text) (ns-insert-working-text)))
-  (defun ns-unput-working-text ()
-    (interactive)
-!   (ns-delete-working-text))
-  
-  (defun ns-insert-working-text ()
-    "Insert contents of `ns-working-text' as UTF-8 string and mark with
---- 325,342 ----
+  ;; map this to [ns-insert-working-text] and eliminate Fevals in nsterm.m.
   ;; These functions test whether in echo area and delegate accordingly.
   (defun ns-put-working-text ()
     (interactive)
@@ -753,8 +185,8 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
   (defun ns-insert-working-text ()
     "Insert contents of `ns-working-text' as UTF-8 string and mark with
 ***************
-*** 335,340 ****
---- 362,425 ----
+*** 356,361 ****
+--- 384,447 ----
   		       'face 'ns-working-text-face msg)
       (message "%s" msg)))
   
@@ -820,7 +252,7 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
     "Delete working text and clear `ns-working-overlay'."
     (interactive)
 ***************
-*** 352,358 ****
+*** 373,379 ****
         (message "%s" msg))))
     (setq ns-working-overlay nil))
   
@@ -828,10 +260,10 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
   ;; macOS file system Unicode UTF-8 NFD (decomposed form) support.
   (when (eq system-type 'darwin)
     ;; Used prior to Emacs 25.
---- 437,442 ----
+--- 459,464 ----
 ***************
-*** 471,476 ****
---- 555,576 ----
+*** 492,497 ****
+--- 577,598 ----
     :version "23.1"
     :group 'ns)
   
@@ -855,11 +287,12 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
   
   (defun ns-find-file ()
 ***************
-*** 925,930 ****
---- 1025,1561 ----
+*** 946,951 ****
+--- 1047,1583 ----
+  This moves point to the current mouse position if
    `dnd-indicate-insertion-point' is enabled."
     (dnd-handle-movement (posn-at-x-y x y frame)))
-  
++ 
 + ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 + ;;
 + ;; Implementation of Input Method Extension for MacOS X
@@ -1390,7 +823,529 @@ diff -crN --exclude .git emacs_origin/lisp/term/ns-win.el emacs/lisp/term/ns-win
 +   (define-key function-key-map [201328805] [?\C-\M-\\])
 +   )
 + ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-+ 
+  
   (provide 'ns-win)
   (provide 'term/ns-win)
+diff -crN --exclude .git emacs_origin/src/Makefile.in emacs/src/Makefile.in
+*** emacs_origin/src/Makefile.in	Sun Dec 22 18:33:00 2024
+--- emacs/src/Makefile.in	Sun Dec 22 18:33:13 2024
+***************
+*** 493,499 ****
+  SOME_MACHINE_OBJECTS = dosfns.o msdos.o \
+    xterm.o xfns.o xmenu.o xselect.o xrdb.o xsmfns.o fringe.o image.o \
+    fontset.o dbusbind.o cygw32.o \
+!   nsterm.o nsfns.o nsmenu.o nsselect.o nsimage.o nsfont.o macfont.o \
+    nsxwidget.o \
+    w32.o w32console.o w32cygwinx.o w32fns.o w32heap.o w32inevt.o w32notify.o \
+    w32menu.o w32proc.o w32reg.o w32select.o w32term.o w32xfns.o \
+--- 493,499 ----
+  SOME_MACHINE_OBJECTS = dosfns.o msdos.o \
+    xterm.o xfns.o xmenu.o xselect.o xrdb.o xsmfns.o fringe.o image.o \
+    fontset.o dbusbind.o cygw32.o \
+!   nsterm.o nsfns.o nsmenu.o nsselect.o nsimage.o nsfont.o macfont.o macim.o \
+    nsxwidget.o \
+    w32.o w32console.o w32cygwinx.o w32fns.o w32heap.o w32inevt.o w32notify.o \
+    w32menu.o w32proc.o w32reg.o w32select.o w32term.o w32xfns.o \
+diff -crN --exclude .git emacs_origin/src/keyboard.c emacs/src/keyboard.c
+*** emacs_origin/src/keyboard.c	Sun Dec 22 18:33:00 2024
+--- emacs/src/keyboard.c	Sun Dec 22 18:33:13 2024
+***************
+*** 6165,6173 ****
   
+  #ifdef HAVE_NS
+      case NS_TEXT_EVENT:
+!       return list1 (intern (event->code == KEY_NS_PUT_WORKING_TEXT
+!                             ? "ns-put-working-text"
+!                             : "ns-unput-working-text"));
+  
+        /* NS_NONKEY_EVENTs are just like NON_ASCII_KEYSTROKE_EVENTs,
+  	 except that they are non-key events (last-nonmenu-event is nil).  */
+--- 6165,6176 ----
+  
+  #ifdef HAVE_NS
+      case NS_TEXT_EVENT:
+!       if (event->code == KEY_NS_PUT_WORKING_TEXT)
+!         return list1 (intern ("ns-put-working-text"));
+!       else if (event->code == KEY_NS_PUT_MARKED_TEXT)
+!         return Fcons (intern ("ns-put-marked-text"), event->arg);
+!       else
+!         return list1 (intern ("ns-unput-working-text"));
+  
+        /* NS_NONKEY_EVENTs are just like NON_ASCII_KEYSTROKE_EVENTs,
+  	 except that they are non-key events (last-nonmenu-event is nil).  */
+***************
+*** 13951,13956 ****
+--- 13954,13961 ----
+  #endif
+    initial_define_lispy_key (Vspecial_event_map, "ns-put-working-text",
+  			    "ns-put-working-text");
++   initial_define_lispy_key (Vspecial_event_map, "ns-put-marked-text",
++ 			    "ns-put-marked-text");
+    initial_define_lispy_key (Vspecial_event_map, "ns-unput-working-text",
+  			    "ns-unput-working-text");
+    /* Here we used to use `ignore-event' which would simple set prefix-arg to
+diff -crN --exclude .git emacs_origin/src/macim.h emacs/src/macim.h
+*** emacs_origin/src/macim.h	Thu Jan  1 09:00:00 1970
+--- emacs/src/macim.h	Sun Dec 22 18:33:13 2024
+***************
+*** 0 ****
+--- 1,11 ----
++ /* Implementation of Input Method Extension for macOS.
++    Copyright (C) 2020
++    Takaaki Ishikawa <takaxp@ieee.org>
++ */
++ #ifdef NS_IMPL_COCOA
++ void mac_init_input_method ();
++ int mac_pass_key_to_system (int code, int modifiers);
++ int mac_pass_key_directly_to_emacs ();
++ int mac_store_change_input_method_event ();
++ NSString* mac_get_locale ();
++ #endif
+diff -crN --exclude .git emacs_origin/src/macim.m emacs/src/macim.m
+*** emacs_origin/src/macim.m	Thu Jan  1 09:00:00 1970
+--- emacs/src/macim.m	Sun Dec 22 18:33:13 2024
+***************
+*** 0 ****
+--- 1,189 ----
++ /* Implementation of Input Method Extension for macOS.
++    Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011
++    Taiichi Hashimoto <taiichi2@mac.com>.
++    2019
++    enhanced by Takaaki Ishikawa <takaxp@ieee.org>
++ */
++ #include "config.h"
++ #ifdef NS_IMPL_COCOA
++ #include <math.h>
++ #include <sys/types.h>
++ #include <time.h>
++ #include <signal.h>
++ #include <unistd.h>
++ #include <Carbon/Carbon.h>
++ #include "lisp.h"
++ #include "blockinput.h"
++ #include "termhooks.h"
++ #include "keyboard.h"
++ #include "buffer.h"
++ #include "macim.h"
++ //extern Lisp_Object Qcurrent_input_method;
++ //extern int cursor_in_echo_area;
++ static Lisp_Object Qmac_keys_passed_to_system;
++ DEFUN ("mac-input-source-is-ascii-capable", Fmac_input_source_is_ascii_capable, Smac_input_source_is_ascii_capable,
++        0, 0, 0,
++        doc: /* Is current input source ascii capable? */)
++      (void)
++ {
++   TISInputSourceRef is = TISCopyCurrentKeyboardInputSource();
++   CFBooleanRef ret = TISGetInputSourceProperty(is, kTISPropertyInputSourceIsASCIICapable);
++   return CFBooleanGetValue(ret)? Qt : Qnil;
++ }
++ DEFUN ("mac-get-locale-input-source", Fmac_get_locale_input_source, Smac_get_locale_input_source,
++        0, 0, 0,
++        doc: /* get input source based on locale */)
++      (void)
++ {
++   NSString *locale = mac_get_locale();
++   // locale = @"ja-JP";
++   // NSLog(@"%@", locale);
++   TISInputSourceRef is = TISCopyInputSourceForLanguage((CFStringRef)locale);
++   NSString *id = (NSString *)TISGetInputSourceProperty(is, kTISPropertyInputSourceID);
++   return make_string([id UTF8String],
++                      [id lengthOfBytesUsingEncoding:NSUTF8StringEncoding]);
++ }
++ DEFUN ("mac-get-input-source-list", Fmac_get_input_source_list, Smac_get_input_source_list,
++        0, 0, 0,
++        doc: /* get input source list on macOS */)
++      (void)
++ {
++   NSArray *is_list = (NSArray *)TISCreateInputSourceList(NULL, false);
++   int list_size = [is_list count];
++   Lisp_Object list[list_size];
++   int i;
++   for (i = 0; i < list_size; i++) {
++     TISInputSourceRef is = (TISInputSourceRef)[is_list objectAtIndex:i];
++     NSString *id = (NSString *)TISGetInputSourceProperty(is, kTISPropertyInputSourceID);
++     list[i] = make_string([id UTF8String],
++                           [id lengthOfBytesUsingEncoding:NSUTF8StringEncoding]);
++   }
++   return Flist(list_size, list);
++ }
++ DEFUN ("mac-get-current-input-source", Fmac_get_current_input_source, Smac_get_current_input_source,
++        0, 0, 0,
++        doc: /* get current input source on macOS */)
++      (void)
++ {
++   TISInputSourceRef is = TISCopyCurrentKeyboardInputSource();
++   NSString *id = (NSString *)TISGetInputSourceProperty(is, kTISPropertyInputSourceID);
++   return make_string([id UTF8String],
++                      [id lengthOfBytesUsingEncoding:NSUTF8StringEncoding]);
++ }
++ DEFUN ("mac-toggle-input-source", Fmac_toggle_input_source, Smac_toggle_input_source,
++        1, 1, 0,
++        doc: /* toggle input source on macOS */)
++      (arg)
++      Lisp_Object arg;
++ {
++   TISInputSourceRef is = NULL;
++   Lisp_Object Vinput_source = Qnil;
++   if (NILP (arg)) {
++     Vinput_source = Vmac_default_input_ascii;
++   } else {
++     Vinput_source = Vmac_default_input_source;
++   }
++   if ( NILP (Vinput_source) || !STRINGP (Vinput_source) ){
++     if (NILP (arg)) {
++       is = TISCopyCurrentASCIICapableKeyboardInputSource();
++     } else {
++       NSString *locale = mac_get_locale();
++       if ( [locale hasPrefix:@"ja"] ) {
++         is = TISCopyInputSourceForLanguage((CFStringRef)locale);
++       }
++     }
++     if (is) TISSelectInputSource(is);
++     return arg;
++   }
++   NSString *targetID = [NSString stringWithUTF8String: SSDATA (Vinput_source)];
++   if ( targetID == nil) {
++     return arg;
++   }
++   NSArray *is_list = (NSArray *)TISCreateInputSourceList(NULL, false);
++   int list_size = [is_list count];
++   for(int i=0; i< list_size; i++) {
++     NSString *id = (NSString *)TISGetInputSourceProperty((TISInputSourceRef)[is_list objectAtIndex:i], kTISPropertyInputSourceID);
++     if ( [id compare:targetID] == NSOrderedSame ) {
++       is = (TISInputSourceRef)[is_list objectAtIndex:i];
++       break;
++     }
++   }
++   if (is) TISSelectInputSource(is);
++   return arg;
++ }
++ NSString*
++ mac_get_locale ()
++ {
++   NSString *locale = NULL;
++   NSArray *languages = [NSLocale preferredLanguages];
++   if (languages != nil) {
++     locale = [languages objectAtIndex:0];
++   } else {
++     locale = [[NSLocale currentLocale]
++               objectForKey:NSLocaleLanguageCode];
++   }
++   return locale;
++ }
++ int
++ mac_store_change_input_method_event ()
++ {
++   Lisp_Object dim;
++   int ret = FALSE;
++   dim = Fsymbol_value (intern ("default-input-method"));
++   if (STRINGP (dim) && (strcmp(SDATA (dim), "MacOSX") == 0
++                         || strcmp(SDATA (dim), "macOS") == 0))
++     {
++       ret = TRUE;
++     }
++   return ret;
++ }
++ int
++ mac_pass_key_to_system (int code, int modifiers)
++ {
++   Lisp_Object keys = Fsymbol_value (Qmac_keys_passed_to_system);
++   Lisp_Object m, k;
++   while (!NILP (keys))
++     {
++       m = XCAR (XCAR (keys));
++       k = XCDR (XCAR (keys));
++       keys = XCDR (keys);
++       if (NUMBERP (m) && modifiers == XFIXNUM (m))
++         if (NILP (k)
++             || (NUMBERP (k) && code == XFIXNUM (k)))
++           return TRUE;
++     }
++   return FALSE;
++ }
++ int
++ mac_pass_key_directly_to_emacs (void)
++ {
++   if (NILP (Fmac_input_source_is_ascii_capable()))
++     {
++       if (NILP (Vmac_use_input_method_on_system)
++           || this_command_key_count
++           || cursor_in_echo_area
++           || !NILP (BVAR (current_buffer, read_only)))
++         return TRUE;
++     }
++   return FALSE;
++ }
++ void mac_init_input_method (void)
++ {
++   Qmac_keys_passed_to_system = intern ("mac-keys-passed-to-system");
++   staticpro (&Qmac_keys_passed_to_system);
++   DEFVAR_LISP ("mac-use-input-method-on-system", Vmac_use_input_method_on_system,
++                doc: /* If it is non-nil, use input method on system. */);
++   Vmac_use_input_method_on_system = Qt;
++   DEFVAR_LISP ("mac-default-input-source", Vmac_default_input_source,
++                doc: /* The default input source. */);
++   Vmac_default_input_source = Qnil;
++   DEFVAR_LISP ("mac-default-input-ascii", Vmac_default_input_ascii,
++                doc: /* The default input source for ASCII. */);
++   Vmac_default_input_ascii = Qnil;
++   defsubr (&Smac_input_source_is_ascii_capable);
++   defsubr (&Smac_get_input_source_list);
++   defsubr (&Smac_get_current_input_source);
++   defsubr (&Smac_get_locale_input_source);
++   defsubr (&Smac_toggle_input_source);
++ }
++ #endif
+diff -crN --exclude .git emacs_origin/src/nsfns.m emacs/src/nsfns.m
+*** emacs_origin/src/nsfns.m	Sun Dec 22 18:33:00 2024
+--- emacs/src/nsfns.m	Sun Dec 22 18:33:13 2024
+***************
+*** 47,52 ****
+--- 47,53 ----
+  #ifdef NS_IMPL_COCOA
+  #include <IOKit/graphics/IOGraphicsLib.h>
+  #include "macfont.h"
++ #include "macim.h"
+  
+  #if MAC_OS_X_VERSION_MAX_ALLOWED >= 120000
+  #include <UniformTypeIdentifiers/UniformTypeIdentifiers.h>
+***************
+*** 3979,3984 ****
+--- 3980,3997 ----
+      doc: /* SKIP: real doc in xfns.c.  */);
+    Vx_max_tooltip_size = Qnil;
+  
++   DEFVAR_LISP ("ns-shift-key-mask", Vns_shift_key_mask,
++   doc: /* Shift key mask defined in system. */);
++   Vns_shift_key_mask = make_fixnum (NSEventModifierFlagShift);
++   DEFVAR_LISP ("ns-control-key-mask", Vns_control_key_mask,
++   doc: /* Control key mask defined in system. */);
++   Vns_control_key_mask = make_fixnum (NSEventModifierFlagControl);
++   DEFVAR_LISP ("ns-alternate-key-mask", Vns_alternate_key_mask,
++   doc: /* Alternate key mask defined in system. */);
++   Vns_alternate_key_mask = make_fixnum (NSEventModifierFlagOption);
++   DEFVAR_LISP ("ns-command-key-mask", Vns_command_key_mask,
++   doc: /* Command key mask defined in system. */);
++   Vns_command_key_mask = make_fixnum (NSEventModifierFlagCommand);
+    defsubr (&Sns_read_file_name);
+    defsubr (&Sns_get_resource);
+    defsubr (&Sns_set_resource);
+***************
+*** 4025,4030 ****
+--- 4038,4046 ----
+    defsubr (&Sx_select_font);
+    defsubr (&Sns_popup_color_panel);
+  
++   #ifdef NS_IMPL_COCOA
++     mac_init_input_method ();
++   #endif
+    defsubr (&Sx_show_tip);
+    defsubr (&Sx_hide_tip);
+  
+diff -crN --exclude .git emacs_origin/src/nsterm.h emacs/src/nsterm.h
+*** emacs_origin/src/nsterm.h	Sun Dec 22 18:33:00 2024
+--- emacs/src/nsterm.h	Sun Dec 22 18:33:13 2024
+***************
+*** 796,801 ****
+--- 796,803 ----
+  #define KEY_NS_NEW_FRAME               ((1<<28)|(0<<16)|12)
+  #define KEY_NS_TOGGLE_TOOLBAR          ((1<<28)|(0<<16)|13)
+  #define KEY_NS_SHOW_PREFS              ((1<<28)|(0<<16)|14)
++ #define KEY_MAC_CHANGE_INPUT_METHOD    ((1<<28)|(0<<16)|15)
++ #define KEY_NS_PUT_MARKED_TEXT         ((1<<28)|(0<<16)|16)
+  
+  /* Could use list to store these, but rest of emacs has a big infrastructure
+     for managing a table of bitmap "records".  */
+diff -crN --exclude .git emacs_origin/src/nsterm.m emacs/src/nsterm.m
+*** emacs_origin/src/nsterm.m	Sun Dec 22 18:33:00 2024
+--- emacs/src/nsterm.m	Sun Dec 22 18:33:13 2024
+***************
+*** 69,74 ****
+--- 69,75 ----
+  
+  #ifdef NS_IMPL_COCOA
+  #include "macfont.h"
++ #include "macim.h"
+  #include <Carbon/Carbon.h>
+  #include <IOSurface/IOSurface.h>
+  #endif
+***************
+*** 5655,5660 ****
+--- 5656,5665 ----
+                                           selector: @selector (logNotification:)
+                                               name: nil object: nil]; */
+  
++   [[NSDistributedNotificationCenter defaultCenter] addObserver: NSApp
++      selector: @selector (changeInputMethod:)
++          name: @"AppleSelectedInputSourcesChangedNotification" object: nil];
++ 
+    dpyinfo = xzalloc (sizeof *dpyinfo);
+  
+    ns_initialize_display_info (dpyinfo);
+***************
+*** 5978,5984 ****
+--- 5983,6004 ----
+      NSLog (@"notification: '%@'", [notification name]);
+  }
+  
++ - (void)changeInputMethod: (NSNotification *)notification
++ {
+  
++   struct frame *emacsframe = SELECTED_FRAME ();
++ 
++   if (mac_store_change_input_method_event())
++     {
++       if (!emacs_event)
++ 	return;
++       emacs_event->kind = NS_NONKEY_EVENT;
++       emacs_event->code = KEY_MAC_CHANGE_INPUT_METHOD;
++       emacs_event->modifiers = 0;
++       EV_TRAILER ((id)nil);
++     }
++ }
++ 
+  - (void)sendEvent: (NSEvent *)theEvent
+  /* --------------------------------------------------------------------------
+       Called when NSApp is running for each event received.  Used to stop
+***************
+*** 6961,6967 ****
+  
+        /* If it was a function key or had control-like modifiers, pass
+           it directly to Emacs.  */
+!       if (fnKeysym || (emacs_event->modifiers
+                         && (emacs_event->modifiers != shift_modifier)
+                         && [[theEvent charactersIgnoringModifiers] length] > 0))
+          {
+--- 6981,6988 ----
+  
+        /* If it was a function key or had control-like modifiers, pass
+           it directly to Emacs.  */
+!       if (mac_pass_key_directly_to_emacs ()
+!           || fnKeysym || (emacs_event->modifiers
+                         && (emacs_event->modifiers != shift_modifier)
+                         && [[theEvent charactersIgnoringModifiers] length] > 0))
+          {
+***************
+*** 6989,6997 ****
+              }
+  
+            emacs_event->code = code;
+!           EV_TRAILER (theEvent);
+!           processingCompose = NO;
+!           return;
+          }
+      }
+  
+--- 7010,7028 ----
+              }
+  
+            emacs_event->code = code;
+!           /* The function mac_pass_key_to_system decides
+!              whether it is passed directly to emacs or not. */
+!           if (emacs_event->kind == NON_ASCII_KEYSTROKE_EVENT
+!               || !mac_pass_key_to_system (code, flags
+!                                           & (NSEventModifierFlagShift
+!                                              | NSEventModifierFlagControl
+!                                              | NSEventModifierFlagOption
+!                                              | NSEventModifierFlagCommand)))
+!             {
+!               EV_TRAILER (theEvent);
+!               processingCompose = NO;
+!               return;
+!             }
+          }
+      }
+  
+***************
+*** 7157,7163 ****
+    ns_working_text = [workingText lispString];
+  
+    emacs_event->kind = NS_TEXT_EVENT;
+!   emacs_event->code = KEY_NS_PUT_WORKING_TEXT;
+    EV_TRAILER ((id)nil);
+  }
+  
+--- 7188,7196 ----
+    ns_working_text = [workingText lispString];
+  
+    emacs_event->kind = NS_TEXT_EVENT;
+!   emacs_event->code = KEY_NS_PUT_MARKED_TEXT;
+!   emacs_event->arg = Fcons (make_int (selRange.location),
+!                             Fcons (make_int (selRange.length), Qnil));
+    EV_TRAILER ((id)nil);
+  }
+  
+***************
+*** 7246,7251 ****
+--- 7279,7285 ----
+  {
+    NSRect rect;
+    NSPoint pt;
++   NSPoint offset;
+    struct window *win;
+  
+    NSTRACE ("[EmacsView firstRectForCharacterRange:]");
+***************
+*** 7253,7268 ****
+    if (NS_KEYLOG)
+      NSLog (@"firstRectForCharRange request");
+  
+!   if (WINDOWP (echo_area_window) && ns_in_echo_area ())
+      win = XWINDOW (echo_area_window);
+    else
+      win = XWINDOW (FRAME_SELECTED_WINDOW (emacsframe));
+  
+    rect.size.width = theRange.length * FRAME_COLUMN_WIDTH (emacsframe);
+    rect.size.height = FRAME_LINE_HEIGHT (emacsframe);
+!   pt.x = WINDOW_TEXT_TO_FRAME_PIXEL_X (win, win->phys_cursor.x);
+    pt.y = WINDOW_TO_FRAME_PIXEL_Y (win, win->phys_cursor.y
+!                                        +FRAME_LINE_HEIGHT (emacsframe));
+  
+    pt = [self convertPoint: pt toView: nil];
+  
+--- 7287,7310 ----
+    if (NS_KEYLOG)
+      NSLog (@"firstRectForCharRange request");
+  
+!   if (NILP (Vmac_in_echo_area))
+!     win = XWINDOW (FRAME_SELECTED_WINDOW (emacsframe));
+!   else if (WINDOWP (echo_area_window) && ns_in_echo_area ())
+      win = XWINDOW (echo_area_window);
+    else
+      win = XWINDOW (FRAME_SELECTED_WINDOW (emacsframe));
+  
++   if ( INTEGERP (Vmac_ime_panel_offset_x) )
++     offset.x = XFIXNUM (Vmac_ime_panel_offset_x);
++   if ( INTEGERP (Vmac_ime_panel_offset_y) )
++     offset.y = XFIXNUM (Vmac_ime_panel_offset_y);
++ 
+    rect.size.width = theRange.length * FRAME_COLUMN_WIDTH (emacsframe);
+    rect.size.height = FRAME_LINE_HEIGHT (emacsframe);
+!   pt.x = WINDOW_TEXT_TO_FRAME_PIXEL_X (win, win->phys_cursor.x + offset.x);
+    pt.y = WINDOW_TO_FRAME_PIXEL_Y (win, win->phys_cursor.y
+!                                        +FRAME_LINE_HEIGHT (emacsframe)
+!                                        +offset.y);
+  
+    pt = [self convertPoint: pt toView: nil];
+  
+***************
+*** 11239,11244 ****
+--- 11281,11298 ----
+  the frame-relative positions of the mouse in the X and Y axes
+  respectively.  */);
+    Vns_drag_motion_function = Qns_handle_drag_motion;
++ 
++   DEFVAR_LISP ("mac-in-echo-area", Vmac_in_echo_area,
++                doc: /* state of cursor in echo area. */);
++   Vmac_in_echo_area = Qnil;
++ 
++   DEFVAR_LISP ("mac-ime-panel-offset-x", Vmac_ime_panel_offset_x,
++                doc: /* Horizontal offset to show candidates panel. */);
++   Vmac_ime_panel_offset_x = make_int (0);
++ 
++   DEFVAR_LISP ("mac-ime-panel-offset-y", Vmac_ime_panel_offset_y,
++                doc: /* Vertical offset to show candidates panel. */);
++   Vmac_ime_panel_offset_y = make_int (2);
+  
+    /* Tell Emacs about this window system.  */
+    Fprovide (Qns, Qnil);
