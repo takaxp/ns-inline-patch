@@ -3,8 +3,7 @@
 [[https://github.com/takaxp/ns-inline-patch/actions?query=workflow%3A%22Build+NS+with+inline-patch+%28HEAD%29%22][https://github.com/takaxp/ns-inline-patch/workflows/Build%20NS%20with%20inline-patch%20(HEAD)/badge.svg]]
 [[https://github.com/takaxp/ns-inline-patch/actions/workflows/release-latest_native.yml][https://github.com/takaxp/ns-inline-patch/actions/workflows/release-latest_native.yml/badge.svg]]
 [[https://github.com/takaxp/ns-inline-patch/actions/workflows/release-latest.yml][https://github.com/takaxp/ns-inline-patch/actions/workflows/release-latest.yml/badge.svg]]
-[[https://github.com/takaxp/ns-inline-patch/actions?query=workflow%3A%22Build+NS+with+inline-patch+%28emacs-29%29%22
-][https://github.com/takaxp/ns-inline-patch/workflows/Build%20NS%20with%20inline-patch%20(emacs-29)/badge.svg]]
+[[https://github.com/takaxp/ns-inline-patch/actions?query=workflow%3A%22Build+NS+with+inline-patch+%28emacs-29%29%22][https://github.com/takaxp/ns-inline-patch/workflows/Build%20NS%20with%20inline-patch%20(emacs-29)/badge.svg]]
 [[https://github.com/takaxp/ns-inline-patch/actions?query=workflow%3A%22Build+NS+with+inline-patch+%28emacs-28%29%22][https://github.com/takaxp/ns-inline-patch/workflows/Build%20NS%20with%20inline-patch%20(emacs-28)/badge.svg]]
 [[https://github.com/takaxp/ns-inline-patch/actions?query=workflow%3A%22Build+NS+with+inline-patch+%28emacs-27%29%22][https://github.com/takaxp/ns-inline-patch/workflows/Build%20NS%20with%20inline-patch%20(emacs-27)/badge.svg]]
 [[https://github.com/takaxp/ns-inline-patch/actions?query=workflow%3A%22Build+NS+with+inline-patch+%28emacs-26%29%22][https://github.com/takaxp/ns-inline-patch/workflows/Build%20NS%20with%20inline-patch%20(emacs-26)/badge.svg]]
