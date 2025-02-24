@@ -1,4 +1,4 @@
-name: "Release v29.4 (pure)"
+name: "Release v30.1 (pure)"
 on:
   workflow_dispatch:
 
@@ -44,14 +44,14 @@ jobs:
         xcrun notarytool store-credentials "github-emacs-build" --apple-id $APPLE_ID --team-id "H2PH8KNN3H" --password $APP_PASSWORD
     - name: Setup to build
       run: sh build/setup.sh
-    - name: Build Emacs 29.4
-      run: sh build/emacs-29.sh -d ${{ github.workspace }} -p pure
+    - name: Build Emacs 30.1
+      run: sh build/emacs-30.sh -d ${{ github.workspace }} -p pure
     - name: Verification
-      run: ${{ github.workspace }}/emacs-29.4/nextstep/Emacs.app/Contents/MacOS/Emacs --batch --eval="(when (fboundp 'mac-input-method-mode) (error \"The inline-patch is integrated for pure package\"))"
+      run: ${{ github.workspace }}/emacs-30.1/nextstep/Emacs.app/Contents/MacOS/Emacs --batch --eval="(when (fboundp 'mac-input-method-mode) (error \"The inline-patch is integrated for pure package\"))"
     - name: Portable
-      run: sh release/portable-emacs.sh -v 29.4 -d ${{ github.workspace }}
+      run: sh release/portable-emacs.sh -v 30.1 -d ${{ github.workspace }}
     - name: Notarize
-      run: sh release/notarize-emacs.sh -v 29.4 -d ${{ github.workspace }} -s ${{ github.workspace }} -p pure -a "github-emacs-build"
+      run: sh release/notarize-emacs.sh -v 30.1 -d ${{ github.workspace }} -s ${{ github.workspace }} -p pure -a "github-emacs-build"
     - name: Export
       env:
         ORZ_HOST: ${{ secrets.ORZ_HOST }}
@@ -110,14 +110,14 @@ jobs:
         xcrun notarytool store-credentials "github-emacs-build" --apple-id $APPLE_ID --team-id "H2PH8KNN3H" --password $APP_PASSWORD
     - name: Setup to build
       run: sh build/setup.sh
-    - name: Build Emacs 29.4
-      run: sh build/emacs-29.sh -d ${{ github.workspace }} -p pure
+    - name: Build Emacs 30.1
+      run: sh build/emacs-30.sh -d ${{ github.workspace }} -p pure
     - name: Verification
-      run: ${{ github.workspace }}/emacs-29.4/nextstep/Emacs.app/Contents/MacOS/Emacs --batch --eval="(when (fboundp 'mac-input-method-mode) (error \"The inline-patch is integrated for pure package\"))"
+      run: ${{ github.workspace }}/emacs-30.1/nextstep/Emacs.app/Contents/MacOS/Emacs --batch --eval="(when (fboundp 'mac-input-method-mode) (error \"The inline-patch is integrated for pure package\"))"
     - name: Portable
-      run: sh release/portable-emacs.sh -v 29.4 -d ${{ github.workspace }}
+      run: sh release/portable-emacs.sh -v 30.1 -d ${{ github.workspace }}
     - name: Notarize
-      run: sh release/notarize-emacs.sh -v 29.4 -d ${{ github.workspace }} -s ${{ github.workspace }} -p pure -a "github-emacs-build"
+      run: sh release/notarize-emacs.sh -v 30.1 -d ${{ github.workspace }} -s ${{ github.workspace }} -p pure -a "github-emacs-build"
     - name: Export
       env:
         ORZ_HOST: ${{ secrets.ORZ_HOST }}
