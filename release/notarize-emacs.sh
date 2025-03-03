@@ -35,10 +35,13 @@ done
 
 if [ "${PATCH}" = "pure" ]; then
     APPINSTALL_DIR="Emacs-takaxp/pure" # APPINSTALL_DIR="Emacs-takaxp"
+    PKG_TITLE="GNU Emacs (NS without patch)"
 elif [ "${PATCH}" = "inline" ]; then
     APPINSTALL_DIR="Emacs-takaxp"
+    PKG_TITLE="GNU Emacs (NS with inline-patch)"
 elif [ "${PATCH}" = "private" ]; then
     APPINSTALL_DIR="" # Emacs-takaxp/private
+    PKG_TITLE="GNU Emacs (NS with private patch)"
 else
     echo "Please provide patch mode by \"-p pure\"."
     exit 1
@@ -119,7 +122,7 @@ fi
 echo "---------------------------------"
 echo "Add title and allowed-os-versions"
 echo "---------------------------------"
-${XMLSTARLET} ed -a '/installer-gui-script/choice[@id="com.takaxp.emacs"]' -t 'elem' -n 'title' -v 'GNU Emacs (NS with inline-patch)' \
+${XMLSTARLET} ed -a '/installer-gui-script/choice[@id="com.takaxp.emacs"]' -t 'elem' -n 'title' -v "${PKG_TITLE}" \
 -a '/installer-gui-script/title' -t 'elem' -n 'allowed-os-versions' \
 -s '/installer-gui-script/allowed-os-versions' -t 'elem' -n 'os-version' \
 -a '/installer-gui-script/allowed-os-versions/os-version' -t 'attr' -n 'min' -v '10.15' Distribution.xml > edited.xml
