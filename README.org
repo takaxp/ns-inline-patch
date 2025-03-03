@@ -92,8 +92,8 @@ Currently, installing =gcc= by brew is required to compile additional lisp code 
 | Apple | 31.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc.pkg][⬇pkg(NC)]] (24FEB2025) | Sonoma  | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc.md5][29ece2122e4ddef031e59b1e5c74bf96]] |
 | Intel | 31.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel_nc.pkg][⬇pkg(NC)]] (24FEB2025) | Ventura | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel_nc.md5][8b0a04e7bfc371f80726de7ab07f6ca6]] |
 |-------+---------+-----------------------+---------+----------------------------------|
-| Apple |    30.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_apple_nc.pkg][⬇pkg(NC)]] (24AUG2024) | Sonoma  | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_apple_nc.md5][8de91a206cea4324a4b3eb9bfe334eae]] |
-| Intel |    30.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_intel_nc.pkg][⬇pkg(NC)]] (24AUG2024) | Ventura | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_intel_nc.md5][32c5d08dcd80fcf66ae3b734f08a830a]] |
+| Apple |    30.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_apple_nc.pkg][⬇pkg(NC)]] (24AUG2024) | Sonoma  | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_apple_nc.md5][07f39fd0b3bdc8fefb2789c3594979a0]] |
+| Intel |    30.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_intel_nc.pkg][⬇pkg(NC)]] (24AUG2024) | Ventura | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_intel_nc.md5][ab1558031ba6e5ba05ddb62ccf1ccd69]] |
 |-------+---------+-----------------------+---------+----------------------------------|
 | Apple |    29.4 | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_apple_nc.pkg][⬇pkg(NC)]] (13AUG2024) | Sonoma  | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_apple_nc.md5][909bca461aab416c4ed8a3971531685c]] |
 | Intel |    29.4 | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_intel_nc.pkg][⬇pkg(NC)]] (13AUG2024) | Ventura | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_intel_nc.md5][ede9e15e84926b4d834dd21029fde595]] |
@@ -125,12 +125,10 @@ brew install gcc
 :ID:       E33762E0-D4DC-4E5D-B7A9-06CB5493E3C1
 :END:
 
-Note: Before installing the pre-built package, please remove previous Emacs.app from the installed directory if you have installed Emacs 30x. If the previously installed Emacs.app is not removed, the installation may fail.
-
 | Chip  | Version | Download           | macOS   | [MB] | md5                              |
 |-------+---------+--------------------+---------+------+----------------------------------|
-| Apple |    30.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_apple.pkg][⬇pkg]] (2025-02-24) | Sonoma  | 61.4 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_apple.md5][ccb7b14a57655781b2765f15d5ae250c]] |
-| Intel |    30.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_intel.pkg][⬇pkg]] (2025-02-24) | Ventura | 61.7 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_intel.md5][2c32419e45814a87cb9c806f87692ebc]] |
+| Apple |    30.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_apple.pkg][⬇pkg]] (2025-02-24) | Sonoma  | 61.4 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_apple.md5][2938f679e0af93da6bc0d4ca5ace68cb]] |
+| Intel |    30.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_intel.pkg][⬇pkg]] (2025-02-24) | Ventura | 61.7 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_intel.md5][b0acd6bff716baa533b4f9f19c40d60b]] |
 
 Note - Not tested in previous versions, but it probably be installed.
 
@@ -203,8 +201,8 @@ Additionally, the following package is "WITHOUT" inline-patch NS build. In this 
 #+caption: pure
 | Chip  | Version | Download                | macOS             | [MB] | md5                              |
 |-------+---------+-------------------------+-------------------+------+----------------------------------|
-| Apple |    30.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_apple_pure.pkg][⬇pure.pkg]] (2025-02-24) | Sonoma[*1]        | 61.4 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_apple_pure.md5][90f966c98e80b98f6a3c63ec07e3ceb5]] |
-| Intel |    30.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_intel_pure.pkg][⬇pure.pkg]] (2025-02-24) | Ventura[*1]       | 61.7 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_intel_pure.md5][a3bf6edee5fb12abdc4fe4eaefbd8046]] |
+| Apple |    30.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_apple_pure.pkg][⬇pure.pkg]] (2025-02-24) | Sonoma[*1]        | 61.4 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_apple_pure.md5][da7889645c10077d25fdf9331fa89614]] |
+| Intel |    30.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_intel_pure.pkg][⬇pure.pkg]] (2025-02-24) | Ventura[*1]       | 61.7 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_intel_pure.md5][97bedb0cd7e33c7d68a597ca984b125e]] |
 |-------+---------+-------------------------+-------------------+------+----------------------------------|
 | Apple |    29.4 | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_apple_pure.pkg][⬇pure.pkg]] (2024-08-13) | Sonoma[*1]        | 59.2 | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_apple_pure.md5][a85a6bd9a2d7e39b546d264dce08368a]] |
 | Intel |    29.4 | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_intel_pure.pkg][⬇pure.pkg]] (2024-08-13) | Ventura[*1]       | 59.5 | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_intel_pure.md5][cb8a0c621c293c11aa1a273eb85dbe88]] |
