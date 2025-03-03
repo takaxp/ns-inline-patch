@@ -44,7 +44,7 @@ else
     exit 1
 fi
 
-PKGVERSION=$(date '+%Y%m%d%H%M')
+PKGVERSION=$(date '+%Y.%m%d.%H%M')
 if [ ! "$VERSION" -a ! "${BRANCH}" ]; then
     echo "Please specify VERSION (-v 28.2)"
     echo "Also check APPINSTALL_DIR and PKGVERSION ($APPINSTALL_DIR, $PKGVERSION)"
@@ -99,8 +99,10 @@ pkgbuild --analyze --root Applications packages.plist
 
 echo "---------------------------------"
 echo "Make BundleIsRelocatable false"
+echo "Make BundleIsVersionChecked false"
 echo "---------------------------------"
 plutil -replace 'BundleIsRelocatable' -bool false packages.plist
+plutil -replace 'BundleIsVersionChecked' -bool false packages.plist
 
 # Create pkg file
 pkgbuild Emacs.pkg --root Applications --component-plist packages.plist --identifier com.takaxp.emacs --version ${PKGVERSION} --install-location "/Applications"
