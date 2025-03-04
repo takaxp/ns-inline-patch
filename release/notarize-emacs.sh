@@ -3,7 +3,7 @@
 SOURCE_DIR="${HOME}/devel/emacs-head"
 WORKING_DIR="${HOME}/Desktop"
 PROFILE_NAME="emacs-build"
-LIBGCCJIT="libgccjit.0.dylib"
+LIB_GCCJIT="libgccjit.0.dylib"
 
 while getopts v:p:b:k:d:s:a: opt
 do
@@ -47,16 +47,17 @@ else
     exit 1
 fi
 
-PKGVERSION=$(date '+%Y.%m%d.%H%M')
+PKG_VERSION=$(date '+%Y.%m%d.%H%M')
 if [ ! "$VERSION" -a ! "${BRANCH}" ]; then
     echo "Please specify VERSION (-v 28.2)"
-    echo "Also check APPINSTALL_DIR and PKGVERSION ($APPINSTALL_DIR, $PKGVERSION)"
+    echo "Also check APPINSTALL_DIR and PKG_VERSION ($APPINSTALL_DIR, $PKG_VERSION)"
     exit 1
 else
     echo "Version:    $VERSION"
     echo "Branch:     $BRANCH"
     echo "APPINSTALL_DIR:     $APPINSTALL_DIR"
-    echo "PKGVERSION: $PKGVERSION"
+    echo "PKG_TITLE: $PKG_TITLE"
+    echo "PKG_VERSION: $PKG_VERSION"
 fi
 
 ##############################################################################
@@ -87,8 +88,8 @@ if [ "${BRANCH}" = "" -a ! "${VERSION}" = "" ]; then
 fi
 cp -r ${APP_DIR}/Emacs.app ${PKG_APPINSTALL_DIR}
 
-DEVELOPERID='Developer ID Application: Takaaki Ishikawa (H2PH8KNN3H)'
-codesign --verify --sign "${DEVELOPERID}" --deep --force --verbose --option runtime --entitlements entitlements.plist --timestamp ./${PKG_APPINSTALL_DIR}/Emacs.app
+DEVELOPER_ID='Developer ID Application: Takaaki Ishikawa (H2PH8KNN3H)'
+codesign --verify --sign "${DEVELOPER_ID}" --deep --force --verbose --option runtime --entitlements entitlements.plist --timestamp ./${PKG_APPINSTALL_DIR}/Emacs.app
 
 # Check the signature
 RESULT=$(pkgutil --check-signature ./${PKG_APPINSTALL_DIR}/Emacs.app | grep "no sign")
@@ -108,7 +109,7 @@ plutil -replace 'BundleIsRelocatable' -bool false packages.plist
 plutil -replace 'BundleIsVersionChecked' -bool false packages.plist
 
 # Create pkg file
-pkgbuild Emacs.pkg --root Applications --component-plist packages.plist --identifier com.takaxp.emacs --version ${PKGVERSION} --install-location "/Applications"
+pkgbuild Emacs.pkg --root Applications --component-plist packages.plist --identifier com.takaxp.emacs --version ${PKG_VERSION} --install-location "/Applications"
 
 # Edit Distribution.xml
 productbuild --synthesize --package Emacs.pkg Distribution.xml
@@ -132,8 +133,8 @@ mv edited.xml Distribution.xml
 productbuild --distribution Distribution.xml --package-path Emacs.pkg Emacs-Distribution.pkg
 
 # Productsign
-DEVELOPERID='Developer ID Installer: Takaaki Ishikawa (H2PH8KNN3H)'
-productsign --sign "${DEVELOPERID}" Emacs-Distribution.pkg Emacs-Distribution_SIGNED.pkg
+DEVELOPER_ID='Developer ID Installer: Takaaki Ishikawa (H2PH8KNN3H)'
+productsign --sign "${DEVELOPER_ID}" Emacs-Distribution.pkg Emacs-Distribution_SIGNED.pkg
 
 # Check the signature
 RESULT=$(pkgutil --check-signature Emacs-Distribution_SIGNED.pkg | grep "no sign")
@@ -164,7 +165,7 @@ fi
 VENDER="_apple"
 [ "${CPUARC}" = "x86_64" ] && VENDER="_intel"
 [ "${PATCH}" = "pure" ] && PURE="_pure"
-if [ -f ./Applications/${APPINSTALL_DIR}/Emacs.app/Contents/MacOS/lib/${LIBGCCJIT} ]; then
+if [ -f ./Applications/${APPINSTALL_DIR}/Emacs.app/Contents/MacOS/lib/${LIB_GCCJIT} ]; then
     NATIVE="_nc"
 fi
 
