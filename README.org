@@ -82,6 +82,8 @@ These packages are built based on the current development source code. So it may
 | Apple | 31.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc.pkg][⬇pkg(NC)]] (24FEB2025) | Sonoma  | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc.md5][29ece2122e4ddef031e59b1e5c74bf96]] |
 | Intel | 31.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel_nc.pkg][⬇pkg(NC)]] (24FEB2025) | Ventura | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel_nc.md5][8b0a04e7bfc371f80726de7ab07f6ca6]] |
 
+Note: Please read [[https://github.com/takaxp/ns-inline-patch?tab=readme-ov-file#using-nativecomp][Using NativeComp]] section if you have any troubles.
+
 Following packages are built *without* NativeComp option.
 
 #+caption: HEAD(master)
@@ -100,6 +102,8 @@ Following packages are built *without* NativeComp option.
 |-------+---------+-----------------------+---------+-------+----------------------------------|
 | Apple |    30.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_apple_nc.pkg][⬇pkg(NC)]] (24AUG2024) | Sonoma  | 129.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_apple_nc.md5][df64216ee5de0753f66cddd8be379d4c]] |
 | Intel |    30.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_intel_nc.pkg][⬇pkg(NC)]] (24AUG2024) | Ventura | 131.8 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_intel_nc.md5][a08f6e92b918e4d190a03249dc5058c5]] |
+
+Note: Please read [[https://github.com/takaxp/ns-inline-patch?tab=readme-ov-file#using-nativecomp][Using NativeComp]] section if you have any troubles.
 
 Following packages are built *without* NativeComp option.
 
@@ -136,6 +140,8 @@ Note: Before installing the pre-built package, please remove previous Emacs.app 
 Note - Not tested in previous versions, but it probably be installed.
 
 Following packages are built with NativeComp option.
+
+Note: Please read [[https://github.com/takaxp/ns-inline-patch?tab=readme-ov-file#using-nativecomp][Using NativeComp]] section if you have any troubles.
 
 #+caption: emacs-29.4 with NativeComp
 | Chip  | Version | Download              | macOS   |  [MB] | md5                              |
