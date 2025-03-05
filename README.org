@@ -76,59 +76,38 @@ These packages are built based on the current development source code. So it may
 
 # https://docs.github.com/en/actions/using-github-hosted-runners/using-github-hosted-runners/about-github-hosted-runners
 
+#+caption: HEAD(master) build with Native Comp
+| Chip  | Version | Download              | macOS   | md5                              |
+|-------+---------+-----------------------+---------+----------------------------------|
+| Apple | 31.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc.pkg][⬇pkg(NC)]] (24FEB2025) | Sonoma  | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc.md5][29ece2122e4ddef031e59b1e5c74bf96]] |
+| Intel | 31.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel_nc.pkg][⬇pkg(NC)]] (24FEB2025) | Ventura | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel_nc.md5][8b0a04e7bfc371f80726de7ab07f6ca6]] |
+
+Following packages are built *without* NativeComp option.
+
 #+caption: HEAD(master)
 | Chip  | Version | Download          | macOS   | md5                              |
 |-------+---------+-------------------+---------+----------------------------------|
 | Apple | 31.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.pkg][⬇pkg]] (24FEB2025) | Sonoma  | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.md5][7703a5dc77ea74cd815e3c67c15823f9]] |
 | Intel | 31.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.pkg][⬇pkg]] (24FEB2025) | Ventura | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.md5][1478a6741b40e464848a64562bdb3918]] |
 
-You can also try to use an Emacs supporting =NativeComp= by downloading pkg from the following links. Integrated lisp code are natively compiled so the pkg size is increased compared to that of the normal pkg file.
-
-Currently, installing =gcc= by brew is required to compile additional lisp code by the installed Emacs. And adding the following configuration will be needed to your =early-init.el= or beginning of =init.el= when you face a warning like *Warning (comp): libgccjit.so: error: error invoking gcc driver*.
-
-#+caption: HEAD(master) build with Native Comp
-| Chip  | Version | Download              | macOS   | md5                              |
-|-------+---------+-----------------------+---------+----------------------------------|
-| Apple | 31.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc.pkg][⬇pkg(NC)]] (24FEB2025) | Sonoma  | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc.md5][29ece2122e4ddef031e59b1e5c74bf96]] |
-| Intel | 31.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel_nc.pkg][⬇pkg(NC)]] (24FEB2025) | Ventura | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel_nc.md5][8b0a04e7bfc371f80726de7ab07f6ca6]] |
-|-------+---------+-----------------------+---------+----------------------------------|
-| Apple |    30.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_apple_nc.pkg][⬇pkg(NC)]] (24AUG2024) | Sonoma  | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_apple_nc.md5][df64216ee5de0753f66cddd8be379d4c]] |
-| Intel |    30.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_intel_nc.pkg][⬇pkg(NC)]] (24AUG2024) | Ventura | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_intel_nc.md5][a08f6e92b918e4d190a03249dc5058c5]] |
-|-------+---------+-----------------------+---------+----------------------------------|
-| Apple |    29.4 | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_apple_nc.pkg][⬇pkg(NC)]] (13AUG2024) | Sonoma  | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_apple_nc.md5][909bca461aab416c4ed8a3971531685c]] |
-| Intel |    29.4 | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_intel_nc.pkg][⬇pkg(NC)]] (13AUG2024) | Ventura | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_intel_nc.md5][ede9e15e84926b4d834dd21029fde595]] |
-
-#+begin_src emacs-lisp
-(setenv "LIBRARY_PATH"
-        (string-join
-         '("/opt/homebrew/opt/gcc/lib/gcc/14"
-           "/opt/homebrew/opt/libgccjit/lib/gcc/14"
-           "/opt/homebrew/opt/gcc/lib/gcc/14/gcc/aarch64-apple-darwin23/14")
-         ":"))
-#+end_src
-
-Note:
-- =14= specified in the above paths may have to be aligned to your environment.
-- For Intel mac user, please replace =aarch64= with =x86_64=.
-
-**** install gcc by grew
-
-#+begin_src sh
-# setup grew
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-# install gcc
-brew install gcc
-#+end_src
-
 *** Emacs 30 (with inline patch)
 :PROPERTIES:
 :ID:       E33762E0-D4DC-4E5D-B7A9-06CB5493E3C1
 :END:
 
-| Chip  | Version | Download           | macOS   | [MB] | md5                              |
-|-------+---------+--------------------+---------+------+----------------------------------|
-| Apple |    30.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_apple.pkg][⬇pkg]] (2025-02-24) | Sonoma  | 61.4 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_apple.md5][73ad729391e90cf24e59b3bcc32005bf]] |
-| Intel |    30.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_intel.pkg][⬇pkg]] (2025-02-24) | Ventura | 61.7 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_intel.md5][8572a3eef3ea7242a5aeb213b1f3b892]] |
+#+caption: emacs-30 with NativeComp
+| Chip  | Version | Download              | macOS   |  [MB] | md5                              |
+|-------+---------+-----------------------+---------+-------+----------------------------------|
+| Apple |    30.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_apple_nc.pkg][⬇pkg(NC)]] (24AUG2024) | Sonoma  | 129.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_apple_nc.md5][df64216ee5de0753f66cddd8be379d4c]] |
+| Intel |    30.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_intel_nc.pkg][⬇pkg(NC)]] (24AUG2024) | Ventura | 131.8 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_intel_nc.md5][a08f6e92b918e4d190a03249dc5058c5]] |
+
+Following packages are built *without* NativeComp option.
+
+#+caption: emacs-30 without NativeComp
+| Chip  | Version | Download              | macOS   | [MB] | md5                              |
+|-------+---------+-----------------------+---------+------+----------------------------------|
+| Apple |    30.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_apple.pkg][⬇pkg]] (2025-02-24)    | Sonoma  | 61.4 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_apple.md5][73ad729391e90cf24e59b3bcc32005bf]] |
+| Intel |    30.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_intel.pkg][⬇pkg]] (2025-02-24)    | Ventura | 61.7 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_intel.md5][8572a3eef3ea7242a5aeb213b1f3b892]] |
 
 Note - Not tested in previous versions, but it probably be installed.
 
@@ -139,6 +118,7 @@ Note - Not tested in previous versions, but it probably be installed.
 
 Note: Before installing the pre-built package, please remove previous Emacs.app from the installed directory if you have installed Emacs 29x. If the previously installed Emacs.app is not removed, the installation may fail.
 
+#+caption: emacs-29.x without NativeComp
 | Chip  | Version | Download          | macOS   | [MB] | md5                              |
 |-------+---------+-------------------+---------+------+----------------------------------|
 | Apple |    29.4 | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_apple.pkg][⬇pkg]] (2024-08-13) | Sonoma  | 59.3 | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_apple.md5][122378bfe6c89eb8e29d292e6d982758]] |
@@ -154,6 +134,14 @@ Note: Before installing the pre-built package, please remove previous Emacs.app 
 | Intel |    29.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-29.1_intel.pkg][⬇pkg]] (2023-08-05) | Ventura | 59.6 | [[https://pxaka.tokyo/emacs/pkg/emacs-29.1_intel.md5][c47cf4e373d97e6ccbbe0775aa007a2c]] |
 
 Note - Not tested in previous versions, but it probably be installed.
+
+Following packages are built with NativeComp option.
+
+#+caption: emacs-29.4 with NativeComp
+| Chip  | Version | Download              | macOS   |  [MB] | md5                              |
+|-------+---------+-----------------------+---------+-------+----------------------------------|
+| Apple |    29.4 | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_apple_nc.pkg][⬇pkg(NC)]] (13AUG2024) | Sonoma  | 125.5 | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_apple_nc.md5][909bca461aab416c4ed8a3971531685c]] |
+| Intel |    29.4 | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_intel_nc.pkg][⬇pkg(NC)]] (13AUG2024) | Ventura | 128.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_intel_nc.md5][ede9e15e84926b4d834dd21029fde595]] |
 
 *** Emacs 28 (with inline patch)
 
@@ -228,6 +216,36 @@ Additionally, the following package is "WITHOUT" inline-patch NS build. In this 
 
 [*1] Not tested in previous versions, but it probably be installed.
 [*2] Mojave / Catalina / Big Sur
+
+*** Using NativeComp
+
+For Emacs =31.x=, =30.1=, and =29.4= users, you can also try to use an Emacs supporting =NativeComp= by downloading pkg from the following links. Integrated lisp code are natively compiled so the pkg size is increased compared to that of the normal pkg file.
+
+Currently, installing =gcc= by brew is required to compile additional lisp code by the installed Emacs. And adding the following configuration will be needed to your =early-init.el= or beginning of =init.el= when you face a warning like *Warning (comp): libgccjit.so: error: error invoking gcc driver*.
+
+#+begin_src emacs-lisp
+(setenv "LIBRARY_PATH"
+        (string-join
+         '("/opt/homebrew/opt/gcc/lib/gcc/14"
+           "/opt/homebrew/opt/libgccjit/lib/gcc/14"
+           "/opt/homebrew/opt/gcc/lib/gcc/14/gcc/aarch64-apple-darwin23/14")
+         ":"))
+#+end_src
+
+Note:
+- =14= specified in the above paths may have to be aligned to your environment.
+- For Intel mac user, please replace =aarch64= with =x86_64=.
+
+**** install gcc by HomeBrew
+
+Just run the following two commands.
+
+#+begin_src sh
+# setup grew
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+# install gcc
+brew install gcc
+#+end_src
 
 *** Integrated dynamic libraries:
 
