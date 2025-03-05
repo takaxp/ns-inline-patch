@@ -264,7 +264,7 @@ Additionally, the following package is "WITHOUT" inline-patch NS build. In this 
 
 *** Using NativeComp
 
-For Emacs =31.x=, =30.1=, and =29.4= users, you can also try to use an Emacs supporting =NativeComp= by downloading pkg from the following links. Integrated lisp code are natively compiled so the pkg size is increased compared to that of the normal pkg file.
+For Emacs =31.x=, =30.1=, and =29.4= users, you can try to use an Emacs supporting =NativeComp= by downloading pkg from the links in above sections. Integrated lisp code are natively compiled so the pkg size is increased compared to that of the normal pkg file.
 
 Currently, installing =gcc= by brew is required to compile additional lisp code by the installed Emacs. And adding the following configuration will be needed to your =early-init.el= or beginning of =init.el= when you face a warning like *Warning (comp): libgccjit.so: error: error invoking gcc driver*.
 
