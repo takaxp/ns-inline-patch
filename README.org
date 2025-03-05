@@ -10,7 +10,10 @@
 
 see https://qiita.com/takaxp/items/e07bb286d80fa9dd8e05 and https://qiita.com/takaxp/items/6a7f9b26eb1b1a8237a0
 
-Note: Version 30.1 has been released. The inline patch (emacs-29.1-inline.patch) is still applicable to Emacs 30.1. Installer packages for Intel-based Mac and Apple Silicon Mac are also available. You may install them in macOS Catalina or later.
+#+begin_quote
+[!NOTE]
+Version 30.1 has been released. The inline patch (emacs-29.1-inline.patch) is still applicable to Emacs 30.1. Installer packages for Intel-based Mac and Apple Silicon Mac are also available. You may install them in macOS Catalina or later.
+#+end_quote
 
 ** Supported features
 
@@ -29,11 +32,18 @@ Note: Version 30.1 has been released. The inline patch (emacs-29.1-inline.patch)
 - Emacs 26.3, 26.2, 26.1 (emacs-25.2-inline.patch)
 - Emacs 25.3, 25.2 (emacs-25.2-inline.patch)
 
-** Integrated functions
+** Integrated functions and hooks
+:PROPERTIES:
+:ID:       982CF02C-EE91-4EC1-8F21-98A581399E00
+:END:
 
 - M-x mac-build-info
-
-Note: This function is not valid in pre-built packages described in later section.
+- M-x mac-ime-input-source-list
+- M-x mac-ime-activate
+- M-x mac-ime-deactivate
+- M-x mac-ime-toggle
+- mac-ime-before-put-text-hook
+- mac-ime-after-put-text-hook
 
 ** How to use?
 
@@ -48,6 +58,11 @@ Add the following code to your init.el.
      '(mac-default-input-source "com.google.inputmethod.Japanese.base")))
   (mac-input-method-mode 1))
 #+end_src
+
+#+begin_quote
+[!TIP]
+You can find available input sources by M-x mac-ime-input-source-list. The available sources will be listed in the Message buffer.
+#+end_quote
 
 ** Build scripts
 
@@ -72,7 +87,10 @@ You can download my pre-built Emacs 26.3, 27.1, 27.2, 28.1, 28.2, 29.1, 29.2, 29
 :ID:       9B7E9F4F-E5C7-4A09-A06B-7E1E58ADBDB9
 :END:
 
+#+begin_quote
+[!WARNING]
 These packages are built based on the current development source code. So it may be unstable or broken.
+#+end_quote
 
 # https://docs.github.com/en/actions/using-github-hosted-runners/using-github-hosted-runners/about-github-hosted-runners
 
@@ -106,7 +124,10 @@ Following packages are built *without* NativeComp option.
 | Apple |    30.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_apple_nc.pkg][⬇pkg(NC)]] (24AUG2024) | Sonoma  | 129.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_apple_nc.md5][df64216ee5de0753f66cddd8be379d4c]] |
 | Intel |    30.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_intel_nc.pkg][⬇pkg(NC)]] (24AUG2024) | Ventura | 131.8 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_intel_nc.md5][a08f6e92b918e4d190a03249dc5058c5]] |
 
-Note: Please read [[https://github.com/takaxp/ns-inline-patch?tab=readme-ov-file#using-nativecomp][Using NativeComp]] section if you have any troubles.
+#+begin_quote
+[!IMPORTANT]
+Please read [[https://github.com/takaxp/ns-inline-patch?tab=readme-ov-file#using-nativecomp][Using NativeComp]] section if you have any troubles.
+#+end_quote
 
 Following packages are built *without* NativeComp option.
 
@@ -116,14 +137,20 @@ Following packages are built *without* NativeComp option.
 | Apple |    30.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_apple.pkg][⬇pkg]] (2025-02-24)    | Sonoma  | 61.4 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_apple.md5][73ad729391e90cf24e59b3bcc32005bf]] |
 | Intel |    30.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_intel.pkg][⬇pkg]] (2025-02-24)    | Ventura | 61.7 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_intel.md5][8572a3eef3ea7242a5aeb213b1f3b892]] |
 
-Note - Not tested in previous versions, but it probably be installed.
+#+begin_quote
+[!NOTE]
+Not tested in previous versions, but it probably be installed.
+#+end_quote
 
 *** Emacs 29 (with inline patch)
 :PROPERTIES:
 :ID:       439F2090-DF77-4228-AAE1-54B97AD67C3E
 :END:
 
-Note: Before installing the pre-built package, please remove previous Emacs.app from the installed directory if you have installed Emacs 29x. If the previously installed Emacs.app is not removed, the installation may fail.
+#+begin_quote
+[!WARNING]
+Before installing the pre-built package, please remove previous Emacs.app from the installed directory if you have installed Emacs 29x. If the previously installed Emacs.app is not removed, the installation may fail.
+#+end_quote
 
 #+caption: emacs-29.x without NativeComp
 | Chip  | Version | Download          | macOS   | [MB] | md5                              |
@@ -140,11 +167,12 @@ Note: Before installing the pre-built package, please remove previous Emacs.app 
 | Apple |    29.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-29.1_apple.pkg][⬇pkg]] (2023-08-05) | Ventura | 59.5 | [[https://pxaka.tokyo/emacs/pkg/emacs-29.1_apple.md5][d90aef769e18390247aa715bef781677]] |
 | Intel |    29.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-29.1_intel.pkg][⬇pkg]] (2023-08-05) | Ventura | 59.6 | [[https://pxaka.tokyo/emacs/pkg/emacs-29.1_intel.md5][c47cf4e373d97e6ccbbe0775aa007a2c]] |
 
-Note - Not tested in previous versions, but it probably be installed.
+#+begin_quote
+[!NOTE]
+Not tested in previous versions, but it probably be installed.
+#+end_quote
 
 Following packages are built with NativeComp option.
-
-Note: Please read [[https://github.com/takaxp/ns-inline-patch?tab=readme-ov-file#using-nativecomp][Using NativeComp]] section if you have any troubles.
 
 #+caption: emacs-29.4 with NativeComp
 | Chip  | Version | Download              | macOS   |  [MB] | md5                              |
@@ -152,9 +180,17 @@ Note: Please read [[https://github.com/takaxp/ns-inline-patch?tab=readme-ov-file
 | Apple |    29.4 | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_apple_nc.pkg][⬇pkg(NC)]] (13AUG2024) | Sonoma  | 125.5 | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_apple_nc.md5][909bca461aab416c4ed8a3971531685c]] |
 | Intel |    29.4 | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_intel_nc.pkg][⬇pkg(NC)]] (13AUG2024) | Ventura | 128.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_intel_nc.md5][ede9e15e84926b4d834dd21029fde595]] |
 
+#+begin_quote
+[!IMPORTANT]
+Please read [[https://github.com/takaxp/ns-inline-patch?tab=readme-ov-file#using-nativecomp][Using NativeComp]] section if you have any troubles.
+#+end_quote
+
 *** Emacs 28 (with inline patch)
 
-Note: Before installing the pre-built package, please remove previous Emacs.app from the installed directory if you have installed Emacs 28x. If the previously installed Emacs.app is not removed, the installation may fail.
+#+begin_quote
+[!WARNING]
+Before installing the pre-built package, please remove previous Emacs.app from the installed directory if you have installed Emacs 29x. If the previously installed Emacs.app is not removed, the installation may fail.
+#+end_quote
 
 | Chip  | Version | Download          | macOS             | [MB] | md5                              |
 |-------+---------+-------------------+-------------------+------+----------------------------------|
@@ -241,9 +277,11 @@ Currently, installing =gcc= by brew is required to compile additional lisp code 
          ":"))
 #+end_src
 
-Note:
+#+begin_quote
+[!NOTE]
 - =14= specified in the above paths may have to be aligned to your environment.
 - For Intel mac user, please replace =aarch64= with =x86_64=.
+#+end_quote
 
 **** install gcc by HomeBrew
 
