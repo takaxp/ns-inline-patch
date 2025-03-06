@@ -121,8 +121,8 @@ Following packages are built *without* NativeComp option.
 #+caption: emacs-30 with NativeComp
 | Chip  | Version | Download              | macOS   |  [MB] | md5                              |
 |-------+---------+-----------------------+---------+-------+----------------------------------|
-| Apple |    30.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_apple_nc.pkg][⬇pkg(NC)]] (24AUG2024) | Sonoma  | 129.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_apple_nc.md5][df64216ee5de0753f66cddd8be379d4c]] |
-| Intel |    30.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_intel_nc.pkg][⬇pkg(NC)]] (24AUG2024) | Ventura | 131.8 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_intel_nc.md5][a08f6e92b918e4d190a03249dc5058c5]] |
+| Apple |    30.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_apple_nc.pkg][⬇pkg(NC)]] (04MAR2025) | Sonoma  | 129.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_apple_nc.md5][df64216ee5de0753f66cddd8be379d4c]] |
+| Intel |    30.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_intel_nc.pkg][⬇pkg(NC)]] (04MAR2025) | Ventura | 131.8 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_intel_nc.md5][a08f6e92b918e4d190a03249dc5058c5]] |
 
 #+begin_quote
 [!IMPORTANT]
@@ -132,10 +132,10 @@ Please read [[https://github.com/takaxp/ns-inline-patch?tab=readme-ov-file#using
 Following packages are built *without* NativeComp option.
 
 #+caption: emacs-30 without NativeComp
-| Chip  | Version | Download              | macOS   | [MB] | md5                              |
-|-------+---------+-----------------------+---------+------+----------------------------------|
-| Apple |    30.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_apple.pkg][⬇pkg]] (2025-02-24)    | Sonoma  | 61.4 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_apple.md5][73ad729391e90cf24e59b3bcc32005bf]] |
-| Intel |    30.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_intel.pkg][⬇pkg]] (2025-02-24)    | Ventura | 61.7 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_intel.md5][8572a3eef3ea7242a5aeb213b1f3b892]] |
+| Chip  | Version | Download           | macOS   | [MB] | md5                              |
+|-------+---------+--------------------+---------+------+----------------------------------|
+| Apple |    30.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_apple.pkg][⬇pkg]] (2025-03-04) | Sonoma  | 61.4 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_apple.md5][73ad729391e90cf24e59b3bcc32005bf]] |
+| Intel |    30.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_intel.pkg][⬇pkg]] (2025-03-04) | Ventura | 61.7 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_intel.md5][8572a3eef3ea7242a5aeb213b1f3b892]] |
 
 #+begin_quote
 [!NOTE]
@@ -234,8 +234,8 @@ Additionally, the following package is "WITHOUT" inline-patch NS build. In this 
 #+caption: pure
 | Chip  | Version | Download                | macOS             | [MB] | md5                              |
 |-------+---------+-------------------------+-------------------+------+----------------------------------|
-| Apple |    30.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_apple_pure.pkg][⬇pure.pkg]] (2025-02-24) | Sonoma[*1]        | 61.4 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_apple_pure.md5][2285e2e60423e0abcd2a09513f554d78]] |
-| Intel |    30.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_intel_pure.pkg][⬇pure.pkg]] (2025-02-24) | Ventura[*1]       | 61.7 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_intel_pure.md5][847e88a6b4552f895cdeeed825654bed]] |
+| Apple |    30.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_apple_pure.pkg][⬇pure.pkg]] (2025-03-04) | Sonoma[*1]        | 61.4 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_apple_pure.md5][2285e2e60423e0abcd2a09513f554d78]] |
+| Intel |    30.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_intel_pure.pkg][⬇pure.pkg]] (2025-03-04) | Ventura[*1]       | 61.7 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_intel_pure.md5][847e88a6b4552f895cdeeed825654bed]] |
 |-------+---------+-------------------------+-------------------+------+----------------------------------|
 | Apple |    29.4 | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_apple_pure.pkg][⬇pure.pkg]] (2024-08-13) | Sonoma[*1]        | 59.2 | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_apple_pure.md5][a85a6bd9a2d7e39b546d264dce08368a]] |
 | Intel |    29.4 | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_intel_pure.pkg][⬇pure.pkg]] (2024-08-13) | Ventura[*1]       | 59.5 | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_intel_pure.md5][cb8a0c621c293c11aa1a273eb85dbe88]] |
