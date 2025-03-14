@@ -85,7 +85,7 @@ Please provide ~-n~ option to enable NativComp if needed.
 #+end_quote
 
 #+begin_quote
-[!TIPS]
+[!TIP]
 Specifying ~CC~ may resolve your issue when you get an error on missing AppKit.h.
 CC=/usr/bin/clang sh ./build/emacs-30.sh
 #+end_quote
