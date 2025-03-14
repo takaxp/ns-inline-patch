@@ -46,6 +46,9 @@ Version 30.1 has been released. The inline patch (emacs-29.1-inline.patch) is st
 - mac-ime-after-put-text-hook
 
 ** How to use?
+:PROPERTIES:
+:ID:       88272C0F-ED87-46B0-ADC8-64FAB20C6908
+:END:
 
 Add the following code to your init.el.
 
@@ -65,13 +68,27 @@ You can find available input sources by M-x mac-ime-input-source-list. The avail
 #+end_quote
 
 ** Build scripts
+:PROPERTIES:
+:ID:       C992491F-5B7F-4F0F-BB99-B1343603CBD6
+:END:
 
 For your convenience, some build scripts are provided. Before you run the script, please run =setup.sh= first.
 
 #+begin_src sh
 sh ./build/setup.sh
-sh ./build/emacs-30.sh
+sh ./build/emacs-30.sh -n
 #+end_src
+
+#+begin_quote
+[!IMPORTANT]
+Please provide ~-n~ option to enable NativComp if needed.
+#+end_quote
+
+#+begin_quote
+[!TIPS]
+Specifying ~CC~ may resolve your issue when you get an error on missing AppKit.h.
+CC=/usr/bin/clang sh ./build/emacs-30.sh
+#+end_quote
 
 If your environment for building Emacs is under PROXY, you can use =emacs-mirror= to get Emacs source codes. Please change the URL of the git repository specified in =emacs-head.sh= and =emacs-30.sh= if needed.
 
@@ -94,7 +111,7 @@ These packages are built based on the current development source code. So it may
 
 # https://docs.github.com/en/actions/using-github-hosted-runners/using-github-hosted-runners/about-github-hosted-runners
 
-#+caption: HEAD(master) build with Native Comp
+#+caption: HEAD(master) build with NativeComp
 | Chip  | Version | Download              | macOS   | md5                              |
 |-------+---------+-----------------------+---------+----------------------------------|
 | Apple | 31.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc.pkg][⬇pkg(NC)]] (07MAR2025) | Sonoma  | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc.md5][a19af1ea1d592e87bfb8c553d971f1aa]] |

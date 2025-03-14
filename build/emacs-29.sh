@@ -27,6 +27,7 @@ export LIBRARY_PATH=${BREW_PREFIX}/lib/gcc/current
 WORKING_DIR="${HOME}/Desktop"
 CORES=4
 NATIVE="no"
+PATCH="inline"
 while getopts d:j:ngp: opt
 do
     case ${opt} in
@@ -51,6 +52,8 @@ echo "---------------------------------"
 echo "WorkingDir: ${WORKING_DIR}"
 echo "NativeComp: ${NATIVE}"
 echo "Cores: ${CORES}"
+echo "PATCH: ${PATCH}"
+
 curl -LO ftp://ftp.gnu.org/gnu/emacs/emacs-$VERSION.tar.gz
 tar xvf ./emacs-$VERSION.tar.gz
 if [ ! -d "emacs-$VERSION" ]; then
@@ -67,8 +70,14 @@ if [ "${PATCH}" = "inline" ]; then
     cd emacs-${VERSION}
     patch -p1 < ../ns-inline-patch/emacs-29.1-inline.patch
     if [ $? -ne 0 ]; then echo "FAILED"; exit 1; fi
-else
+
+elif [ "${PATCH}" = "pure" ]; then
+    # build without inline-patch
     cd emacs-${VERSION}
+
+else
+    echo "PATCH is missing."
+    exit 1
 fi
 
 sleep 5
