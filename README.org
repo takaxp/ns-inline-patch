@@ -87,8 +87,11 @@ Please provide ~-n~ option to enable NativComp if needed.
 #+begin_quote
 [!TIP]
 Specifying ~CC~ may resolve your issue when you get an error on missing AppKit.h.
-CC=/usr/bin/clang sh ./build/emacs-30.sh
 #+end_quote
+
+#+begin_src sh
+CC=/usr/bin/clang sh ./build/emacs-30.sh
+#+end_src
 
 If your environment for building Emacs is under PROXY, you can use =emacs-mirror= to get Emacs source codes. Please change the URL of the git repository specified in =emacs-head.sh= and =emacs-30.sh= if needed.
 
