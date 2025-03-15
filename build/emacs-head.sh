@@ -54,9 +54,9 @@ echo "NativeComp: ${NATIVE}"
 echo "Cores: ${CORES}"
 echo "Target branch: ${BRANCH}"
 rm -rf ./emacs
-SHALLOW=" --depth 1"
+SHALLOW="--depth 1"
 if [ ! ${BRANCH} = "master" ]; then
-    SHALLOW=" --depth 1 --no-single-branch -b ${BRANCH}"
+    SHALLOW="--depth 1 --no-single-branch -b ${BRANCH}"
 fi
 
 if [ $SV_HOST ]; then
