@@ -33,6 +33,7 @@ jobs:
     - name: Verification
       run: ${{ github.workspace }}/emacs-29.4/nextstep/Emacs.app/Contents/MacOS/Emacs --batch --eval="(unless (fboundp 'mac-input-method-mode) (error \"The inline-patch is NOT integrated\"))"
   build-28:
+    needs: build-27
     runs-on: macos-latest
     timeout-minutes: 60
     steps:
