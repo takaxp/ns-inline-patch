@@ -115,10 +115,10 @@ These packages are built based on the current development source code. So it may
 # https://docs.github.com/en/actions/using-github-hosted-runners/using-github-hosted-runners/about-github-hosted-runners
 
 #+caption: HEAD(master) build with NativeComp
-| Chip  | Version | Download              | macOS   | md5                              |
-|-------+---------+-----------------------+---------+----------------------------------|
-| Apple | 31.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc.pkg][⬇pkg(NC)]] (18APR2025) | Sonoma  | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc.md5][3a44a697302570f527c16c2bde089181]] |
-| Intel | 31.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel_nc.pkg][⬇pkg(NC)]] (18APR2025)  | Ventura | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel_nc.md5][9e18c7c313f7780121efc36397966e8e]] |
+| Chip  | Version | Download             | macOS   | md5                              |
+|-------+---------+----------------------+---------+----------------------------------|
+| Apple | 31.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc.pkg][⬇pkg(NC)]] (25APR2025) | Sonoma  | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc.md5][f55860025bea3fd5c6c3c5fb43f3827c]] |
+| Intel | 31.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel_nc.pkg][⬇pkg(NC)]] (25APR2025) | Ventura | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel_nc.md5][6131be16ec6290f4d5135c46c57a66e4]] |
 
 #+begin_quote
 [!IMPORTANT]
@@ -130,8 +130,8 @@ Following packages are built *without* NativeComp option.
 #+caption: HEAD(master)
 | Chip  | Version | Download          | macOS   | md5                              |
 |-------+---------+-------------------+---------+----------------------------------|
-| Apple | 31.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.pkg][⬇pkg]] (18APR2025) | Sonoma  | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.md5][9ac2a68f7e919adcbfe4d156e77e24bf]] |
-| Intel | 31.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.pkg][⬇pkg]] (18APR2025) | Ventura | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.md5][dc09412de333a3ff57455db54ce48235]] |
+| Apple | 31.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.pkg][⬇pkg]] (25APR2025) | Sonoma  | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.md5][dc90f29f6000582fe0b6203222215151]] |
+| Intel | 31.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.pkg][⬇pkg]] (25APR2025) | Ventura | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.md5][abe27b7aaa0c8e5adaab71a04232ca54]] |
 
 *** Emacs 30 (with inline patch)
 :PROPERTIES:
