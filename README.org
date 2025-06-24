@@ -1,12 +1,10 @@
 #+title: An enhanced inline patch for GNU Emacs
 
-[[https://github.com/takaxp/ns-inline-patch/actions?query=workflow%3A%22Build+NS+with+inline-patch+%28HEAD%29%22][https://github.com/takaxp/ns-inline-patch/workflows/Build%20NS%20with%20inline-patch%20(HEAD)/badge.svg]]
+[[https://github.com/takaxp/ns-inline-patch/actions/workflows/build-head.yml][https://github.com/takaxp/ns-inline-patch/actions/workflows/build-head.yml/badge.svg]]
+[[https://github.com/takaxp/ns-inline-patch/actions/workflows/nightly-arm64.yml][https://github.com/takaxp/ns-inline-patch/actions/workflows/nightly-arm64.yml/badge.svg]]
+[[https://github.com/takaxp/ns-inline-patch/actions/workflows/nightly-x86_64.yml][https://github.com/takaxp/ns-inline-patch/actions/workflows/nightly-x86_64.yml/badge.svg]]
 [[https://github.com/takaxp/ns-inline-patch/actions/workflows/release-latest_native.yml][https://github.com/takaxp/ns-inline-patch/actions/workflows/release-latest_native.yml/badge.svg]]
 [[https://github.com/takaxp/ns-inline-patch/actions/workflows/release-latest.yml][https://github.com/takaxp/ns-inline-patch/actions/workflows/release-latest.yml/badge.svg]]
-[[https://github.com/takaxp/ns-inline-patch/actions?query=workflow%3A%22Build+NS+with+inline-patch+%28emacs-29%29%22][https://github.com/takaxp/ns-inline-patch/workflows/Build%20NS%20with%20inline-patch%20(emacs-29)/badge.svg]]
-[[https://github.com/takaxp/ns-inline-patch/actions?query=workflow%3A%22Build+NS+with+inline-patch+%28emacs-28%29%22][https://github.com/takaxp/ns-inline-patch/workflows/Build%20NS%20with%20inline-patch%20(emacs-28)/badge.svg]]
-[[https://github.com/takaxp/ns-inline-patch/actions?query=workflow%3A%22Build+NS+with+inline-patch+%28emacs-27%29%22][https://github.com/takaxp/ns-inline-patch/workflows/Build%20NS%20with%20inline-patch%20(emacs-27)/badge.svg]]
-[[https://github.com/takaxp/ns-inline-patch/actions?query=workflow%3A%22Build+NS+with+inline-patch+%28emacs-26%29%22][https://github.com/takaxp/ns-inline-patch/workflows/Build%20NS%20with%20inline-patch%20(emacs-26)/badge.svg]]
 
 see https://qiita.com/takaxp/items/e07bb286d80fa9dd8e05 and https://qiita.com/takaxp/items/6a7f9b26eb1b1a8237a0
 
