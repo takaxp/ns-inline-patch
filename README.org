@@ -321,15 +321,6 @@ export LIBRARY_PATH="/opt/homebrew/opt/gcc/lib/gcc/15:/opt/homebrew/opt/libgccji
 ${EMACS} -Q --batch --eval="(setq native-comp-eln-load-path (list (expand-file-name \"eln-cache/\" user-emacs-directory)))" -f batch-byte+native-compile init.el
 #+end_src
 
-
-#+begin_quote
-[!NOTE]
-- For batch mode, ""
-- For Intel mac user, please replace =aarch64= with =x86_64=.
-- =darwin24= may also be changed, check the output of M-x ~emacs-version~.
-#+end_quote
-
-
 **** install gcc by HomeBrew
 
 Just run the following two commands.
