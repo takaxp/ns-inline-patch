@@ -1,6 +1,6 @@
 #!/bin/sh
 
-VERSION=30.1
+VERSION=30.2
 
 # LIBXML2 for Catalina
 MACSDK=`xcrun --show-sdk-path`
