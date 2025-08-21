@@ -1,4 +1,4 @@
-name: "Test emacs-30,29,28,27,26"
+name: "Test emacs-29,28,27,26"
 on:
   pull_request:
   workflow_dispatch:
