@@ -185,7 +185,7 @@ jobs:
     - name: Portable
       run: sh release/portable-emacs.sh -b master -d ${{ github.workspace }}
     - name: Notarize
-      run: sh release/notarize-emacs.sh -b master -d ${{ github.workspace }} -s ${{ github.workspace }} -p inline -a "github-emacs-build"
+      run: sh release/notarize-emacs.sh -b master -d ${{ github.workspace }} -s ${{ github.workspace }} -p inline -a "github-emacs-build" -m "15"
     - name: Export
       env:
         ORZ_HOST: ${{ secrets.ORZ_HOST }}

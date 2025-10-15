@@ -5,7 +5,7 @@ WORKING_DIR="${HOME}/Desktop"
 PROFILE_NAME="emacs-build"
 LIB_GCCJIT="libgccjit.0.dylib"
 
-while getopts v:p:b:k:d:s:a: opt
+while getopts v:p:b:k:d:s:a:m: opt
 do
     case ${opt} in
         s)
@@ -25,6 +25,9 @@ do
             ;;
         v)
             VERSION=${OPTARG}
+            ;;
+        m)
+            MACOS="-${OPTARG}"
             ;;
         h)
             echo ""
@@ -169,11 +172,11 @@ if [ -f ./Applications/${APPINSTALL_DIR}/Emacs.app/Contents/MacOS/lib/${LIB_GCCJ
     NATIVE="_nc"
 fi
 
-mv Emacs-Distribution_SIGNED.pkg ${FILENAME}${VENDER}${PURE}${NATIVE}.pkg
-rm -f ${FILENAME}${VENDER}${PURE}${NATIVE}.md5
-md5 ${FILENAME}${VENDER}${PURE}${NATIVE}.pkg > ${FILENAME}${VENDER}${PURE}${NATIVE}.md5
+mv Emacs-Distribution_SIGNED.pkg ${FILENAME}${VENDER}${PURE}${NATIVE}${MACOS}.pkg
+rm -f ${FILENAME}${VENDER}${PURE}${NATIVE}${MACOS}.md5
+md5 ${FILENAME}${VENDER}${PURE}${NATIVE}${MACOS}.pkg > ${FILENAME}${VENDER}${PURE}${NATIVE}${MACOS}.md5
 
-echo "--- ${FILENAME}${VENDER}${PURE}${NATIVE}.pkg and md5 are generaed"
+echo "--- ${FILENAME}${VENDER}${PURE}${NATIVE}${MACOS}.pkg and md5 are generaed"
 
 cp -f *.pkg ${WORKING_DIR}
 cp -f *.md5 ${WORKING_DIR}
