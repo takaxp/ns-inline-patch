@@ -30,8 +30,8 @@ if [ $? -ne 0 ]; then echo "FAILED"; exit 1; fi
 sleep 5
 ./autogen.sh
 ./configure CC=clang --without-x --with-ns --with-modules
-CORES=
-#CORES=1
+# CORES=
+CORES=1
 make bootstrap -j$CORES
 make install -j$CORES
 cd ./nextstep
