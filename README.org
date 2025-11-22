@@ -113,10 +113,11 @@ These packages are built based on the current development source code. So it may
 # https://docs.github.com/en/actions/using-github-hosted-runners/using-github-hosted-runners/about-github-hosted-runners
 
 #+caption: HEAD(master) build with NativeComp
-| Chip  | Version | Download              | macOS  | md5                              |
-|-------+---------+-----------------------+--------+----------------------------------|
-| Apple | 31.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc.pkg][⬇pkg(NC)]] (15OCT2025) | Sonoma | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc.md5][e66abd17468efa77623a96603f66fbd5]] |
-| Intel | 31.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel_nc.pkg][⬇pkg(NC)]] (15OCT2025) | Sonoma | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel_nc.md5][b636ed2cee4f2789378175f3d27244d8]] |
+| Chip  | Version | Download              | macOS   | md5                              |
+|-------+---------+-----------------------+---------+----------------------------------|
+| Apple | 31.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc.pkg][⬇pkg(NC)]] (23NOV2025) | Sonoma  | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc.md5][e66abd17468efa77623a96603f66fbd5]] |
+| Apple | 31.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc-15.pkg][⬇pkg(NC)]] (23NOV2025) | Sequoia | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc-15.md5][99c130946cb58c3d4ceeba54687ea979]] |
+| Intel | 31.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel_nc.pkg][⬇pkg(NC)]] (23NOV2025) | Sequoia | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel_nc.md5][d4fa4a5cb48c741bb39641d2b05e23e8]] |
 
 #+begin_quote
 [!IMPORTANT]
@@ -128,8 +129,8 @@ Following packages are built *without* NativeComp option.
 #+caption: HEAD(master)
 | Chip  | Version | Download          | macOS  | md5                              |
 |-------+---------+-------------------+--------+----------------------------------|
-| Apple | 31.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.pkg][⬇pkg]] (15OCT2025) | Sonoma | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.md5][c24a0bc808250d4725b136e5174a7c7f]] |
-| Intel | 31.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.pkg][⬇pkg]] (15OCT2025) | Sonoma | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.md5][6fd95310410a7a2dbabcd89bce732f81]] |
+| Apple | 31.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.pkg][⬇pkg]] (23NOV2025) | Sonoma | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.md5][3d139e574a79fbcaf038021a5800f85d]] |
+| Intel | 31.0.50 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.pkg][⬇pkg]] (23NOV2025) | Sonoma | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.md5][d69a1b22aa68a032c7ef6748f1ca1269]] |
 
 *** Emacs 30 (with inline patch)
 :PROPERTIES:
