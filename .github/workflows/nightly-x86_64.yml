@@ -6,7 +6,7 @@ on:
 
 jobs:
   nightly-x86_64:
-    runs-on: macos-14-large
+    runs-on: macos-15-intel
     timeout-minutes: 60
     steps:
     - name: Checkout repository
@@ -72,7 +72,7 @@ jobs:
         rm ~/Library/MobileDevice/Provisioning\ Profiles/build_pp.provisionprofile
         rm $RUNNER_TEMP/orz_id
   nightly-native-x86_64:
-    runs-on: macos-14-large
+    runs-on: macos-15-intel
     timeout-minutes: 120
     steps:
     - name: Checkout repository
