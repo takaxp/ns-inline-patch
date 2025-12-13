@@ -72,7 +72,11 @@ echo "---------------------------------"
 git clone --depth 1 https://github.com/takaxp/ns-inline-patch.git
 
 cd emacs
-if [ "${BRANCH}" = "emacs-29" -o "${BRANCH}" = "emacs-30" ]; then
+if [ "${BRANCH}" = "emacs-30" ]; then
+    patch -p1 < ../ns-inline-patch/emacs-29.1-inline.patch
+    # see https://github.com/emacs-mirror/emacs/commit/d587ce8c65a0e22ab0a63ef2873a3dfcfbeba166
+    patch -p1 < ../ns-inline-patch/fix-emacs30-head-treesit.c.patch
+elif [ "${BRANCH}" = "emacs-29" ]; then
     patch -p1 < ../ns-inline-patch/emacs-29.1-inline.patch
 elif [ "${BRANCH}" = "emacs-28" ]; then
     patch -p1 < ../ns-inline-patch/emacs-28.1-inline.patch
