@@ -73,6 +73,7 @@ if [ "${PATCH}" = "inline" ]; then
 
     cd emacs-${VERSION}
     patch -p1 < ../ns-inline-patch/emacs-29.1-inline.patch # still work for emacs-30.x
+    patch -p1 < ../ns-inline-patch/fix-emacs30-treesit.patch # exclude tree-sitter 0.26 or later
     if [ $? -ne 0 ]; then echo "FAILED"; exit 1; fi
 
 elif [ "${PATCH}" = "pure" ]; then
