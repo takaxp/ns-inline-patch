@@ -1,0 +1,106 @@
+Binary files emacs/.git/index and fixed/.git/index differ
+diff -crN emacs/src/treesit.c fixed/src/treesit.c
+*** emacs/src/treesit.c	Sat Mar  7 21:55:50 2026
+--- fixed/src/treesit.c	Sat Mar  7 21:58:51 2026
+***************
+*** 34,40 ****
+  # include "w32common.h"
+  
+  /* In alphabetical order.  */
+! #undef ts_language_version
+  #undef ts_node_child
+  #undef ts_node_child_by_field_name
+  #undef ts_node_child_count
+--- 34,40 ----
+  # include "w32common.h"
+  
+  /* In alphabetical order.  */
+! #undef ts_language_abi_version
+  #undef ts_node_child
+  #undef ts_node_child_by_field_name
+  #undef ts_node_child_count
+***************
+*** 89,95 ****
+  #undef ts_tree_get_changed_ranges
+  #undef ts_tree_root_node
+  
+! DEF_DLL_FN (uint32_t, ts_language_version, (const TSLanguage *));
+  DEF_DLL_FN (TSNode, ts_node_child, (TSNode, uint32_t));
+  DEF_DLL_FN (TSNode, ts_node_child_by_field_name,
+  	    (TSNode, const char *, uint32_t));
+--- 89,95 ----
+  #undef ts_tree_get_changed_ranges
+  #undef ts_tree_root_node
+  
+! DEF_DLL_FN (uint32_t, ts_language_abi_version, (const TSLanguage *));
+  DEF_DLL_FN (TSNode, ts_node_child, (TSNode, uint32_t));
+  DEF_DLL_FN (TSNode, ts_node_child_by_field_name,
+  	    (TSNode, const char *, uint32_t));
+***************
+*** 166,172 ****
+    if (!library)
+      return false;
+  
+!   LOAD_DLL_FN (library, ts_language_version);
+    LOAD_DLL_FN (library, ts_node_child);
+    LOAD_DLL_FN (library, ts_node_child_by_field_name);
+    LOAD_DLL_FN (library, ts_node_child_count);
+--- 166,172 ----
+    if (!library)
+      return false;
+  
+!   LOAD_DLL_FN (library, ts_language_abi_version);
+    LOAD_DLL_FN (library, ts_node_child);
+    LOAD_DLL_FN (library, ts_node_child_by_field_name);
+    LOAD_DLL_FN (library, ts_node_child_count);
+***************
+*** 224,230 ****
+    return true;
+  }
+  
+! #define ts_language_version fn_ts_language_version
+  #define ts_node_child fn_ts_node_child
+  #define ts_node_child_by_field_name fn_ts_node_child_by_field_name
+  #define ts_node_child_count fn_ts_node_child_count
+--- 224,230 ----
+    return true;
+  }
+  
+! #define ts_language_abi_version fn_ts_language_abi_version
+  #define ts_node_child fn_ts_node_child
+  #define ts_node_child_by_field_name fn_ts_node_child_by_field_name
+  #define ts_node_child_count fn_ts_node_child_count
+***************
+*** 746,752 ****
+      {
+        *signal_symbol = Qtreesit_load_language_error;
+        *signal_data = list2 (Qversion_mismatch,
+! 			    make_fixnum (ts_language_version (lang)));
+        return NULL;
+      }
+    return lang;
+--- 746,752 ----
+      {
+        *signal_symbol = Qtreesit_load_language_error;
+        *signal_data = list2 (Qversion_mismatch,
+! 			    make_fixnum (ts_language_abi_version (lang)));
+        return NULL;
+      }
+    return lang;
+***************
+*** 817,823 ****
+  						       &signal_data);
+        if (ts_language == NULL)
+  	return Qnil;
+!       uint32_t version =  ts_language_version (ts_language);
+        return make_fixnum((ptrdiff_t) version);
+      }
+  }
+--- 817,823 ----
+  						       &signal_data);
+        if (ts_language == NULL)
+  	return Qnil;
+!       uint32_t version =  ts_language_abi_version (ts_language);
+        return make_fixnum((ptrdiff_t) version);
+      }
+  }

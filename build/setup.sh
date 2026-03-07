@@ -22,8 +22,8 @@ function setup_homebrew () {
 
 function install_deps () {
     brew install autoconf automake pkg-config gnutls texinfo jansson
-    # Required to support NativeComp
-    brew install gcc libgccjit
+    # Required to support NativeComp and tree-sitter
+    brew install gcc libgccjit tree-sitter
 
     if [ $(uname -m) = "x86_64" ]; then
         echo "--- Hot fix for libgccjit 14.1 on x86_64"

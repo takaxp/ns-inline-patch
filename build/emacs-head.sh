@@ -19,14 +19,21 @@ fi
 BREW=`which brew`
 BREW_PREFIX=`$BREW --prefix`
 BREW_LIBGCCJIT_PREFIX=`$BREW --prefix --installed libgccjit 2>/dev/null`
-BREW_GCC_MAJOR=15
-BREW_GCC_TRIPLET=$(${BREW_PREFIX}/bin/gcc-${BREW_GCC_MAJOR} -dumpmachine)
+BREW_GCC_MAJOR=$(brew list --version gcc | sed -E 's/.* ([0-9]+)\..*/\1/')
+if [ -f ${BREW_PREFIX}/bin/gcc-${BREW_GCC_MAJOR} ]; then
+    BREW_GCC_TRIPLET=$(${BREW_PREFIX}/bin/gcc-${BREW_GCC_MAJOR} -dumpmachine)
+else
+    echo "Terminated!"
+    echo "--- ${BREW_PREFIX}/bin/gcc-${BREW_GCC_MAJOR} is not installed"
+    echo "install Homebrew, then run \"brew install gcc libgccjit.\""
+    exit 1
+fi
 export CFLAGS="$CFLAGS -I${BREW_LIBGCCJIT_PREFIX}/include"
 export LIBRARY_PATH=${BREW_PREFIX}/lib/gcc/current:${BREW_PREFIX}/opt/gcc/lib/gcc/current/gcc/${BREW_GCC_TRIPLET}/${BREW_GCC_MAJOR}
 
 WORKING_DIR="${HOME}/Desktop"
 CORES=4
-NATIVE="no"
+NATIVE="yes"
 BRANCH=master
 while getopts d:j:ngb: opt
 do
@@ -76,8 +83,8 @@ git clone --depth 1 https://github.com/takaxp/ns-inline-patch.git
 cd emacs
 if [ "${BRANCH}" = "emacs-30" ]; then
     patch -p1 < ../ns-inline-patch/emacs-29.1-inline.patch
-    # see https://github.com/emacs-mirror/emacs/commit/d587ce8c65a0e22ab0a63ef2873a3dfcfbeba166
-    patch -p1 < ../ns-inline-patch/fix-emacs30-head-treesit.c.patch
+    # see https://gist.github.com/rjray/5a00be43dad87447962b2b69bae2bd74
+    patch -p1 < ../ns-inline-patch/fix-emacs30-treesit.c.patch
 elif [ "${BRANCH}" = "emacs-29" ]; then
     patch -p1 < ../ns-inline-patch/emacs-29.1-inline.patch
 elif [ "${BRANCH}" = "emacs-28" ]; then
@@ -92,7 +99,7 @@ if [ $? -ne 0 ]; then echo "FAILED"; exit 1; fi
 
 sleep 5
 ./autogen.sh
-./configure --without-x --with-ns --with-modules --with-jpeg=no --with-tiff=no --with-gif=no --with-png=no --with-lcms2=no --with-webp=no --with-rsvg=no --with-tree-sitter=no --with-native-compilation=${NATIVE}
+./configure --without-x --with-ns --with-modules --with-jpeg=no --with-tiff=no --with-gif=no --with-png=no --with-lcms2=no --with-webp=no --with-rsvg=no --with-tree-sitter=yes --with-native-compilation=${NATIVE}
 make bootstrap -j$CORES
 make install -j$CORES
 cd ./nextstep
