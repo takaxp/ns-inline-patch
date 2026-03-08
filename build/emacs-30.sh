@@ -35,7 +35,7 @@ export LIBRARY_PATH=${BREW_PREFIX}/lib/gcc/current:${BREW_PREFIX}/opt/gcc/lib/gc
 
 WORKING_DIR="${HOME}/Desktop"
 CORES=4
-NATIVE="yes"
+NATIVE="no"
 PATCH="inline"
 while getopts d:j:ngp: opt
 do
