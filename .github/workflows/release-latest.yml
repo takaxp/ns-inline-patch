@@ -30,22 +30,14 @@ jobs:
     - name: Notarize
       run: sh release/notarize-emacs.sh -v 30.2 -d ${{ github.workspace }} -s ${{ github.workspace }} -p inline -a "github-emacs-build"
     - name: Export
+      uses: ./.github/actions/exporting
       env:
         ORZ_HOST: ${{ secrets.ORZ_HOST }}
         ORZ_PORT: ${{ secrets.ORZ_PORT }}
         ORZ_ID_BASE64: ${{ secrets.ORZ_ID_BASE64 }}
-      run: |
-        ID_PATH=$RUNNER_TEMP/orz_id
-        rm -f ~/.ssh/known_hosts
-        echo -n "$ORZ_ID_BASE64" | base64 --decode -o $ID_PATH
-        chmod 600 $ID_PATH
-        sftp -b release/upload.bat -o StrictHostKeyChecking=no -i $ID_PATH -P $ORZ_PORT github-ci@$ORZ_HOST
     - name: Clean up keychain and provisioning profile
       if: ${{ always() }}
-      run: |
-        security delete-keychain $RUNNER_TEMP/app-signing.keychain-db
-        rm ~/Library/MobileDevice/Provisioning\ Profiles/build_pp.provisionprofile
-        rm $RUNNER_TEMP/orz_id
+      uses: ./.github/actions/cleanup
   release_arm64:
     runs-on: macos-14
     timeout-minutes: 60
