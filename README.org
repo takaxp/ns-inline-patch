@@ -141,9 +141,9 @@ Following packages are built *without* NativeComp option.
 #+caption: emacs-30 with NativeComp
 | Chip  | Version | Download                  | macOS         |  [MB] | md5                              |
 |-------+---------+---------------------------+---------------+-------+----------------------------------|
-| Apple |    30.2 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.2_apple_nc-15.pkg][⬇pkg(NC-15)]] (2026-03-08) | Sequoia,Tahoe | 134.5 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.2_apple_nc-15.md5][d4a9f36e0e607d32d94315b64fce5476]] |
-| Apple |    30.2 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.2_apple_nc.pkg][⬇pkg(NC)]] (2026-03-08)    | Sonoma        | 134.3 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.2_apple_nc.md5][91e1e75c6c35f9798147190e6ef39be8]] |
-| Intel |    30.2 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.2_intel_nc.pkg][⬇pkg(NC)]] (2026-03-08)    | Sequoia,Tahoe | 134.3 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.2_intel_nc.md5][c1e702ced73ec9f0c983f7e82b5c1c5a]] |
+| Apple |    30.2 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.2_apple_nc-15.pkg][⬇pkg(NC-15)]] (2026-03-08) | Sequoia,Tahoe | 134.5 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.2_apple_nc-15.md5][52797826eeee1ce1583aa8fb06a89da3]] |
+| Apple |    30.2 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.2_apple_nc.pkg][⬇pkg(NC)]] (2026-03-08)    | Sonoma        | 134.3 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.2_apple_nc.md5][cc99a66e864f7b080d1eadb71f8e0997]] |
+| Intel |    30.2 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.2_intel_nc.pkg][⬇pkg(NC)]] (2026-03-08)    | Sequoia,Tahoe | 134.3 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.2_intel_nc.md5][032085969012ced87a1a61797c679769]] |
 |-------+---------+---------------------------+---------------+-------+----------------------------------|
 | Apple |    30.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_apple_nc.pkg][⬇pkg(NC)]] (2025-03-04)    | Sonoma        | 129.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_apple_nc.md5][df64216ee5de0753f66cddd8be379d4c]] |
 | Intel |    30.1 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_intel_nc.pkg][⬇pkg(NC)]] (2025-03-04)    | Ventura       | 131.8 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.1_intel_nc.md5][a08f6e92b918e4d190a03249dc5058c5]] |
