@@ -15,6 +15,6 @@ jobs:
     - name: Setup to build
       run: sh build/setup.sh
     - name: Build HEAD with inline patch
-      run: sh build/emacs-head.sh -d ${{ github.workspace }} -b emacs-30 -n
+      run: sh build/emacs-head.sh -d ${{ github.workspace }} -b emacs-30 -n -j4
     - name: Verification
       run: ${{ github.workspace }}/emacs/nextstep/Emacs.app/Contents/MacOS/Emacs --batch --eval="(unless (fboundp 'mac-input-method-mode) (error \"The inline-patch is NOT integrated\"))"
