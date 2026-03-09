@@ -8,11 +8,16 @@ export LIBXML2_CFLAGS="-I${MACSDK}/usr/include/libxml2"
 export LIBXML2_LIBS="-lxml2"
 
 export WORKING_DIR="${HOME}/Desktop"
+
+PATCH="inline"
 while getopts d: opt
 do
     case ${opt} in
         d)
             WORKING_DIR=${OPTARG}
+            ;;
+        p)
+            PATCH=${OPTARG}
             ;;
     esac
 done
@@ -32,16 +37,21 @@ if [ ! -d "emacs-$VERSION" ]; then
 fi
 echo "---------------------------------"
 
-# inline-patch
-git clone --depth 1 https://github.com/takaxp/ns-inline-patch.git
+if [ "${PATCH}" = "inline" ]; then
+    # inline-patch
+    git clone --depth 1 https://github.com/takaxp/ns-inline-patch.git
 
-cd emacs-${VERSION}
-patch -p1 < ../ns-inline-patch/emacs-28.1-inline.patch
-if [ $? -ne 0 ]; then echo "FAILED"; exit 1; fi
-# patch -p1 < ../ns-inline-patch/revert-89d0c445.patch
-# if [ $? -ne 0 ]; then echo "FAILED"; exit 1; fi
-# patch -p1 < ../$PATCH/ns-inline-patch/fix-working-text.patch
-# if [ $? -ne 0 ]; then echo "FAILED"; exit 1; fi
+    cd emacs-${VERSION}
+    patch -p1 < ../ns-inline-patch/emacs-28.1-inline.patch
+    if [ $? -ne 0 ]; then echo "FAILED"; exit 1; fi
+    # patch -p1 < ../ns-inline-patch/revert-89d0c445.patch
+    # if [ $? -ne 0 ]; then echo "FAILED"; exit 1; fi
+    # patch -p1 < ../$PATCH/ns-inline-patch/fix-working-text.patch
+    # if [ $? -ne 0 ]; then echo "FAILED"; exit 1; fi
+else
+    echo "PATCH is missing."
+    exit 1
+fi
 
 sleep 5
 ./autogen.sh
