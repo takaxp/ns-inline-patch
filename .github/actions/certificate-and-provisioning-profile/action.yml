@@ -27,3 +27,4 @@ runs:
         cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
         # register a profile to keychain for notarize
         xcrun notarytool store-credentials "github-emacs-build" --apple-id $APPLE_ID --team-id "H2PH8KNN3H" --password $APP_PASSWORD
+      shell: bash
