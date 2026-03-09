@@ -79,7 +79,6 @@ echo "---------------------------------"
 if [ "${PATCH}" = "inline" ]; then
     # inline-patch
     git clone --depth 1 https://github.com/takaxp/ns-inline-patch.git
-    rm -rf ./ns-inline-patch/.git
 
     cd emacs-${VERSION}
     patch -p1 < ../ns-inline-patch/emacs-29.1-inline.patch # still work for emacs-30.x
