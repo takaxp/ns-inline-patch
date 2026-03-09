@@ -10,7 +10,7 @@ export LIBXML2_LIBS="-lxml2"
 export WORKING_DIR="${HOME}/Desktop"
 
 PATCH="inline"
-while getopts d: opt
+while getopts d:p: opt
 do
     case ${opt} in
         d)
