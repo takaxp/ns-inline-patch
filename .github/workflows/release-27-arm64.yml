@@ -4,7 +4,6 @@ on:
 
 jobs:
   release-27-arm64-latest:
-    needs: release-27-arm64-sequoia
     runs-on: macos-26
     timeout-minutes: 90
     steps:
@@ -23,7 +22,7 @@ jobs:
     - name: Setup to build
       run: sh build/setup.sh
     - name: Build Emacs 27.2 with inline patch
-      run: sh build/emacs-27.2.sh -d ${{ github.workspace }} -p inline
+      run: sh build/emacs-27.2.sh -d ${{ github.workspace }} -p inline -j4
     - name: Verification
       run: ${{ github.workspace }}/emacs-27.2/nextstep/Emacs.app/Contents/MacOS/Emacs --batch --eval="(unless (fboundp 'mac-input-method-mode) (error \"The inline-patch is NOT integrated\"))"
     - name: Portable
@@ -41,7 +40,6 @@ jobs:
       uses: ./.github/actions/cleanup
 
   release-27-arm64-sequoia:
-    needs: release-27-arm64-sonoma
     runs-on: macos-15
     timeout-minutes: 60
     steps:
@@ -60,7 +58,7 @@ jobs:
     - name: Setup to build
       run: sh build/setup.sh
     - name: Build Emacs 27.2 with inline patch
-      run: sh build/emacs-27.2.sh -d ${{ github.workspace }} -p inline
+      run: sh build/emacs-27.2.sh -d ${{ github.workspace }} -p inline -j4
     - name: Verification
       run: ${{ github.workspace }}/emacs-27.2/nextstep/Emacs.app/Contents/MacOS/Emacs --batch --eval="(unless (fboundp 'mac-input-method-mode) (error \"The inline-patch is NOT integrated\"))"
     - name: Portable
@@ -96,7 +94,7 @@ jobs:
     - name: Setup to build
       run: sh build/setup.sh
     - name: Build Emacs 27.2 with inline patch
-      run: sh build/emacs-27.2.sh -d ${{ github.workspace }} -p inline
+      run: sh build/emacs-27.2.sh -d ${{ github.workspace }} -p inline -j4
     - name: Verification
       run: ${{ github.workspace }}/emacs-27.2/nextstep/Emacs.app/Contents/MacOS/Emacs --batch --eval="(unless (fboundp 'mac-input-method-mode) (error \"The inline-patch is NOT integrated\"))"
     - name: Portable
