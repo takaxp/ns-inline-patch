@@ -34,7 +34,7 @@ export LIBRARY_PATH=${BREW_PREFIX}/lib/gcc/current:${BREW_PREFIX}/opt/gcc/lib/gc
 WORKING_DIR="${HOME}/Desktop"
 NATIVE="no"
 BRANCH=master
-while getopts d:j:ngb: opt
+while getopts d:j:ngb:p: opt
 do
     case ${opt} in
         n)
@@ -51,6 +51,10 @@ do
             ;;
         b)
             BRANCH=${OPTARG}
+            ;;
+        p)
+            PATCH=${OPTARG}
+            ;;
     esac
 done
 
@@ -60,6 +64,7 @@ echo "---------------------------------"
 echo "WorkingDir: ${WORKING_DIR}"
 echo "NativeComp: ${NATIVE}"
 echo "Cores: ${CORES}"
+echo "PATCH: ${PATCH}"
 echo "Target branch: ${BRANCH}"
 rm -rf ./emacs
 SHALLOW="--depth 1"
@@ -76,23 +81,25 @@ else
 fi
 echo "---------------------------------"
 
-# inline-patch
-git clone --depth 1 https://github.com/takaxp/ns-inline-patch.git
+if [ "${PATCH}" = "inline" ]; then
+    # inline-patch
+    git clone --depth 1 https://github.com/takaxp/ns-inline-patch.git
 
-cd emacs
-if [ "${BRANCH}" = "emacs-30" ]; then
-    patch -p1 < ../ns-inline-patch/emacs-29.1-inline.patch
-    # see https://gist.github.com/rjray/5a00be43dad87447962b2b69bae2bd74
-    patch -p1 < ../ns-inline-patch/fix-emacs30-treesit.c.patch
-elif [ "${BRANCH}" = "emacs-29" ]; then
-    patch -p1 < ../ns-inline-patch/emacs-29.1-inline.patch
-    patch -p1 < ../ns-inline-patch/fix-emacs30-treesit.c.patch
-elif [ "${BRANCH}" = "emacs-28" ]; then
-    patch -p1 < ../ns-inline-patch/emacs-28.1-inline.patch
-elif [ "${BRANCH}" = "emacs-27" ]; then
-    patch -p1 < ../ns-inline-patch/emacs-27.1-inline.patch
-else
-    patch -p1 < ../ns-inline-patch/emacs-head-inline.patch
+    cd emacs
+    if [ "${BRANCH}" = "emacs-30" ]; then
+        patch -p1 < ../ns-inline-patch/emacs-29.1-inline.patch
+        # see https://gist.github.com/rjray/5a00be43dad87447962b2b69bae2bd74
+        patch -p1 < ../ns-inline-patch/fix-emacs30-treesit.c.patch
+    elif [ "${BRANCH}" = "emacs-29" ]; then
+        patch -p1 < ../ns-inline-patch/emacs-29.1-inline.patch
+        patch -p1 < ../ns-inline-patch/fix-emacs30-treesit.c.patch
+    elif [ "${BRANCH}" = "emacs-28" ]; then
+        patch -p1 < ../ns-inline-patch/emacs-28.1-inline.patch
+    elif [ "${BRANCH}" = "emacs-27" ]; then
+        patch -p1 < ../ns-inline-patch/emacs-27.1-inline.patch
+    else
+        patch -p1 < ../ns-inline-patch/emacs-head-inline.patch
+    fi
 fi
 
 if [ $? -ne 0 ]; then echo "FAILED"; exit 1; fi
