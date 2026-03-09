@@ -6,6 +6,7 @@ on:
 
 jobs:
   nightly-native-x86_64:
+    needs: nightly-native-x86_64-sequoia
     runs-on: macos-26-intel
     timeout-minutes: 120
     steps:
@@ -40,7 +41,7 @@ jobs:
     - name: Clean up keychain and provisioning profile
       if: ${{ always() }}
       uses: ./.github/actions/cleanup
-  nightly-native-x86_64-15:
+  nightly-native-x86_64-sequoia:
     runs-on: macos-15-intel
     timeout-minutes: 120
     steps:

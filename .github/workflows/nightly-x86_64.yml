@@ -2,10 +2,11 @@ name: "Experiment master (HEAD) for Intel Chips"
 on:
   workflow_dispatch:
   schedule:
-  - cron: '0 2 * * *'
+  - cron: '0 3 * * *'
 
 jobs:
   nightly-x86_64:
+    needs: nightly-x86_64-sequoia
     runs-on: macos-26-intel
     timeout-minutes: 120
     steps:
@@ -40,7 +41,7 @@ jobs:
     - name: Clean up keychain and provisioning profile
       if: ${{ always() }}
       uses: ./.github/actions/cleanup
-  nightly-x86_64-15:
+  nightly-x86_64-sequoia:
     runs-on: macos-15-intel
     timeout-minutes: 120
     steps:

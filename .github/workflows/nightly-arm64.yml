@@ -2,10 +2,11 @@ name: "Experiment master (HEAD) for Apple Silicon"
 on:
   workflow_dispatch:
   schedule:
-  - cron: '30 1 * * *'
+  - cron: '0 1 * * *'
 
 jobs:
   nightly-arm64-latest:
+    needs: nightly-arm64-sequoia
     runs-on: macos-26
     timeout-minutes: 120
     steps:
@@ -41,6 +42,7 @@ jobs:
       if: ${{ always() }}
       uses: ./.github/actions/cleanup
   nightly-arm64-sequoia:
+    needs: nightly-arm64-sonoma
     runs-on: macos-15
     timeout-minutes: 120
     steps:
