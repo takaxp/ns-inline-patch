@@ -1,11 +1,11 @@
-name: "Experiment master (HEAD) for Intel Chips"
+name: "Experiment master (HEAD) for Intel Chips with NativeComp"
 on:
   workflow_dispatch:
   schedule:
   - cron: '0 2 * * *'
 
 jobs:
-  nightly-x86_64:
+  nightly-native-x86_64:
     runs-on: macos-26-intel
     timeout-minutes: 120
     steps:
@@ -24,7 +24,7 @@ jobs:
     - name: Setup to build
       run: sh build/setup.sh
     - name: Build HEAD with inline patch
-      run: sh build/emacs-head.sh -d ${{ github.workspace }}
+      run: sh build/emacs-head.sh -d ${{ github.workspace }} -n
     - name: Verification
       run: ${{ github.workspace }}/emacs/nextstep/Emacs.app/Contents/MacOS/Emacs --batch --eval="(unless (fboundp 'mac-input-method-mode) (error \"The inline-patch is NOT integrated\"))"
     - name: Portable
@@ -40,7 +40,7 @@ jobs:
     - name: Clean up keychain and provisioning profile
       if: ${{ always() }}
       uses: ./.github/actions/cleanup
-  nightly-x86_64-15:
+  nightly-native-x86_64-15:
     runs-on: macos-15-intel
     timeout-minutes: 120
     steps:
@@ -59,7 +59,7 @@ jobs:
     - name: Setup to build
       run: sh build/setup.sh
     - name: Build HEAD with inline patch
-      run: sh build/emacs-head.sh -d ${{ github.workspace }}
+      run: sh build/emacs-head.sh -d ${{ github.workspace }} -n
     - name: Verification
       run: ${{ github.workspace }}/emacs/nextstep/Emacs.app/Contents/MacOS/Emacs --batch --eval="(unless (fboundp 'mac-input-method-mode) (error \"The inline-patch is NOT integrated\"))"
     - name: Portable
