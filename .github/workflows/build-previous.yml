@@ -7,7 +7,6 @@ on:
 
 jobs:
   build-29:
-    needs: build-28
     runs-on: macos-latest
     timeout-minutes: 60
     steps:
@@ -16,12 +15,11 @@ jobs:
     - name: Setup to build
       run: sh build/setup.sh
     - name: Build emacs-29.4 with inline patch
-      run: sh build/emacs-29.sh -d ${{ github.workspace }} -p inline -n
+      run: sh build/emacs-29.sh -d ${{ github.workspace }} -p inline -n -j4
     - name: Verification
       run: ${{ github.workspace }}/emacs-29.4/nextstep/Emacs.app/Contents/MacOS/Emacs --batch --eval="(unless (fboundp 'mac-input-method-mode) (error \"The inline-patch is NOT integrated\"))"
 
   build-28:
-    needs: build-27
     runs-on: macos-latest
     timeout-minutes: 60
     steps:
@@ -29,7 +27,7 @@ jobs:
     - name: Setup to build
       run: sh build/setup.sh
     - name: Build emacs-28 with inline patch
-      run: sh build/emacs-28.sh -d ${{ github.workspace }} -p inline
+      run: sh build/emacs-28.sh -d ${{ github.workspace }} -p inline -j4
     - name: Verification
       run: ${{ github.workspace }}/emacs-28.2/nextstep/Emacs.app/Contents/MacOS/Emacs --batch --eval="(unless (fboundp 'mac-input-method-mode) (error \"The inline-patch is NOT integrated\"))"
 
@@ -44,11 +42,3 @@ jobs:
       run: sh build/emacs-27.2.sh -d ${{ github.workspace }} -p inline -j2
     - name: Verification
       run: ${{ github.workspace }}/emacs-27.2/nextstep/Emacs.app/Contents/MacOS/Emacs --batch --eval="(unless (fboundp 'mac-input-method-mode) (error \"The inline-patch is NOT integrated\"))"
-    - name: Build emacs-28 with inline patch
-      run: sh build/emacs-28.sh -d ${{ github.workspace }} -p inline -j2
-    - name: Verification
-      run: ${{ github.workspace }}/emacs-28.2/nextstep/Emacs.app/Contents/MacOS/Emacs --batch --eval="(unless (fboundp 'mac-input-method-mode) (error \"The inline-patch is NOT integrated\"))"
-    - name: Build emacs-29 with inline patch
-      run: sh build/emacs-29.sh -d ${{ github.workspace }} -p inline -j2
-    - name: Verification
-      run: ${{ github.workspace }}/emacs-29.4/nextstep/Emacs.app/Contents/MacOS/Emacs --batch --eval="(unless (fboundp 'mac-input-method-mode) (error \"The inline-patch is NOT integrated\"))"
