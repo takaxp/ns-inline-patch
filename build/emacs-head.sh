@@ -87,6 +87,7 @@ if [ "${BRANCH}" = "emacs-30" ]; then
     patch -p1 < ../ns-inline-patch/fix-emacs30-treesit.c.patch
 elif [ "${BRANCH}" = "emacs-29" ]; then
     patch -p1 < ../ns-inline-patch/emacs-29.1-inline.patch
+    patch -p1 < ../ns-inline-patch/fix-emacs30-treesit.c.patch
 elif [ "${BRANCH}" = "emacs-28" ]; then
     patch -p1 < ../ns-inline-patch/emacs-28.1-inline.patch
 elif [ "${BRANCH}" = "emacs-27" ]; then

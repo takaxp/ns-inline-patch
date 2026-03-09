@@ -1,0 +1,37 @@
+name: 'Install the Apple certificate and provisioning profile'
+description: 'Install certificate and profile'
+runs:
+  using: "composite"
+  steps:
+    - env:
+        BUILD_CERTIFICATE_BASE64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
+        DISTRIBUTE_CERTIFICATE_BASE64: ${{ secrets.DISTRIBUTE_CERTIFICATE_BASE64 }}
+        P12_PASSWORD: ${{ secrets.P12_PASSWORD }}
+        BUILD_PROVISION_PROFILE_BASE64: ${{ secrets.BUILD_PROVISION_PROFILE_BASE64 }}
+        KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
+        APP_PASSWORD: ${{ secrets.APP_PASSWORD }}
+        APPLE_ID: ${{ secrets.APPLE_ID }}
+    - run: |
+        # create variables
+        BUILD_CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
+        DISTRIBUTE_CERTIFICATE_PATH=$RUNNER_TEMP/distribute_certificate.p12
+        PP_PATH=$RUNNER_TEMP/build_pp.provisionprofile
+        KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
+        # import certificate and provisioning profile from secrets
+        echo -n "$BUILD_CERTIFICATE_BASE64" | base64 --decode -o $BUILD_CERTIFICATE_PATH
+        echo -n "$DISTRIBUTE_CERTIFICATE_BASE64" | base64 --decode -o $DISTRIBUTE_CERTIFICATE_PATH
+        echo -n "$BUILD_PROVISION_PROFILE_BASE64" | base64 --decode -o $PP_PATH
+        # create temporary keychain
+        security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+        security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
+        security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+        # import certificate to keychain
+        security import $BUILD_CERTIFICATE_PATH -P "$P12_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
+        security import $DISTRIBUTE_CERTIFICATE_PATH -P "$P12_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
+        security set-key-partition-list -S apple-tool:,apple:,codesign: -k "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+        security list-keychain -d user -s $KEYCHAIN_PATH
+        # apply provisioning profile
+        mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+        cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
+        # register a profile to keychain for notarize
+        xcrun notarytool store-credentials "github-emacs-build" --apple-id $APPLE_ID --team-id "H2PH8KNN3H" --password $APP_PASSWORD
