@@ -34,7 +34,6 @@ export CFLAGS="$CFLAGS -I${BREW_LIBGCCJIT_PREFIX}/include"
 export LIBRARY_PATH=${BREW_PREFIX}/lib/gcc/current:${BREW_PREFIX}/opt/gcc/lib/gcc/current/gcc/${BREW_GCC_TRIPLET}/${BREW_GCC_MAJOR}
 
 WORKING_DIR="${HOME}/Desktop"
-CORES=4
 NATIVE="no"
 PATCH="inline"
 while getopts d:j:ngp: opt

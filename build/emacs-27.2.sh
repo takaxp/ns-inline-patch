@@ -10,7 +10,7 @@ export LIBXML2_LIBS="-lxml2"
 export WORKING_DIR="${HOME}/Desktop"
 
 PATCH="inline"
-while getopts d:p: opt
+while getopts d:p:j: opt
 do
     case ${opt} in
         d)
@@ -18,6 +18,9 @@ do
             ;;
         p)
             PATCH=${OPTARG}
+            ;;
+        j)
+            CORES=${OPTARG}
             ;;
     esac
 done
@@ -56,8 +59,6 @@ fi
 sleep 5
 ./autogen.sh
 ./configure CC=clang --without-x --with-ns --with-modules
-CORES=
-#CORES=4
 make bootstrap -j$CORES
 make install -j$CORES
 cd ./nextstep
