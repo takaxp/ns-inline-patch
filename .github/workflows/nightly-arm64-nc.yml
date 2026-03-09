@@ -6,7 +6,6 @@ on:
 
 jobs:
   nightly-native-arm64-latest:
-    needs: nightly-native-arm64-sequoia
     runs-on: macos-26
     timeout-minutes: 120
     steps:
@@ -25,7 +24,7 @@ jobs:
     - name: Setup to build
       run: sh build/setup.sh
     - name: Build HEAD with inline patch
-      run: sh build/emacs-head.sh -d ${{ github.workspace }} -p inline -n
+      run: sh build/emacs-head.sh -d ${{ github.workspace }} -p inline -n -j4
     - name: Verification
       run: ${{ github.workspace }}/emacs/nextstep/Emacs.app/Contents/MacOS/Emacs --batch --eval="(unless (fboundp 'mac-input-method-mode) (error \"The inline-patch is NOT integrated\"))"
     - name: Portable
@@ -42,7 +41,6 @@ jobs:
       if: ${{ always() }}
       uses: ./.github/actions/cleanup
   nightly-native-arm64-sequoia:
-    needs: nightly-native-arm64-sonoma
     runs-on: macos-15
     timeout-minutes: 120
     steps:
@@ -61,7 +59,7 @@ jobs:
     - name: Setup to build
       run: sh build/setup.sh
     - name: Build HEAD with inline patch
-      run: sh build/emacs-head.sh -d ${{ github.workspace }} -p inline -n
+      run: sh build/emacs-head.sh -d ${{ github.workspace }} -p inline -n -j4
     - name: Verification
       run: ${{ github.workspace }}/emacs/nextstep/Emacs.app/Contents/MacOS/Emacs --batch --eval="(unless (fboundp 'mac-input-method-mode) (error \"The inline-patch is NOT integrated\"))"
     - name: Portable
