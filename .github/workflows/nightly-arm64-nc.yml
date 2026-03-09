@@ -2,7 +2,7 @@ name: "Experiment master (HEAD) for Apple Silicon with NativeComp"
 on:
   workflow_dispatch:
   schedule:
-  - cron: '30 1 * * *'
+  - cron: '30 3 * * *'
 
 jobs:
   nightly-native-arm64-latest:
@@ -24,7 +24,7 @@ jobs:
     - name: Setup to build
       run: sh build/setup.sh
     - name: Build HEAD with inline patch
-      run: sh build/emacs-head.sh -d ${{ github.workspace }} -n
+      run: sh build/emacs-head.sh -d ${{ github.workspace }} -p inline -n
     - name: Verification
       run: ${{ github.workspace }}/emacs/nextstep/Emacs.app/Contents/MacOS/Emacs --batch --eval="(unless (fboundp 'mac-input-method-mode) (error \"The inline-patch is NOT integrated\"))"
     - name: Portable
@@ -59,7 +59,7 @@ jobs:
     - name: Setup to build
       run: sh build/setup.sh
     - name: Build HEAD with inline patch
-      run: sh build/emacs-head.sh -d ${{ github.workspace }} -n
+      run: sh build/emacs-head.sh -d ${{ github.workspace }} -p inline -n
     - name: Verification
       run: ${{ github.workspace }}/emacs/nextstep/Emacs.app/Contents/MacOS/Emacs --batch --eval="(unless (fboundp 'mac-input-method-mode) (error \"The inline-patch is NOT integrated\"))"
     - name: Portable
@@ -94,7 +94,7 @@ jobs:
     - name: Setup to build
       run: sh build/setup.sh
     - name: Build HEAD with inline patch
-      run: sh build/emacs-head.sh -d ${{ github.workspace }} -n
+      run: sh build/emacs-head.sh -d ${{ github.workspace }} -p inline -n
     - name: Verification
       run: ${{ github.workspace }}/emacs/nextstep/Emacs.app/Contents/MacOS/Emacs --batch --eval="(unless (fboundp 'mac-input-method-mode) (error \"The inline-patch is NOT integrated\"))"
     - name: Portable
