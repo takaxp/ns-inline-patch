@@ -7,11 +7,18 @@ export LIBXML2_LIBS="-lxml2"
 export PATH="/usr/local/opt/texinfo/bin:$PATH"
 
 export WORKING_DIR="${HOME}/Desktop"
-while getopts d: opt
+PATCH=inline
+while getopts d:p:j: opt
 do
     case ${opt} in
         d)
             WORKING_DIR=${OPTARG}
+            ;;
+        j)
+            CORES=${OPTARG}
+            ;;
+        p)
+            PATCH=${OPTARG}
             ;;
     esac
 done
@@ -21,11 +28,14 @@ mkdir emacs_ns
 cd emacs_ns
 VERSION=26.3
 curl -LOk https://ftp.gnu.org/gnu/emacs/emacs-$VERSION.tar.gz
-git clone --depth 1 https://github.com/takaxp/ns-inline-patch.git
-tar zxvf emacs-$VERSION.tar.gz
-cd ./emacs-$VERSION
-patch -p1 < ../ns-inline-patch/emacs-25.2-inline.patch
-patch -p1 < ../ns-inline-patch/fix-emacs26.3-unexmacosx.c.patch
+if [ "${PATCH}" = "inline" ]; then
+    git clone --depth 1 https://github.com/takaxp/ns-inline-patch.git
+    tar zxvf emacs-$VERSION.tar.gz
+    cd ./emacs-$VERSION
+    patch -p1 < ../ns-inline-patch/emacs-25.2-inline.patch
+    patch -p1 < ../ns-inline-patch/fix-emacs26.3-unexmacosx.c.patch
+fi
+
 if [ $? -ne 0 ]; then echo "FAILED"; exit 1; fi
 sleep 5
 ./autogen.sh

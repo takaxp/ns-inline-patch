@@ -34,6 +34,7 @@ export LIBRARY_PATH=${BREW_PREFIX}/lib/gcc/current:${BREW_PREFIX}/opt/gcc/lib/gc
 WORKING_DIR="${HOME}/Desktop"
 NATIVE="no"
 BRANCH=master
+PATCH=inline
 while getopts d:j:ngb:p: opt
 do
     case ${opt} in
