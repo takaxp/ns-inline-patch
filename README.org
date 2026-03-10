@@ -1,6 +1,6 @@
 #+title: An enhanced inline patch for GNU Emacs
 
-[[https://github.com/takaxp/ns-inline-patch/actions/workflows/head-latest.yml][../../actions/workflows/build-head.yml/badge.svg]]
+[[https://github.com/takaxp/ns-inline-patch/actions/workflows/head-latest.yml][../../actions/workflows/head-latest.yml/badge.svg]]
 
 see https://qiita.com/takaxp/items/e07bb286d80fa9dd8e05 and https://qiita.com/takaxp/items/6a7f9b26eb1b1a8237a0
 
@@ -129,7 +129,6 @@ Please read [[https://github.com/takaxp/ns-inline-patch?tab=readme-ov-file#using
 #+end_quote
 
 - Emacs 31.0.50 HEAD of Master branch =without= NativeComp
-  [[https://github.com/takaxp/ns-inline-patch/actions/workflows/nightly-arm64.yml][../../actions/workflows/nightly-arm64.yml/badge.svg]] [[https://github.com/takaxp/ns-inline-patch/actions/workflows/nightly-x86_64.yml][../../actions/workflows/nightly-x86_64.yml/badge.svg]]
 #+caption: Emacs 31.0.50 HEAD of Master branch (without NativeComp)
 | Chip  | Version | macOS          | :link:    |       Date | md5                              |
 |-------+---------+----------------+-----------+------------+----------------------------------|
@@ -138,6 +137,7 @@ Please read [[https://github.com/takaxp/ns-inline-patch?tab=readme-ov-file#using
 | Apple | 31.0.50 | Sonoma         | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple-14.pkg][:package:]] | 2026-03-10 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple-14.md5][2e21cbe91889ca900de6707e5efeb1a3]] |
 | Intel | 31.0.50 | Tahoe or later | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.pkg][:package:]] | 2026-03-10 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.md5][1507798731e41697d090b2d9369ab87f]] |
 | Intel | 31.0.50 | Sequoia        | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel-15.pkg][:package:]] | 2026-03-10 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel-15.md5][87f6ca220b0a0b4293b8aa2677b30598]] |
+  [[https://github.com/takaxp/ns-inline-patch/actions/workflows/nightly-arm64.yml][../../actions/workflows/nightly-arm64.yml/badge.svg]] [[https://github.com/takaxp/ns-inline-patch/actions/workflows/nightly-x86_64.yml][../../actions/workflows/nightly-x86_64.yml/badge.svg]]
 
 *** Emacs 30 (latest version)
 :PROPERTIES:
