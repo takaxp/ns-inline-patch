@@ -113,6 +113,9 @@ These packages are built based on the latest development source code. So it may 
 #+end_quote
 
 - Emacs 31.0.50 HEAD of Master branch =with= NativeComp
+
+ [[https://github.com/takaxp/ns-inline-patch/actions/workflows/nightly-arm64-nc.yml][../../actions/workflows/release-30-arm64-nc.yml/badge.svg]] [[https://github.com/takaxp/ns-inline-patch/actions/workflows/nightly-x86_64-nc.yml][../../actions/workflows/release-30-x86_64-nc.yml/badge.svg]]
+
 #+caption: Emacs 31.0.50 HEAD of Master branch (*with* NativeComp)
 | Chip  | Version | macOS          | :link:    |       Date | md5                              |
 |-------+---------+----------------+-----------+------------+----------------------------------|
@@ -122,16 +125,15 @@ These packages are built based on the latest development source code. So it may 
 | Intel | 31.0.50 | Tahoe or later | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel_nc.pkg][:package:]] | 2026-03-10 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel_nc.md5][1b7bdc4aa336bcb9c9b3059bc2e0b372]] |
 | Intel | 31.0.50 | Sequoia        | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel_nc-15.pkg][:package:]] | 2026-03-10 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel_nc-15.md5][9311c1d7580b6a4b4c63d845ace39874]] |
 
- [[https://github.com/takaxp/ns-inline-patch/actions/workflows/nightly-arm64-nc.yml][../../actions/workflows/release-30-arm64-nc.yml/badge.svg]] [[https://github.com/takaxp/ns-inline-patch/actions/workflows/nightly-x86_64-nc.yml][../../actions/workflows/release-30-x86_64-nc.yml/badge.svg]]
-
 #+begin_quote
 [!IMPORTANT]
 Please read [[https://github.com/takaxp/ns-inline-patch?tab=readme-ov-file#using-nativecomp][Using NativeComp]] section if you have any troubles.
 #+end_quote
 
 - Emacs 31.0.50 HEAD of Master branch =without= NativeComp
-  - [[https://github.com/takaxp/ns-inline-patch/actions/workflows/nightly-arm64.yml][../../actions/workflows/nightly-arm64.yml/badge.svg]]
-  - [[https://github.com/takaxp/ns-inline-patch/actions/workflows/nightly-x86_64.yml][../../actions/workflows/nightly-x86_64.yml/badge.svg]]
+
+ [[https://github.com/takaxp/ns-inline-patch/actions/workflows/nightly-arm64.yml][../../actions/workflows/nightly-arm64.yml/badge.svg]] [[https://github.com/takaxp/ns-inline-patch/actions/workflows/nightly-x86_64.yml][../../actions/workflows/nightly-x86_64.yml/badge.svg]]
+
 #+caption: Emacs 31.0.50 HEAD of Master branch (without NativeComp)
 | Chip  | Version | macOS          | :link:    |       Date | md5                              |
 |-------+---------+----------------+-----------+------------+----------------------------------|
