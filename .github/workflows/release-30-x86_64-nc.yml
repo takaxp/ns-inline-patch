@@ -39,7 +39,7 @@ jobs:
       if: ${{ always() }}
       uses: ./.github/actions/cleanup
   release-30-native-x86_64-sequoia:
-    runs-on: macos-15
+    runs-on: macos-15-intel
     timeout-minutes: 60
     steps:
     - name: Checkout repository
