@@ -112,7 +112,7 @@ You can download my pre-built Emacs HEAD, 30.2, 29.4, 28.2, 27.2 with ns-inline 
 These packages are built based on the latest development source code. So it may be unstable or broken.
 #+end_quote
 
-- Emacs 31.0.50 HEAD of Master branch _with_ NativeComp
+- Emacs 31.0.50 HEAD of Master branch *with* NativeComp
 
 [[https://github.com/takaxp/ns-inline-patch/actions/workflows/nightly-arm64-nc.yml][../../actions/workflows/nightly-arm64-nc.yml/badge.svg]] [[https://github.com/takaxp/ns-inline-patch/actions/workflows/nightly-x86_64-nc.yml][../../actions/workflows/nightly-x86_64-nc.yml/badge.svg]]
 #+caption: Emacs 31.0.50 HEAD of Master branch (*with* NativeComp)
@@ -145,7 +145,7 @@ Please read [[https://github.com/takaxp/ns-inline-patch?tab=readme-ov-file#using
 :PROPERTIES:
 :ID:       763AF298-873F-4ABD-834C-2E155FE5EC3D
 :END:
-- Emacs 30.2 **with** NativeComp
+- Emacs 30.2 *with* NativeComp
 
 [[https://github.com/takaxp/ns-inline-patch/actions/workflows/release-30-arm64-nc.yml][../../actions/workflows/release-30-arm64-nc.yml/badge.svg]] [[https://github.com/takaxp/ns-inline-patch/actions/workflows/release-30-x86_64-nc.yml][../../actions/workflows/release-30-x86_64-nc.yml/badge.svg]]
 #+caption: Emacs 30.2 (*with* NativeComp)
@@ -178,7 +178,7 @@ Please read [[https://github.com/takaxp/ns-inline-patch?tab=readme-ov-file#using
 :PROPERTIES:
 :ID:       439F2090-DF77-4228-AAE1-54B97AD67C3E
 :END:
-- Emacs 29.4 **with** NativeComp
+- Emacs 29.4 *with* NativeComp
 
 [[https://github.com/takaxp/ns-inline-patch/actions/workflows/release-29-arm64-nc.yml][../../actions/workflows/release-29-arm64-nc.yml/badge.svg]] [[https://github.com/takaxp/ns-inline-patch/actions/workflows/release-29-x86_64-nc.yml][../../actions/workflows/release-29-x86_64-nc.yml/badge.svg]]
 #+caption: Emacs 29.4 (*with* NativeComp)
