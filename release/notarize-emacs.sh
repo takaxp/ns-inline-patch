@@ -172,14 +172,24 @@ if [ -f ./Applications/${APPINSTALL_DIR}/Emacs.app/Contents/MacOS/lib/${LIB_GCCJ
     NATIVE="_nc"
 fi
 
-mv Emacs-Distribution_SIGNED.pkg ${FILENAME}${VENDER}${PURE}${NATIVE}${MACOS}.pkg
-rm -f ${FILENAME}${VENDER}${PURE}${NATIVE}${MACOS}.md5
-md5 ${FILENAME}${VENDER}${PURE}${NATIVE}${MACOS}.pkg > ${FILENAME}${VENDER}${PURE}${NATIVE}${MACOS}.md5
+RELEASE_FILENAME="${FILENAME}${VENDER}${PURE}${NATIVE}${MACOS}"
+mv Emacs-Distribution_SIGNED.pkg ${RELEASE_FILENAME}.pkg
+rm -f ${RELEASE_FILENAME}.md5
+md5 ${RELEASE_FILENAME}.pkg > ${RELEASE_FILENAME}.md5
 
-echo "--- ${FILENAME}${VENDER}${PURE}${NATIVE}${MACOS}.pkg and md5 are generaed"
+# Check the file size
+PKGSIZE=$(wc -c < ${RELEASE_FILENAME}.pkg)
+PKGSIZECHECK=$([[ "$PKGSIZE" -gt 1000000 ]]; echo $?)
 
 cp -f *.pkg ${WORKING_DIR}
 cp -f *.md5 ${WORKING_DIR}
 rm -rf ${WORKING_DIR}/notarize
+
+if [ ${PKGSIZECHECK} -eq 0 ]; then
+    echo "--- ${RELEASE_FILENAME}.pkg and md5 are generaed"
+else
+    echo "--- ${RELEASE_FILENAME}.pkg(${PKGSIZE}[B]) is probably broken."
+    exit 1
+fi
 
 echo "--- done"
