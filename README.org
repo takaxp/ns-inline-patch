@@ -1,6 +1,6 @@
 #+title: An enhanced inline patch for GNU Emacs
 
-[[https://github.com/takaxp/ns-inline-patch/actions/workflows/head-latest.yml][https://github.com/takaxp/ns-inline-patch/actions/workflows/build-head.yml/badge.svg]]
+[[https://github.com/takaxp/ns-inline-patch/actions/workflows/head-latest.yml][../../actions/workflows/build-head.yml/badge.svg]]
 
 see https://qiita.com/takaxp/items/e07bb286d80fa9dd8e05 and https://qiita.com/takaxp/items/6a7f9b26eb1b1a8237a0
 
@@ -107,17 +107,15 @@ You can download my pre-built Emacs HEAD, 30.2, 29.4, 28.2, 27.2 with ns-inline 
 :PROPERTIES:
 :ID:       9B7E9F4F-E5C7-4A09-A06B-7E1E58ADBDB9
 :END:
-
 #+begin_quote
 [!WARNING]
 These packages are built based on the latest development source code. So it may be unstable or broken.
 #+end_quote
 
-[[https://github.com/takaxp/ns-inline-patch/actions/workflows/nightly-arm64-nc.yml][https://github.com/takaxp/ns-inline-patch/actions/workflows/release-30-arm64-nc.yml/badge.svg]], [[https://github.com/takaxp/ns-inline-patch/actions/workflows/nightly-x86_64-nc.yml][https://github.com/takaxp/ns-inline-patch/actions/workflows/release-30-x86_64-nc.yml/badge.svg]]
-
 - Emacs 31.0.50 HEAD of Master branch =with= NativeComp
+  [[https://github.com/takaxp/ns-inline-patch/actions/workflows/nightly-arm64-nc.yml][../../actions/workflows/release-30-arm64-nc.yml/badge.svg]] [[https://github.com/takaxp/ns-inline-patch/actions/workflows/nightly-x86_64-nc.yml][../../actions/workflows/release-30-x86_64-nc.yml/badge.svg]]
 #+caption: Emacs 31.0.50 HEAD of Master branch (*with* NativeComp)
-| Chip  | Version | macOS          | Download  |       Date | md5                              |
+| Chip  | Version | macOS          | :link:    |       Date | md5                              |
 |-------+---------+----------------+-----------+------------+----------------------------------|
 | Apple | 31.0.50 | Tahoe or later | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc.pkg][:package:]] | 2026-03-10 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc.md5][2bd5a784c37259596e64c0d8e2af4af6]] |
 | Apple | 31.0.50 | Sequoia        | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc-15.pkg][:package:]] | 2026-03-10 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc-15.md5][c73ee9259817fed3b25c7d1d456dfc61]] |
@@ -130,11 +128,10 @@ These packages are built based on the latest development source code. So it may 
 Please read [[https://github.com/takaxp/ns-inline-patch?tab=readme-ov-file#using-nativecomp][Using NativeComp]] section if you have any troubles.
 #+end_quote
 
-[[https://github.com/takaxp/ns-inline-patch/actions/workflows/nightly-arm64.yml][https://github.com/takaxp/ns-inline-patch/actions/workflows/nightly-arm64.yml/badge.svg]], [[https://github.com/takaxp/ns-inline-patch/actions/workflows/nightly-x86_64.yml][https://github.com/takaxp/ns-inline-patch/actions/workflows/nightly-x86_64.yml/badge.svg]]
-
 - Emacs 31.0.50 HEAD of Master branch =without= NativeComp
+  [[https://github.com/takaxp/ns-inline-patch/actions/workflows/nightly-arm64.yml][../../actions/workflows/nightly-arm64.yml/badge.svg]] [[https://github.com/takaxp/ns-inline-patch/actions/workflows/nightly-x86_64.yml][../../actions/workflows/nightly-x86_64.yml/badge.svg]]
 #+caption: Emacs 31.0.50 HEAD of Master branch (without NativeComp)
-| Chip  | Version | macOS          | Download  |       Date | md5                              |
+| Chip  | Version | macOS          | :link:    |       Date | md5                              |
 |-------+---------+----------------+-----------+------------+----------------------------------|
 | Apple | 31.0.50 | Tahoe or later | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.pkg][:package:]] | 2026-03-10 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.md5][1bd1bbfe7f045064ae87d7919d21516b]] |
 | Apple | 31.0.50 | Sequoia        | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple-15.pkg][:package:]] | 2026-03-10 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple-15.md5][46958c5e39ac980c89889fa0f068ff9a]] |
@@ -146,12 +143,10 @@ Please read [[https://github.com/takaxp/ns-inline-patch?tab=readme-ov-file#using
 :PROPERTIES:
 :ID:       763AF298-873F-4ABD-834C-2E155FE5EC3D
 :END:
-
-[[https://github.com/takaxp/ns-inline-patch/actions/workflows/release-30-arm64-nc.yml][https://github.com/takaxp/ns-inline-patch/actions/workflows/release-30-arm64-nc.yml/badge.svg]], [[https://github.com/takaxp/ns-inline-patch/actions/workflows/release-30-x86_64-nc.yml][https://github.com/takaxp/ns-inline-patch/actions/workflows/release-30-x86_64-nc.yml/badge.svg]]
-
 - Emacs 30.2 =with= NativeComp
+  [[https://github.com/takaxp/ns-inline-patch/actions/workflows/release-30-arm64-nc.yml][../../actions/workflows/release-30-arm64-nc.yml/badge.svg]] [[https://github.com/takaxp/ns-inline-patch/actions/workflows/release-30-x86_64-nc.yml][../../actions/workflows/release-30-x86_64-nc.yml/badge.svg]]
 #+caption: Emacs 30.2 (*with* NativeComp)
-| Chip  | Version | macOS          | Download  |       Date | md5                              |
+| Chip  | Version | macOS          | :link:  |       Date | md5                              |
 |-------+---------+----------------+-----------+------------+----------------------------------|
 | Apple |    30.2 | Tahoe or later | [[https://pxaka.tokyo/emacs/pkg/emacs-30.2_apple_nc.pkg][:package:]] | 2026-03-10 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.2_apple_nc.md5][4804ceaa2392aa2e75c80fca753dd5a6]] |
 | Apple |    30.2 | Sequoia        | [[https://pxaka.tokyo/emacs/pkg/emacs-30.2_apple_nc-15.pkg][:package:]] | 2026-03-10 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.2_apple_nc-15.md5][a0762202c6bb0f282669d7178ff2e56a]] |
@@ -164,27 +159,25 @@ Please read [[https://github.com/takaxp/ns-inline-patch?tab=readme-ov-file#using
 Please read [[https://github.com/takaxp/ns-inline-patch?tab=readme-ov-file#using-nativecomp][Using NativeComp]] section if you have any troubles.
 #+end_quote
 
-[[https://github.com/takaxp/ns-inline-patch/actions/workflows/release-30-arm64.yml][https://github.com/takaxp/ns-inline-patch/actions/workflows/release-30-arm64.yml/badge.svg]], [[https://github.com/takaxp/ns-inline-patch/actions/workflows/release-30-x86_64.yml][https://github.com/takaxp/ns-inline-patch/actions/workflows/release-30-x86_64.yml/badge.svg]]
-
 - Emacs 30.2 =without= NativeComp
+  [[https://github.com/takaxp/ns-inline-patch/actions/workflows/release-30-arm64.yml][../../actions/workflows/release-30-arm64.yml/badge.svg]] [[https://github.com/takaxp/ns-inline-patch/actions/workflows/release-30-x86_64.yml][../../actions/workflows/release-30-x86_64.yml/badge.svg]]
 #+caption: Emacs 30.2 (without NativeComp)
-| Chip  | Version | macOS          | Download  |       Date | md5                              |
+| Chip  | Version | macOS          | :link:  |       Date | md5                              |
 |-------+---------+----------------+-----------+------------+----------------------------------|
 | Apple |    30.2 | Tahoe or later | [[https://pxaka.tokyo/emacs/pkg/emacs-30.2_apple.pkg][:package:]] | 2026-03-10 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.2_apple.md5][c4bf229d73669456b37f7a7deff0768d]] |
 | Apple |    30.2 | Sequoia        | [[https://pxaka.tokyo/emacs/pkg/emacs-30.2_apple-15.pkg][:package:]] | 2026-03-10 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.2_apple-15.md5][060f86196324113116e4dfa6ed3ba0c7]] |
 | Apple |    30.2 | Sonoma         | [[https://pxaka.tokyo/emacs/pkg/emacs-30.2_apple-14.pkg][:package:]] | 2026-03-10 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.2_apple-14.md5][d2056b0fafb7c366b62f19ae7e631e32]] |
 | Intel |    30.2 | Tahoe or later | [[https://pxaka.tokyo/emacs/pkg/emacs-30.2_intel.pkg][:package:]] | 2026-03-10 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.2_intel.md5][7b476a1a8137e6069c3ad1d78173d044]] |
 | Intel |    30.2 | Sequoia        | [[https://pxaka.tokyo/emacs/pkg/emacs-30.2_intel-15.pkg][:package:]] | 2026-03-10 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.2_intel-15.md5][31b69591224dd19d5d7874d3aa11474f]] |
+
 *** Emacs 29
 :PROPERTIES:
 :ID:       439F2090-DF77-4228-AAE1-54B97AD67C3E
 :END:
-
-[[https://github.com/takaxp/ns-inline-patch/actions/workflows/release-29-arm64-nc.yml][https://github.com/takaxp/ns-inline-patch/actions/workflows/release-29-arm64-nc.yml/badge.svg]], [[https://github.com/takaxp/ns-inline-patch/actions/workflows/release-29-x86_64-nc.yml][https://github.com/takaxp/ns-inline-patch/actions/workflows/release-29-x86_64-nc.yml/badg.svg]]
-
 - Emacs 29.4 =with= NativeComp
+  [[https://github.com/takaxp/ns-inline-patch/actions/workflows/release-29-arm64-nc.yml][../../actions/workflows/release-29-arm64-nc.yml/badge.svg]] [[https://github.com/takaxp/ns-inline-patch/actions/workflows/release-29-x86_64-nc.yml][../../actions/workflows/release-29-x86_64-nc.yml/badg.svg]]
 #+caption: Emacs 29.4 (*with* NativeComp)
-| Chip  | Version | macOS          | Download  |       Date | md5                              |
+| Chip  | Version | macOS          | :link:    |       Date | md5                              |
 |-------+---------+----------------+-----------+------------+----------------------------------|
 | Apple |    29.4 | Tahoe or later | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_apple_nc.pkg][:package:]] | 2026-03-10 | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_apple_nc.md5][c752a2ef757792391903eae2250cfdf4]] |
 | Apple |    29.4 | Sequoia        | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_apple_nc-15.pkg][:package:]] | 2026-03-10 | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_apple_nc-15.md5][3b6feda59e574a7ecd7fddefea3b03f6]] |
@@ -197,11 +190,10 @@ Please read [[https://github.com/takaxp/ns-inline-patch?tab=readme-ov-file#using
 Please read [[https://github.com/takaxp/ns-inline-patch?tab=readme-ov-file#using-nativecomp][Using NativeComp]] section if you have any troubles.
 #+end_quote
 
-[[https://github.com/takaxp/ns-inline-patch/actions/workflows/release-29-arm64.yml][https://github.com/takaxp/ns-inline-patch/actions/workflows/release-29-arm64.yml/badge.svg]], [[https://github.com/takaxp/ns-inline-patch/actions/workflows/release-29-x86_64.yml][https://github.com/takaxp/ns-inline-patch/actions/workflows/release-29-x86_64.yml/badge.svg]]
-
 - Emacs 29.4 =without= NativeComp
+  [[https://github.com/takaxp/ns-inline-patch/actions/workflows/release-29-arm64.yml][../../actions/workflows/release-29-arm64.yml/badge.svg]] [[https://github.com/takaxp/ns-inline-patch/actions/workflows/release-29-x86_64.yml][../../actions/workflows/release-29-x86_64.yml/badge.svg]]
 #+caption: Emacs 29.4 (without NativeComp)
-| Chip  | Version | macOS          | Download  |       Date | md5                              |
+| Chip  | Version | macOS          | :link:    |       Date | md5                              |
 |-------+---------+----------------+-----------+------------+----------------------------------|
 | Apple |    29.4 | Tahoe or later | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_apple.pkg][:package:]] | 2026-03-10 | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_apple.md5][c818268dee3c5babf84376f02434f5b9]] |
 | Apple |    29.4 | Sequoia        | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_apple-15.pkg][:package:]] | 2026-03-10 | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_apple-15.md5][b90c5e0981c1ba19b26c2cc5974f7fa8]] |
@@ -210,12 +202,13 @@ Please read [[https://github.com/takaxp/ns-inline-patch?tab=readme-ov-file#using
 | Intel |    29.4 | Sequoia        | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_intel-15.pkg][:package:]] | 2026-03-10 | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_intel-15.md5][c09ac21455dafbd590cabd6dc3fa9777]] |
 
 *** Emacs 28
-
-[[https://github.com/takaxp/ns-inline-patch/actions/workflows/release-28-arm64.yml][https://github.com/takaxp/ns-inline-patch/actions/workflows/release-28-arm64.yml/badge.svg]], [[https://github.com/takaxp/ns-inline-patch/actions/workflows/release-28-x86_64.yml][https://github.com/takaxp/ns-inline-patch/actions/workflows/release-28-x86_64.yml/badge.svg]]
-
+:PROPERTIES:
+:ID:       A4AF8391-ACD7-40C3-87F2-1A8D11D94CA4
+:END:
 - Emacs 28.2 =without= NativeComp
+  [[https://github.com/takaxp/ns-inline-patch/actions/workflows/release-28-arm64.yml][../../actions/workflows/release-28-arm64.yml/badge.svg]] [[https://github.com/takaxp/ns-inline-patch/actions/workflows/release-28-x86_64.yml][../../actions/workflows/release-28-x86_64.yml/badge.svg]]
 #+caption: Emacs 28.2 (without NativeComp)
-| Chip  | Version | macOS          | Download  |       Date | md5                              |
+| Chip  | Version | macOS          | :link:    |       Date | md5                              |
 |-------+---------+----------------+-----------+------------+----------------------------------|
 | Apple |    28.2 | Tahoe or later | [[https://pxaka.tokyo/emacs/pkg/emacs-28.2_apple.pkg][:package:]] | 2026-03-10 | [[https://pxaka.tokyo/emacs/pkg/emacs-28.2_apple.md5][b49eb256f0bf53cd44ef3de01e1c59a6]] |
 | Apple |    28.2 | Sequoia        | [[https://pxaka.tokyo/emacs/pkg/emacs-28.2_apple-15.pkg][:package:]] | 2026-03-10 | [[https://pxaka.tokyo/emacs/pkg/emacs-28.2_apple-15.md5][c2fa258f598086b8a633de1c3ff8d15a]] |
@@ -227,16 +220,10 @@ Please read [[https://github.com/takaxp/ns-inline-patch?tab=readme-ov-file#using
 :PROPERTIES:
 :ID:       80C0124C-893E-4697-A4D5-72707F90A336
 :END:
-
-[[https://github.com/takaxp/ns-inline-patch/actions/workflows/release-27-arm64.yml][https://github.com/takaxp/ns-inline-patch/actions/workflows/release-27-arm64.yml/badge.svg]]
-
-[[https://github.com/takaxp/ns-inline-patch/actions/workflows/release-27-x86_64.yml][https://github.com/takaxp/ns-inline-patch/actions/workflows/release-27-x86_64.yml/badge.svg]]
-
-[[https://pxaka.tokyo][../../actions/workflows/release-27-arm64.yml/badge.svg]]
-
 - Emacs 27.2 =without= NativeComp
+  [[https://github.com/takaxp/ns-inline-patch/actions/workflows/release-27-arm64.yml][../../actions/workflows/release-27-arm64.yml/badge.svg]] [[https://github.com/takaxp/ns-inline-patch/actions/workflows/release-27-x86_64.yml][../../actions/workflows/release-27-x86_64.yml/badge.svg]]
 #+caption: Emacs 27.2 (without NativeComp)
-| Chip  | Version | macOS          | Download  |       Date | md5                              |
+| Chip  | Version | macOS          | :link:    |       Date | md5                              |
 |-------+---------+----------------+-----------+------------+----------------------------------|
 | Apple |    27.2 | Tahoe or later | [[https://pxaka.tokyo/emacs/pkg/emacs-27.2_apple.pkg][:package:]] | 2026-03-10 | [[https://pxaka.tokyo/emacs/pkg/emacs-27.2_apple.md5][af5473f8477b562416c997d5c345f89e]] |
 | Apple |    27.2 | Sequoia (15)   | [[https://pxaka.tokyo/emacs/pkg/emacs-27.2_apple-15.pkg][:package:]] | 2026-03-10 | [[https://pxaka.tokyo/emacs/pkg/emacs-27.2_apple-15.md5][78a5464489e505fc613012e8b1ce322a]] |
