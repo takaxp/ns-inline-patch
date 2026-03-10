@@ -2,7 +2,7 @@ name: "Experiment master (HEAD) for Intel Chips with NativeComp"
 on:
   workflow_dispatch:
   schedule:
-  - cron: '0 4 * * *'
+  - cron: '0 20 * * *'
 
 jobs:
   nightly-native-x86_64:

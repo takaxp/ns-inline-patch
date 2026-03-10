@@ -1,8 +1,8 @@
-name: "Experiment master (HEAD) for Intel Chips"
+name: "Nightly build for Intel Chips"
 on:
   workflow_dispatch:
   schedule:
-  - cron: '0 3 * * *'
+  - cron: '0 18 * * *'
 
 jobs:
   nightly-x86_64:

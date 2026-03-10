@@ -1,8 +1,8 @@
-name: "Experiment master (HEAD) for Apple Silicon"
+name: "Nightly build for Apple Silicon"
 on:
   workflow_dispatch:
   schedule:
-  - cron: '0 1 * * *'
+  - cron: '0 17 * * *'
 
 jobs:
   nightly-arm64-latest:

@@ -2,7 +2,7 @@ name: "Experiment master (HEAD) for Apple Silicon with NativeComp"
 on:
   workflow_dispatch:
   schedule:
-  - cron: '0 2 * * *'
+  - cron: '0 19 * * *'
 
 jobs:
   nightly-native-arm64-latest:
