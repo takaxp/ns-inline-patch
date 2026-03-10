@@ -1,4 +1,4 @@
-name: "emacs-30@HEAD"
+name: "HEAD emacs-30"
 on:
   pull_request:
   workflow_dispatch:
@@ -15,6 +15,6 @@ jobs:
     - name: Setup to build
       run: sh build/setup.sh
     - name: Build HEAD with inline patch
-      run: sh build/emacs-head.sh -d ${{ github.workspace }} -b emacs-30 -n -j4
+      run: sh build/emacs-head.sh -d ${{ github.workspace }} -b emacs-30 -n -j8
     - name: Verification
       run: ${{ github.workspace }}/emacs/nextstep/Emacs.app/Contents/MacOS/Emacs --batch --eval="(unless (fboundp 'mac-input-method-mode) (error \"The inline-patch is NOT integrated\"))"
