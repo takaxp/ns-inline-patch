@@ -113,7 +113,7 @@ You can download my pre-built Emacs HEAD, 30.2, 29.4, 28.2, 27.2 with ns-inline 
 These packages are built based on the latest development source code. So it may be unstable or broken.
 #+end_quote
 
-[[https://github.com/takaxp/ns-inline-patch/actions/workflows/nightly-arm64-nc.yml][https://github.com/takaxp/ns-inline-patch/actions/workflows/release-30-arm64-nc.yml/badge.svg]], [[https://github.com/takaxp/ns-inline-patch/actions/workflows/nightly-x86_64-nc.yml][https://github.com/takaxp/ns-inline-patch/actions/workflows/release-30-x86_64.yml/badge-nc.svg]]
+[[https://github.com/takaxp/ns-inline-patch/actions/workflows/nightly-arm64-nc.yml][https://github.com/takaxp/ns-inline-patch/actions/workflows/release-30-arm64-nc.yml/badge.svg]], [[https://github.com/takaxp/ns-inline-patch/actions/workflows/nightly-x86_64-nc.yml][https://github.com/takaxp/ns-inline-patch/actions/workflows/release-30-x86_64-nc.yml/badge.svg]]
 
 - Emacs 31.0.50 HEAD of Master branch =with= NativeComp
 #+caption: Emacs 31.0.50 HEAD of Master branch (*with* NativeComp)
@@ -147,7 +147,7 @@ Please read [[https://github.com/takaxp/ns-inline-patch?tab=readme-ov-file#using
 :ID:       763AF298-873F-4ABD-834C-2E155FE5EC3D
 :END:
 
-[[https://github.com/takaxp/ns-inline-patch/actions/workflows/release-30-arm64-nc.yml][https://github.com/takaxp/ns-inline-patch/actions/workflows/release-30-arm64-nc.yml/badge.svg]], [[https://github.com/takaxp/ns-inline-patch/actions/workflows/release-30-x86_64-nc.yml][https://github.com/takaxp/ns-inline-patch/actions/workflows/release-30-x86_64.yml/badge-nc.svg]]
+[[https://github.com/takaxp/ns-inline-patch/actions/workflows/release-30-arm64-nc.yml][https://github.com/takaxp/ns-inline-patch/actions/workflows/release-30-arm64-nc.yml/badge.svg]], [[https://github.com/takaxp/ns-inline-patch/actions/workflows/release-30-x86_64-nc.yml][https://github.com/takaxp/ns-inline-patch/actions/workflows/release-30-x86_64-nc.yml/badge.svg]]
 
 - Emacs 30.2 =with= NativeComp
 #+caption: Emacs 30.2 (*with* NativeComp)
@@ -180,7 +180,7 @@ Please read [[https://github.com/takaxp/ns-inline-patch?tab=readme-ov-file#using
 :ID:       439F2090-DF77-4228-AAE1-54B97AD67C3E
 :END:
 
-[[https://github.com/takaxp/ns-inline-patch/actions/workflows/release-29-arm64-nc.yml][https://github.com/takaxp/ns-inline-patch/actions/workflows/release-29-arm64-nc.yml/badge.svg]], [[https://github.com/takaxp/ns-inline-patch/actions/workflows/release-29-x86_64-nc.yml][https://github.com/takaxp/ns-inline-patch/actions/workflows/release-29-x86_64.yml/badge-nc.svg]]
+[[https://github.com/takaxp/ns-inline-patch/actions/workflows/release-29-arm64-nc.yml][https://github.com/takaxp/ns-inline-patch/actions/workflows/release-29-arm64-nc.yml/badge.svg]], [[https://github.com/takaxp/ns-inline-patch/actions/workflows/release-29-x86_64-nc.yml][https://github.com/takaxp/ns-inline-patch/actions/workflows/release-29-x86_64-nc.yml/badg.svg]]
 
 - Emacs 29.4 =with= NativeComp
 #+caption: Emacs 29.4 (*with* NativeComp)
@@ -228,19 +228,21 @@ Please read [[https://github.com/takaxp/ns-inline-patch?tab=readme-ov-file#using
 :ID:       80C0124C-893E-4697-A4D5-72707F90A336
 :END:
 
-[[https://github.com/takaxp/ns-inline-patch/actions/workflows/release-27-arm64.yml][https://github.com/takaxp/ns-inline-patch/actions/workflows/release-27-arm64.yml/badge.svg]], [[https://github.com/takaxp/ns-inline-patch/actions/workflows/release-27-x86_64.yml][https://github.com/takaxp/ns-inline-patch/actions/workflows/release-27-x86_64.yml/badge.svg]]
+[[https://github.com/takaxp/ns-inline-patch/actions/workflows/release-27-arm64.yml][https://github.com/takaxp/ns-inline-patch/actions/workflows/release-27-arm64.yml/badge.svg]]
 
-[[https://pxaka.tokyo][https://github.com/takaxp/ns-inline-patch/actions/workflows/release-27-arm64.yml/badge.svg]]
+[[https://github.com/takaxp/ns-inline-patch/actions/workflows/release-27-x86_64.yml][https://github.com/takaxp/ns-inline-patch/actions/workflows/release-27-x86_64.yml/badge.svg]]
+
+[[https://pxaka.tokyo][../../workflows/release-27-arm64.yml/badge.svg]]
 
 - Emacs 27.2 =without= NativeComp
 #+caption: Emacs 27.2 (without NativeComp)
 | Chip  | Version | macOS          | Download  |       Date | md5                              |
 |-------+---------+----------------+-----------+------------+----------------------------------|
 | Apple |    27.2 | Tahoe or later | [[https://pxaka.tokyo/emacs/pkg/emacs-27.2_apple.pkg][:package:]] | 2026-03-10 | [[https://pxaka.tokyo/emacs/pkg/emacs-27.2_apple.md5][af5473f8477b562416c997d5c345f89e]] |
-| Apple |    27.2 | Sequoia        | [[https://pxaka.tokyo/emacs/pkg/emacs-27.2_apple-15.pkg][:package:]] | 2026-03-10 | [[https://pxaka.tokyo/emacs/pkg/emacs-27.2_apple-15.md5][78a5464489e505fc613012e8b1ce322a]] |
-| Apple |    27.2 | Sonoma         | [[https://pxaka.tokyo/emacs/pkg/emacs-27.2_apple-14.pkg][:package:]] | 2026-03-10 | [[https://pxaka.tokyo/emacs/pkg/emacs-27.2_apple-14.md5][9ad566ce47836edf03927709d5671181]] |
+| Apple |    27.2 | Sequoia (15)   | [[https://pxaka.tokyo/emacs/pkg/emacs-27.2_apple-15.pkg][:package:]] | 2026-03-10 | [[https://pxaka.tokyo/emacs/pkg/emacs-27.2_apple-15.md5][78a5464489e505fc613012e8b1ce322a]] |
+| Apple |    27.2 | Sonoma (14)    | [[https://pxaka.tokyo/emacs/pkg/emacs-27.2_apple-14.pkg][:package:]] | 2026-03-10 | [[https://pxaka.tokyo/emacs/pkg/emacs-27.2_apple-14.md5][9ad566ce47836edf03927709d5671181]] |
 | Intel |    27.2 | Tahoe or later | [[https://pxaka.tokyo/emacs/pkg/emacs-27.2_intel.pkg][:package:]] | 2026-03-10 | [[https://pxaka.tokyo/emacs/pkg/emacs-27.2_intel.md5][ab074220a0f549565bed53c02a426b12]] |
-| Intel |    27.2 | Sequoia        | [[https://pxaka.tokyo/emacs/pkg/emacs-27.2_intel-15.pkg][:package:]] | 2026-03-10 | [[https://pxaka.tokyo/emacs/pkg/emacs-27.2_intel-15.md5][05c4eda6d67eb36803399ed62abaf30d]] |
+| Intel |    27.2 | Sequoia (15)   | [[https://pxaka.tokyo/emacs/pkg/emacs-27.2_intel-15.pkg][:package:]] | 2026-03-10 | [[https://pxaka.tokyo/emacs/pkg/emacs-27.2_intel-15.md5][05c4eda6d67eb36803399ed62abaf30d]] |
 
 *** Using NativeComp
 :PROPERTIES:
