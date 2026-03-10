@@ -131,8 +131,8 @@ Please read [[https://github.com/takaxp/ns-inline-patch?tab=readme-ov-file#using
 #+end_quote
 
 - Emacs 31.0.50 HEAD of Master branch =without= NativeComp
- [[https://github.com/takaxp/ns-inline-patch/actions/workflows/nightly-arm64.yml][../../actions/workflows/nightly-arm64.yml/badge.svg]] [[https://github.com/takaxp/ns-inline-patch/actions/workflows/nightly-x86_64.yml][../../actions/workflows/nightly-x86_64.yml/badge.svg]]
 
+[[https://github.com/takaxp/ns-inline-patch/actions/workflows/nightly-arm64.yml][../../actions/workflows/nightly-arm64.yml/badge.svg]] [[https://github.com/takaxp/ns-inline-patch/actions/workflows/nightly-x86_64.yml][../../actions/workflows/nightly-x86_64.yml/badge.svg]]
 #+caption: Emacs 31.0.50 HEAD of Master branch (without NativeComp)
 | Chip  | Version | macOS          | :link:    |       Date | md5                              |
 |-------+---------+----------------+-----------+------------+----------------------------------|
