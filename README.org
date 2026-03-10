@@ -232,7 +232,7 @@ Please read [[https://github.com/takaxp/ns-inline-patch?tab=readme-ov-file#using
 
 [[https://github.com/takaxp/ns-inline-patch/actions/workflows/release-27-x86_64.yml][https://github.com/takaxp/ns-inline-patch/actions/workflows/release-27-x86_64.yml/badge.svg]]
 
-[[https://pxaka.tokyo][../../workflows/release-27-arm64.yml/badge.svg]]
+[[https://pxaka.tokyo][../../actions/workflows/release-27-arm64.yml/badge.svg]]
 
 - Emacs 27.2 =without= NativeComp
 #+caption: Emacs 27.2 (without NativeComp)
