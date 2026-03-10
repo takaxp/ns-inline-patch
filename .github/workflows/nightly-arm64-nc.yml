@@ -1,4 +1,4 @@
-name: "Experiment master (HEAD) for Apple Silicon with NativeComp"
+name: "Nightly build for Apple Silicon with NativeComp"
 on:
   workflow_dispatch:
   schedule:

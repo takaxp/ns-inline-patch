@@ -1,4 +1,4 @@
-name: "Experiment master (HEAD) for Intel Chips with NativeComp"
+name: "Nightly build for Intel Chips with NativeComp"
 on:
   workflow_dispatch:
   schedule:
