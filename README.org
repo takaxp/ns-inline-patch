@@ -112,7 +112,7 @@ You can download my pre-built Emacs HEAD, 30.2, 29.4, 28.2, 27.2 with ns-inline 
 These packages are built based on the latest development source code. So it may be unstable or broken.
 #+end_quote
 
-- Emacs 31.0.50 HEAD of Master branch **with** NativeComp
+- Emacs 31.0.50 HEAD of Master branch *with* NativeComp
 
 [[https://github.com/takaxp/ns-inline-patch/actions/workflows/nightly-arm64-nc.yml][../../actions/workflows/nightly-arm64-nc.yml/badge.svg]] [[https://github.com/takaxp/ns-inline-patch/actions/workflows/nightly-x86_64-nc.yml][../../actions/workflows/nightly-x86_64-nc.yml/badge.svg]]
 #+caption: Emacs 31.0.50 HEAD of Master branch (*with* NativeComp)
