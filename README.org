@@ -129,17 +129,13 @@ These packages are built based on the latest development source code. So it may 
 Please read [[https://github.com/takaxp/ns-inline-patch?tab=readme-ov-file#using-nativecomp][Using NativeComp]] section if you have any troubles.
 #+end_quote
 
-- Emacs 31.0.50 HEAD of Master branch =without= NativeComp
+If you want to try the above HEAD package without enabling NativeComp, please check [[https://github.com/takaxp/ns-inline-patch?tab=readme-ov-file#disable-nativecomp][disable NativeComp]] section.
 
-[[https://github.com/takaxp/ns-inline-patch/actions/workflows/nightly-arm64.yml][../../actions/workflows/nightly-arm64.yml/badge.svg]] [[https://github.com/takaxp/ns-inline-patch/actions/workflows/nightly-x86_64.yml][../../actions/workflows/nightly-x86_64.yml/badge.svg]]
-#+caption: Emacs 31.0.50 HEAD of Master branch (without NativeComp)
-| Version | Chip  | macOS          | :link:    |       Date | md5                              |
-|---------+-------+----------------+-----------+------------+----------------------------------|
-| 31.0.50 | Apple | Tahoe or later | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.pkg][:package:]] | 2026-03-11 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.md5][f45c1f1cd66cfc32ecd8a126cbd0ae26]] |
-| 31.0.50 | Apple | Sequoia (15)   | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple-15.pkg][:package:]] | 2026-03-11 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple-15.md5][c7dac310647c74e4f5fa95cb87f2737d]] |
-| 31.0.50 | Apple | Sonoma (14)    | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple-14.pkg][:package:]] | 2026-03-11 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple-14.md5][f984ce89c49be6bf78319a92be1a77be]] |
-| 31.0.50 | Intel | Tahoe or later | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.pkg][:package:]] | 2026-03-11 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.md5][23e3572c887b5b22b25149e1b765df2d]] |
-| 31.0.50 | Intel | Sequoia (15)   | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel-15.pkg][:package:]] | 2026-03-11 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel-15.md5][283a32d0b3b96b2e6476fae026fdfe4e]] |
+#+begin_src emacs-lisp
+;; No need to install GCC via Homebrew, put the following code to early-init.el or beginning of init.el.
+(setq native-comp-jit-compilation nil
+      native-comp-enable-subr-trampolines nil)  
+#+end_src
 
 *** Emacs 30 (latest version)
 :PROPERTIES:
@@ -280,6 +276,15 @@ Just run the following two commands.
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 # install gcc
 brew install gcc
+#+end_src
+
+**** disable NativeComp
+
+The following code will disable NativeComp module in each emacs session. So, no need to install GCC via Homebrew. Put the following code to early-init.el or beginning of init.el.
+
+#+begin_src emacs-lisp
+(setq native-comp-jit-compilation nil
+      native-comp-enable-subr-trampolines nil)  
 #+end_src
 
 *** Integrated dynamic libraries:

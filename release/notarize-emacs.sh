@@ -186,7 +186,7 @@ cp -f *.md5 ${WORKING_DIR}
 rm -rf ${WORKING_DIR}/notarize
 
 if [ ${PKGSIZECHECK} -eq 0 ]; then
-    echo "--- ${RELEASE_FILENAME}.pkg and md5 are generaed"
+    echo "--- ${RELEASE_FILENAME}.pkg(${PKGSIZE}[B]) and md5 are generaed"
 else
     echo "--- ${RELEASE_FILENAME}.pkg(${PKGSIZE}[B]) is probably broken."
     exit 1
