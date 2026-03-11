@@ -131,12 +131,6 @@ Please read [[https://github.com/takaxp/ns-inline-patch?tab=readme-ov-file#using
 
 If you want to try the above HEAD package without enabling NativeComp, please check [[https://github.com/takaxp/ns-inline-patch?tab=readme-ov-file#disable-nativecomp][disable NativeComp]] section.
 
-#+begin_src emacs-lisp
-;; No need to install GCC via Homebrew, put the following code to early-init.el or beginning of init.el.
-(setq native-comp-jit-compilation nil
-      native-comp-enable-subr-trampolines nil)  
-#+end_src
-
 *** Emacs 30 (latest version)
 :PROPERTIES:
 :ID:       763AF298-873F-4ABD-834C-2E155FE5EC3D
