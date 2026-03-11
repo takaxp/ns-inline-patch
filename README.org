@@ -121,8 +121,8 @@ These packages are built based on the latest development source code. So it may 
 | 31.0.50 | Apple | Tahoe or later | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc.pkg][:package:]] | 2026-03-11 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc.md5][7ecf6baf410a4db5cc9b12ceb2535faf]] |
 | 31.0.50 | Apple | Sequoia (15)   | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc-15.pkg][:package:]] | 2026-03-11 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc-15.md5][67b5375374c2ca3a71232211891e4609]] |
 | 31.0.50 | Apple | Sonoma (14)    | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc-14.pkg][:package:]] | 2026-03-11 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc-14.md5][a112c8ac902170eda5fcbcc741c8413e]] |
-| 31.0.50 | Intel | Tahoe or later | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel_nc.pkg][:package:]] | 2026-03-10 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel_nc.md5][c768e801de24172a10ab6b07f8b47c67]] |
-| 31.0.50 | Intel | Sequoia (15)   | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel_nc-15.pkg][:package:]] | 2026-03-10 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel_nc-15.md5][f512338b91f16164d8d2b76005f0ec16]] |
+| 31.0.50 | Intel | Tahoe or later | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel_nc.pkg][:package:]] | 2026-03-11 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel_nc.md5][c768e801de24172a10ab6b07f8b47c67]] |
+| 31.0.50 | Intel | Sequoia (15)   | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel_nc-15.pkg][:package:]] | 2026-03-11 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel_nc-15.md5][f512338b91f16164d8d2b76005f0ec16]] |
 
 #+begin_quote
 [!IMPORTANT]
@@ -135,11 +135,11 @@ Please read [[https://github.com/takaxp/ns-inline-patch?tab=readme-ov-file#using
 #+caption: Emacs 31.0.50 HEAD of Master branch (without NativeComp)
 | Version | Chip  | macOS          | :link:    |       Date | md5                              |
 |---------+-------+----------------+-----------+------------+----------------------------------|
-| 31.0.50 | Apple | Tahoe or later | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.pkg][:package:]] | 2026-03-10 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.md5][f45c1f1cd66cfc32ecd8a126cbd0ae26]] |
-| 31.0.50 | Apple | Sequoia (15)   | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple-15.pkg][:package:]] | 2026-03-10 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple-15.md5][c7dac310647c74e4f5fa95cb87f2737d]] |
-| 31.0.50 | Apple | Sonoma (14)    | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple-14.pkg][:package:]] | 2026-03-10 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple-14.md5][f984ce89c49be6bf78319a92be1a77be]] |
-| 31.0.50 | Intel | Tahoe or later | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.pkg][:package:]] | 2026-03-10 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.md5][23e3572c887b5b22b25149e1b765df2d]] |
-| 31.0.50 | Intel | Sequoia (15)   | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel-15.pkg][:package:]] | 2026-03-10 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel-15.md5][283a32d0b3b96b2e6476fae026fdfe4e]] |
+| 31.0.50 | Apple | Tahoe or later | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.pkg][:package:]] | 2026-03-11 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple.md5][f45c1f1cd66cfc32ecd8a126cbd0ae26]] |
+| 31.0.50 | Apple | Sequoia (15)   | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple-15.pkg][:package:]] | 2026-03-11 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple-15.md5][c7dac310647c74e4f5fa95cb87f2737d]] |
+| 31.0.50 | Apple | Sonoma (14)    | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple-14.pkg][:package:]] | 2026-03-11 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple-14.md5][f984ce89c49be6bf78319a92be1a77be]] |
+| 31.0.50 | Intel | Tahoe or later | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.pkg][:package:]] | 2026-03-11 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel.md5][23e3572c887b5b22b25149e1b765df2d]] |
+| 31.0.50 | Intel | Sequoia (15)   | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel-15.pkg][:package:]] | 2026-03-11 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel-15.md5][283a32d0b3b96b2e6476fae026fdfe4e]] |
 
 *** Emacs 30 (latest version)
 :PROPERTIES:

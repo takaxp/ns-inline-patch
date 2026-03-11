@@ -178,7 +178,7 @@ rm -f ${RELEASE_FILENAME}.md5
 md5 ${RELEASE_FILENAME}.pkg > ${RELEASE_FILENAME}.md5
 
 # Check the file size
-PKGSIZE=$(wc -c < ${RELEASE_FILENAME}.pkg)
+PKGSIZE=$(wc -c < ${RELEASE_FILENAME}.pkg | awk '{print $1}')
 PKGSIZECHECK=$([[ "$PKGSIZE" -gt 1000000 ]]; echo $?)
 
 cp -f *.pkg ${WORKING_DIR}
