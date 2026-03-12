@@ -40,6 +40,7 @@ jobs:
     - name: Clean up keychain and provisioning profile
       if: ${{ always() }}
       uses: ./.github/actions/cleanup
+
   nightly-arm64-sequoia:
     runs-on: macos-15
     timeout-minutes: 120
@@ -75,6 +76,7 @@ jobs:
     - name: Clean up keychain and provisioning profile
       if: ${{ always() }}
       uses: ./.github/actions/cleanup
+
   nightly-arm64-sonoma:
     runs-on: macos-14
     timeout-minutes: 120
