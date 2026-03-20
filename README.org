@@ -74,6 +74,8 @@ You can find available input sources by M-x mac-ime-input-source-list. The avail
 For your convenience, some build scripts are provided. Before you run the script, please run =setup.sh= first.
 
 #+begin_src sh
+git clone --depth=1 https://github.com/takaxp/ns-inline-patch.git
+cd ns-inline-patch
 sh ./build/setup.sh
 sh ./build/emacs-30.sh -n
 #+end_src
@@ -118,11 +120,11 @@ These packages are built based on the latest development source code. So it may 
 #+caption: Emacs 31.0.50 HEAD of Master branch (*with* NativeComp)
 | Version | Chip  | macOS          | :link:    |       Date | md5                              |
 |---------+-------+----------------+-----------+------------+----------------------------------|
-| 31.0.50 | Apple | Tahoe or later | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc.pkg][:package:]] | 2026-03-14 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc.md5][e60d5bc26b120321d22988600bd67af0]] |
-| 31.0.50 | Apple | Sequoia (15)   | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc-15.pkg][:package:]] | 2026-03-14 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc-15.md5][123f853ebea4d4a05f5feefda1c87704]] |
-| 31.0.50 | Apple | Sonoma (14)    | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc-14.pkg][:package:]] | 2026-03-14 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc-14.md5][bc2600dd53a4d086cd8ab1f792d3c5ac]] |
-| 31.0.50 | Intel | Tahoe or later | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel_nc.pkg][:package:]] | 2026-03-14 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel_nc.md5][b3305f7231a36614cb298c36961ce469]] |
-| 31.0.50 | Intel | Sequoia (15)   | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel_nc-15.pkg][:package:]] | 2026-03-14 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel_nc-15.md5][00925fbcec2cf69187ed11ca6dcf4b0c]] |
+| 31.0.50 | Apple | Tahoe or later | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc.pkg][:package:]] | 2026-03-20 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc.md5][3ab10361e7c55b796f21c941672f56a5]] |
+| 31.0.50 | Apple | Sequoia (15)   | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc-15.pkg][:package:]] | 2026-03-20 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc-15.md5][9c4de27b60fd49c3f343987fc4b71065]] |
+| 31.0.50 | Apple | Sonoma (14)    | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc-14.pkg][:package:]] | 2026-03-20 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc-14.md5][cfaee8b36083947ef611f01335b7b4b9]] |
+| 31.0.50 | Intel | Tahoe or later | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel_nc.pkg][:package:]] | 2026-03-20 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel_nc.md5][6edc4edff9a61662238668f6d89a56d8]] |
+| 31.0.50 | Intel | Sequoia (15)   | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel_nc-15.pkg][:package:]] | 2026-03-20 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel_nc-15.md5][c8c8ef7390e4c634c42490a4f87d260c]] |
 
 #+begin_quote
 [!IMPORTANT]
