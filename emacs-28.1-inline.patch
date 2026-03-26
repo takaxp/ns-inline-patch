@@ -900,7 +900,7 @@ diff -crN emacs_orig/src/macim.m emacs-28.1/src/macim.m
 --- emacs-28.1/src/macim.m	2022-04-06 22:54:04.000000000 +0900
 ***************
 *** 0 ****
---- 1,229 ----
+--- 1,228 ----
 + /* Implementation of Input Method Extension for macOS.
 +    Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011
 +    Taiichi Hashimoto <taiichi2@mac.com>.
@@ -996,8 +996,7 @@ diff -crN emacs_orig/src/macim.m emacs-28.1/src/macim.m
 + DEFUN ("mac-toggle-input-source", Fmac_toggle_input_source, Smac_toggle_input_source,
 +        1, 1, 0,
 +        doc: /* toggle input source on macOS */)
-+      (arg)
-+      Lisp_Object arg;
++      (Lisp_Object arg)
 + {
 +   TISInputSourceRef is = NULL;
 +   Lisp_Object Vinput_source = Qnil;

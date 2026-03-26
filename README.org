@@ -133,7 +133,7 @@ Please read [[https://github.com/takaxp/ns-inline-patch?tab=readme-ov-file#using
 
 If you want to try the above HEAD package without enabling NativeComp, please check [[https://github.com/takaxp/ns-inline-patch?tab=readme-ov-file#disable-nativecomp][disable NativeComp]] section.
 
-*** Emacs 30 (latest version)
+*** Emacs 30 (latest stable version)
 :PROPERTIES:
 :ID:       763AF298-873F-4ABD-834C-2E155FE5EC3D
 :END:
