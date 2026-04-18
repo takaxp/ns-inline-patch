@@ -120,11 +120,11 @@ These packages are built based on the latest development source code. So it may 
 #+caption: Emacs 31.0.50 HEAD of Master branch (*with* NativeComp)
 | Version | Chip  | macOS          | :link:    |       Date | md5                              |
 |---------+-------+----------------+-----------+------------+----------------------------------|
-| 31.0.50 | Apple | Tahoe or later | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc.pkg][:package:]] | 2026-04-10 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc.md5][4cdcbb5e4df87327cb74b7072c122955]] |
-| 31.0.50 | Apple | Sequoia (15)   | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc-15.pkg][:package:]] | 2026-04-10 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc-15.md5][46e5d5dae1b7cce193b7beae30c1573b]] |
-| 31.0.50 | Apple | Sonoma (14)    | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc-14.pkg][:package:]] | 2026-04-10 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc-14.md5][deff33564ec70b07b4087972e6180a8e]] |
-| 31.0.50 | Intel | Tahoe or later | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel_nc.pkg][:package:]] | 2026-04-10 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel_nc.md5][46c593a0ffe14ffbf499865ac89b2644]] |
-| 31.0.50 | Intel | Sequoia (15)   | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel_nc-15.pkg][:package:]] | 2026-04-10 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel_nc-15.md5][08518fde3fd57b666152a4347a9fc801]] |
+| 31.0.50 | Apple | Tahoe or later | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc.pkg][:package:]] | 2026-04-18 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc.md5][a966c8986353389e27a717a6c4cf0e9d]] |
+| 31.0.50 | Apple | Sequoia (15)   | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc-15.pkg][:package:]] | 2026-04-18 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc-15.md5][f9892f40209232c6cd4e5cf3d28271ed]] |
+| 31.0.50 | Apple | Sonoma (14)    | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc-14.pkg][:package:]] | 2026-04-18 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc-14.md5][90eacc69c207cb2c38ea4bce11407e24]] |
+| 31.0.50 | Intel | Tahoe or later | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel_nc.pkg][:package:]] | 2026-04-18 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel_nc.md5][6d55c7ce8cf3c39348e8e8885c394e02]] |
+| 31.0.50 | Intel | Sequoia (15)   | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel_nc-15.pkg][:package:]] | 2026-04-18 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel_nc-15.md5][49eff1c09026a2f840684b56f4dcd400]] |
 
 #+begin_quote
 [!IMPORTANT]
@@ -280,7 +280,7 @@ The following code will disable NativeComp module in each emacs session. So, no 
 
 #+begin_src emacs-lisp
 (setq native-comp-jit-compilation nil
-      native-comp-enable-subr-trampolines nil)  
+      native-comp-enable-subr-trampolines nil)
 #+end_src
 
 *** Integrated dynamic libraries:
