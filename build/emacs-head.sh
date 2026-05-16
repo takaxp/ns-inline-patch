@@ -87,7 +87,9 @@ if [ "${PATCH}" = "inline" ]; then
     git clone --depth 1 https://github.com/takaxp/ns-inline-patch.git
 
     cd emacs
-    if [ "${BRANCH}" = "emacs-30" ]; then
+    if [ "${BRANCH}" = "emacs-31" ]; then
+        patch -p1 < ../ns-inline-patch/emacs-31.1-inline.patch
+    elif [ "${BRANCH}" = "emacs-30" ]; then
         patch -p1 < ../ns-inline-patch/emacs-29.1-inline.patch
         # see https://gist.github.com/rjray/5a00be43dad87447962b2b69bae2bd74
         patch -p1 < ../ns-inline-patch/fix-emacs30-treesit.c.patch
@@ -99,6 +101,7 @@ if [ "${PATCH}" = "inline" ]; then
     elif [ "${BRANCH}" = "emacs-27" ]; then
         patch -p1 < ../ns-inline-patch/emacs-27.1-inline.patch
     else
+        # master branch
         patch -p1 < ../ns-inline-patch/emacs-head-inline.patch
     fi
 fi
