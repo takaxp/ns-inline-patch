@@ -48,7 +48,7 @@ function print_gcc_env () {
     BREW=$(which brew)
     BREW_PREFIX=$($BREW --prefix)
     BREW_LIBGCCJIT_PREFIX=$($BREW --prefix --installed libgccjit 2>/dev/null)
-    BREW_GCC_MAJOR=$(brew list --version gcc | sed -E 's/.* ([0-9]+)\..*/\1/')
+    BREW_GCC_MAJOR=$(brew list --versions gcc | tr ' ' '\n' | grep '^[0-9]' | sort -V | tail -1 | cut -d. -f1)
     if [ -f ${BREW_PREFIX}/bin/gcc-${BREW_GCC_MAJOR} ]; then
        BREW_GCC_TRIPLET=$(${BREW_PREFIX}/bin/gcc-${BREW_GCC_MAJOR} -dumpmachine)
     else
