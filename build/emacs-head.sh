@@ -19,6 +19,8 @@ fi
 BREW=`which brew`
 BREW_PREFIX=`$BREW --prefix`
 BREW_LIBGCCJIT_PREFIX=`$BREW --prefix --installed libgccjit 2>/dev/null`
+brew info gcc
+brew link --overwrite gcc
 BREW_GCC_MAJOR=$(brew list --version gcc | sed -E 's/.* ([0-9]+)\..*/\1/')
 echo ${BREW_GCC_MAJOR}
 ls ${BREW_PREFIX}/bin | grep gcc
