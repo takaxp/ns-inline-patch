@@ -22,6 +22,7 @@ BREW_LIBGCCJIT_PREFIX=`$BREW --prefix --installed libgccjit 2>/dev/null`
 brew info gcc
 brew link --overwrite gcc
 BREW_GCC_MAJOR=$(brew list --version gcc | sed -E 's/.* ([0-9]+)\..*/\1/')
+BREW_GCC_MAJOR=$(brew list --versions gcc | tr ' ' '\n' | grep '^[0-9]' | sort -V | tail -1 | cut -d. -f1)
 echo ${BREW_GCC_MAJOR}
 ls ${BREW_PREFIX}/bin | grep gcc
 if [ -f ${BREW_PREFIX}/bin/gcc-${BREW_GCC_MAJOR} ]; then
