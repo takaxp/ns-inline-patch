@@ -24,7 +24,7 @@ jobs:
     - name: Build Emacs 31.1 with inline patch
       run: |
         mv ${{ github.workspace }}/.git ${{ github.workspace }}/_git
-        sh build/emacs-31.sh -d ${{ github.workspace }} -p inline -j4
+        sh build/emacs-31.sh -d ${{ github.workspace }} -p inline -j4 -n
         mv ${{ github.workspace }}/_git ${{ github.workspace }}/.git
     - name: Verification
       run: ${{ github.workspace }}/emacs-31.1/nextstep/Emacs.app/Contents/MacOS/Emacs --batch --eval="(unless (fboundp 'mac-input-method-mode) (error \"The inline-patch is NOT integrated\"))"
@@ -63,7 +63,7 @@ jobs:
     - name: Build Emacs 31.1 with inline patch
       run: |
         mv ${{ github.workspace }}/.git ${{ github.workspace }}/_git
-        sh build/emacs-31.sh -d ${{ github.workspace }} -p inline -j4
+        sh build/emacs-31.sh -d ${{ github.workspace }} -p inline -j4 -n
         mv ${{ github.workspace }}/_git ${{ github.workspace }}/.git
     - name: Verification
       run: ${{ github.workspace }}/emacs-31.1/nextstep/Emacs.app/Contents/MacOS/Emacs --batch --eval="(unless (fboundp 'mac-input-method-mode) (error \"The inline-patch is NOT integrated\"))"

@@ -80,7 +80,6 @@ if [ "${PATCH}" = "inline" ]; then
     git clone --depth 1 https://github.com/takaxp/ns-inline-patch.git
 
     cd emacs-${VERSION}
-    patch -p1 < ../ns-inline-patch/fix-emacs30-treesit.c.patch
     patch -p1 < ../ns-inline-patch/emacs-31.1-inline.patch
     if [ $? -ne 0 ]; then echo "FAILED"; exit 1; fi
 
