@@ -6,7 +6,7 @@ see https://qiita.com/takaxp/items/e07bb286d80fa9dd8e05 and https://qiita.com/ta
 
 #+begin_quote
 [!NOTE]
-Version 30.2 has been released. The previous inline patch (emacs-29.1-inline.patch) is still applicable to Emacs 30.2. Installer packages for Intel-based Mac and Apple Silicon Mac are also available.
+Emacs 31.1 has been released. An updated inline patch (emacs-31.1-inline.patch) is now available, along with installer packages for Intel-based Mac and Apple Silicon Mac.
 #+end_quote
 
 # https://docs.github.com/en/actions/using-github-hosted-runners/using-github-hosted-runners/about-github-hosted-runners
@@ -24,6 +24,7 @@ Version 30.2 has been released. The previous inline patch (emacs-29.1-inline.pat
 ** Supported Emacs version
 
 - Emacs HEAD (emacs-head-inline.patch)
+- Emacs 31.1 (emacs-31.1-inline.patch)
 - Emacs 30.2, 30.1 (emacs-29.1-inline.patch)
 - Emacs 29.4, 29.3, 29.2, 29.1 (emacs-29.1-inline.patch)
 - Emacs 28.2, 28.1 (emacs-28.1-inline.patch)
@@ -77,7 +78,7 @@ For your convenience, some build scripts are provided. Before you run the script
 git clone --depth=1 https://github.com/takaxp/ns-inline-patch.git
 cd ns-inline-patch
 sh ./build/setup.sh
-sh ./build/emacs-30.sh -n
+sh ./build/emacs-31.sh -n
 #+end_src
 
 #+begin_quote
@@ -91,17 +92,17 @@ Specifying ~CC~ may resolve your issue when you get an error on missing AppKit.h
 #+end_quote
 
 #+begin_src sh
-CC=/usr/bin/clang sh ./build/emacs-30.sh
+CC=/usr/bin/clang sh ./build/emacs-31.sh
 #+end_src
 
-If your environment for building Emacs is under PROXY, you can use =emacs-mirror= to get Emacs source codes. Please change the URL of the git repository specified in =emacs-head.sh= and =emacs-30.sh= if needed.
+If your environment for building Emacs is under PROXY, you can use =emacs-mirror= to get Emacs source codes. Please change the URL of the git repository specified in =emacs-head.sh= and =emacs-31.sh= if needed.
 
 ** Pre-built distribution package
 :PROPERTIES:
 :ID:       3A8A27A7-93D9-4F4E-A621-042FC4521D14
 :END:
 
-You can download my pre-built Emacs HEAD, 30.2, 29.4, 28.2, 27.2 with ns-inline patch. =Emacs.app= will be installed under =/Applications/Emacs-takaxp= in your macOS. Please copy =Emacs.app= into =/Applications= if needed. The provided packages contain =GnuTLS= and =jansson=. Also =TREE-SITTER= is included in 29.4 or later packages.
+You can download my pre-built Emacs HEAD, 31.1, 30.2, 29.4, 28.2, 27.2 with ns-inline patch. =Emacs.app= will be installed under =/Applications/Emacs-takaxp= in your macOS. Please copy =Emacs.app= into =/Applications= if needed. The provided packages contain =GnuTLS= and =jansson=. Also =TREE-SITTER= is included in 29.4 or later packages.
 
  All packages are signed and notarized with my Apple developer ID: =H2PH8KNN3H=.
 
@@ -133,7 +134,41 @@ Please read [[https://github.com/takaxp/ns-inline-patch?tab=readme-ov-file#using
 
 If you want to try the above HEAD package without enabling NativeComp, please check [[https://github.com/takaxp/ns-inline-patch?tab=readme-ov-file#disable-nativecomp][disable NativeComp]] section.
 
-*** Emacs 30 (latest stable version)
+*** Emacs 31 (latest stable version)
+:PROPERTIES:
+:ID:       77CE1C74-F467-463D-8468-6834AAA3182E
+:END:
+- Emacs 31.1 *with* NativeComp
+
+
+[[https://github.com/takaxp/ns-inline-patch/actions/workflows/release-31-arm64-nc.yml][../../actions/workflows/release-31-arm64-nc.yml/badge.svg]] [[https://github.com/takaxp/ns-inline-patch/actions/workflows/release-31-x86_64-nc.yml][../../actions/workflows/release-31-x86_64-nc.yml/badge.svg]]
+#+caption: Emacs 31.1 (*with* NativeComp)
+| Version | Chip  | macOS          | :link:    |       Date | md5                              |
+|---------+-------+----------------+-----------+------------+----------------------------------|
+|    31.1 | Apple | Tahoe or later | [[https://pxaka.tokyo/emacs/pkg/emacs-31.1_apple_nc.pkg][:package:]] | 2026-08-25 | [[https://pxaka.tokyo/emacs/pkg/emacs-31.1_apple_nc.md5][689f182a359f61a6b05555c3970a73d6]] |
+|    31.1 | Apple | Sequoia (15)   | [[https://pxaka.tokyo/emacs/pkg/emacs-31.1_apple_nc-15.pkg][:package:]] | 2026-08-25 | [[https://pxaka.tokyo/emacs/pkg/emacs-31.1_apple_nc-15.md5][f4459c8ea44228370ae51c29b403c546]] |
+|    31.1 | Apple | Sonoma (14)    | [[https://pxaka.tokyo/emacs/pkg/emacs-31.1_apple_nc-14.pkg][:package:]] | 2026-08-25 | [[https://pxaka.tokyo/emacs/pkg/emacs-31.1_apple_nc-14.md5][c2addec864403ff4648e452a7519caed]] |
+|    31.1 | Intel | Tahoe or later | [[https://pxaka.tokyo/emacs/pkg/emacs-31.1_intel_nc.pkg][:package:]] | 2026-08-25 | [[https://pxaka.tokyo/emacs/pkg/emacs-31.1_intel_nc.md5][8dab305da1b6d588a4984ae0fab3c488]] |
+|    31.1 | Intel | Sequoia (15)   | [[https://pxaka.tokyo/emacs/pkg/emacs-31.1_intel_nc-15.pkg][:package:]] | 2026-08-25 | [[https://pxaka.tokyo/emacs/pkg/emacs-31.1_intel_nc-15.md5][dbd9dd7f37127657317c80b74eef9895]] |
+
+#+begin_quote
+[!IMPORTANT]
+Please read [[https://github.com/takaxp/ns-inline-patch?tab=readme-ov-file#using-nativecomp][Using NativeComp]] section if you have any troubles.
+#+end_quote
+
+- Emacs 31.1 =without= NativeComp
+
+[[https://github.com/takaxp/ns-inline-patch/actions/workflows/release-31-arm64.yml][../../actions/workflows/release-31-arm64.yml/badge.svg]] [[https://github.com/takaxp/ns-inline-patch/actions/workflows/release-31-x86_64.yml][../../actions/workflows/release-31-x86_64.yml/badge.svg]]
+#+caption: Emacs 31.1 (without NativeComp)
+| Version | Chip  | macOS          | :link:    |       Date | md5                              |
+|---------+-------+----------------+-----------+------------+----------------------------------|
+|    31.1 | Apple | Tahoe or later | [[https://pxaka.tokyo/emacs/pkg/emacs-31.1_apple.pkg][:package:]] | 2026-08-25 | [[https://pxaka.tokyo/emacs/pkg/emacs-31.1_apple.md5][00ecb349a32842b51fcb10def584d9b7]] |
+|    31.1 | Apple | Sequoia (15)   | [[https://pxaka.tokyo/emacs/pkg/emacs-31.1_apple-15.pkg][:package:]] | 2026-08-25 | [[https://pxaka.tokyo/emacs/pkg/emacs-31.1_apple-15.md5][ba30f72b68ff972da07047d48d033aed]] |
+|    31.1 | Apple | Sonoma (14)    | [[https://pxaka.tokyo/emacs/pkg/emacs-31.1_apple-14.pkg][:package:]] | 2026-08-25 | [[https://pxaka.tokyo/emacs/pkg/emacs-31.1_apple-14.md5][2bcfc372d4da8a905bbb82be949793c6]] |
+|    31.1 | Intel | Tahoe or later | [[https://pxaka.tokyo/emacs/pkg/emacs-31.1_intel.pkg][:package:]] | 2026-08-25 | [[https://pxaka.tokyo/emacs/pkg/emacs-31.1_intel.md5][c9b7eba45770f32b29fdf1ad2ec883c2]] |
+|    31.1 | Intel | Sequoia (15)   | [[https://pxaka.tokyo/emacs/pkg/emacs-31.1_intel-15.pkg][:package:]] | 2026-08-25 | [[https://pxaka.tokyo/emacs/pkg/emacs-31.1_intel-15.md5][47e266a745643b6cc6307b6a543a7b9a]] |
+
+*** Emacs 30
 :PROPERTIES:
 :ID:       763AF298-873F-4ABD-834C-2E155FE5EC3D
 :END:
@@ -143,11 +178,11 @@ If you want to try the above HEAD package without enabling NativeComp, please ch
 #+caption: Emacs 30.2 (*with* NativeComp)
 | Version | Chip  | macOS          | :link:    |       Date | md5                              |
 |---------+-------+----------------+-----------+------------+----------------------------------|
-|    30.2 | Apple | Tahoe or later | [[https://pxaka.tokyo/emacs/pkg/emacs-30.2_apple_nc.pkg][:package:]] | 2026-03-14 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.2_apple_nc.md5][4804ceaa2392aa2e75c80fca753dd5a6]] |
-|    30.2 | Apple | Sequoia (15)   | [[https://pxaka.tokyo/emacs/pkg/emacs-30.2_apple_nc-15.pkg][:package:]] | 2026-03-14 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.2_apple_nc-15.md5][a0762202c6bb0f282669d7178ff2e56a]] |
-|    30.2 | Apple | Sonoma (14)    | [[https://pxaka.tokyo/emacs/pkg/emacs-30.2_apple_nc-14.pkg][:package:]] | 2026-03-14 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.2_apple_nc-14.md5][a34a9727cbac59b67058a8e8df4ba19e]] |
-|    30.2 | Intel | Tahoe or later | [[https://pxaka.tokyo/emacs/pkg/emacs-30.2_intel_nc.pkg][:package:]] | 2026-03-14 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.2_intel_nc.md5][2f65369a818d18b382e3ececeab274f9]] |
-|    30.2 | Intel | Sequoia (15)   | [[https://pxaka.tokyo/emacs/pkg/emacs-30.2_intel_nc-15.pkg][:package:]] | 2026-03-14 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.2_intel_nc-15.md5][eaaea6ff0a92bce72b7ba5991770841b]] |
+|    30.2 | Apple | Tahoe or later | [[https://pxaka.tokyo/emacs/pkg/emacs-30.2_apple_nc.pkg][:package:]] | 2026-08-25 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.2_apple_nc.md5][c345a2d4afe02431e6e39475ebfdb545]] |
+|    30.2 | Apple | Sequoia (15)   | [[https://pxaka.tokyo/emacs/pkg/emacs-30.2_apple_nc-15.pkg][:package:]] | 2026-08-25 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.2_apple_nc-15.md5][f4155cb1ea254e7dfc54ebf890761f04]] |
+|    30.2 | Apple | Sonoma (14)    | [[https://pxaka.tokyo/emacs/pkg/emacs-30.2_apple_nc-14.pkg][:package:]] | 2026-08-25 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.2_apple_nc-14.md5][18d94f2ea86a166687bf35b3cf419f0b]] |
+|    30.2 | Intel | Tahoe or later | [[https://pxaka.tokyo/emacs/pkg/emacs-30.2_intel_nc.pkg][:package:]] | 2026-08-25 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.2_intel_nc.md5][c7ee489e46708c69990add3c9cbf89cd]] |
+|    30.2 | Intel | Sequoia (15)   | [[https://pxaka.tokyo/emacs/pkg/emacs-30.2_intel_nc-15.pkg][:package:]] | 2026-08-25 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.2_intel_nc-15.md5][34da821ee79ec81dab406ddddce9ca5f]] |
 
 #+begin_quote
 [!IMPORTANT]
@@ -160,9 +195,9 @@ Please read [[https://github.com/takaxp/ns-inline-patch?tab=readme-ov-file#using
 #+caption: Emacs 30.2 (without NativeComp)
 | Version | Chip  | macOS          | :link:    |       Date | md5                              |
 |---------+-------+----------------+-----------+------------+----------------------------------|
-|    30.2 | Apple | Tahoe or later | [[https://pxaka.tokyo/emacs/pkg/emacs-30.2_apple.pkg][:package:]] | 2026-03-13 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.2_apple.md5][c53696495162e1cda44467c960a56cca]] |
-|    30.2 | Apple | Sequoia (15)   | [[https://pxaka.tokyo/emacs/pkg/emacs-30.2_apple-15.pkg][:package:]] | 2026-03-13 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.2_apple-15.md5][2597efceb90c72726200ae31a4ea77e3]] |
-|    30.2 | Apple | Sonoma (14)    | [[https://pxaka.tokyo/emacs/pkg/emacs-30.2_apple-14.pkg][:package:]] | 2026-03-13 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.2_apple-14.md5][eb0c0e0cd9e2d372b5489ea9e37e7762]] |
+|    30.2 | Apple | Tahoe or later | [[https://pxaka.tokyo/emacs/pkg/emacs-30.2_apple.pkg][:package:]] | 2026-03-13 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.2_apple.md5][ad5b507f695067829751b0b46e97e565]] |
+|    30.2 | Apple | Sequoia (15)   | [[https://pxaka.tokyo/emacs/pkg/emacs-30.2_apple-15.pkg][:package:]] | 2026-03-13 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.2_apple-15.md5][7933203c044d489a26a80d7b6ebbbb1f]] |
+|    30.2 | Apple | Sonoma (14)    | [[https://pxaka.tokyo/emacs/pkg/emacs-30.2_apple-14.pkg][:package:]] | 2026-03-13 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.2_apple-14.md5][5bbb7fa31b2903a1463853617313086f]] |
 |    30.2 | Intel | Tahoe or later | [[https://pxaka.tokyo/emacs/pkg/emacs-30.2_intel.pkg][:package:]] | 2026-03-13 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.2_intel.md5][a48c13e135b88c656e7fe73d36b5566d]] |
 |    30.2 | Intel | Sequoia (15)   | [[https://pxaka.tokyo/emacs/pkg/emacs-30.2_intel-15.pkg][:package:]] | 2026-03-13 | [[https://pxaka.tokyo/emacs/pkg/emacs-30.2_intel-15.md5][295cc10126d11db4e1271191f93b5d30]] |
 
@@ -176,11 +211,11 @@ Please read [[https://github.com/takaxp/ns-inline-patch?tab=readme-ov-file#using
 #+caption: Emacs 29.4 (*with* NativeComp)
 | Version | Chip  | macOS          | :link:    |       Date | md5                              |
 |---------+-------+----------------+-----------+------------+----------------------------------|
-|    29.4 | Apple | Tahoe or later | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_apple_nc.pkg][:package:]] | 2026-03-13 | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_apple_nc.md5][c752a2ef757792391903eae2250cfdf4]] |
-|    29.4 | Apple | Sequoia (15)   | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_apple_nc-15.pkg][:package:]] | 2026-03-13 | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_apple_nc-15.md5][3b6feda59e574a7ecd7fddefea3b03f6]] |
-|    29.4 | Apple | Sonoma (14)    | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_apple_nc-14.pkg][:package:]] | 2026-03-13 | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_apple_nc-14.md5][ed299905476e222bb0fc94d968d03bfc]] |
-|    29.4 | Intel | Tahoe or later | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_intel_nc.pkg][:package:]] | 2026-03-13 | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_intel_nc.md5][a56bdce24afcc3dc8895c520f114db34]] |
-|    29.4 | Intel | Sequoia (15)   | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_intel_nc-15.pkg][:package:]] | 2026-03-13 | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_intel_nc-15.md5][e524791289974b41486f367ece0ec0ca]] |
+|    29.4 | Apple | Tahoe or later | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_apple_nc.pkg][:package:]] | 2026-08-25 | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_apple_nc.md5][bf6a6cb8d79d51f2f80e962721be6431]] |
+|    29.4 | Apple | Sequoia (15)   | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_apple_nc-15.pkg][:package:]] | 2026-08-25 | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_apple_nc-15.md5][e2442bb75edd3732cf110dfd5753e829]] |
+|    29.4 | Apple | Sonoma (14)    | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_apple_nc-14.pkg][:package:]] | 2026-08-25 | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_apple_nc-14.md5][50ea74196883b70772140ba597c6ad11]] |
+|    29.4 | Intel | Tahoe or later | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_intel_nc.pkg][:package:]] | 2026-08-25 | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_intel_nc.md5][e8721af5a84f406849310adbed2e7250]] |
+|    29.4 | Intel | Sequoia (15)   | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_intel_nc-15.pkg][:package:]] | 2026-08-25 | [[https://pxaka.tokyo/emacs/pkg/emacs-29.4_intel_nc-15.md5][b48e3c7bdc6e2395811c0c726ef6c030]] |
 
 #+begin_quote
 [!IMPORTANT]
@@ -236,7 +271,7 @@ Please read [[https://github.com/takaxp/ns-inline-patch?tab=readme-ov-file#using
 :ID:       B6294138-DE78-49A8-82B5-858C43EBA5A9
 :END:
 
-For Emacs =31.x=, =30.2=, and =29.4= users, you can try to use an Emacs supporting =NativeComp= by downloading pkg from the links in above sections. Integrated lisp code are natively compiled so the pkg size is increased compared to that of the normal pkg file.
+For Emacs =32.x=, =31.1=, =30.2=, and =29.4= users, you can try to use an Emacs supporting =NativeComp= by downloading pkg from the links in above sections. Integrated lisp code are natively compiled so the pkg size is increased compared to that of the normal pkg file.
 
 Currently, installing =gcc= by brew is required to compile additional lisp code by the installed Emacs. And adding the following configuration will be needed to your =early-init.el= or beginning of =init.el= when you face a warning like *Warning (comp): libgccjit.so: error: error invoking gcc driver*.
 
@@ -244,14 +279,14 @@ Currently, installing =gcc= by brew is required to compile additional lisp code 
 (setenv "LIBRARY_PATH"
         (string-join
          '("/opt/homebrew/opt/gcc/lib/gcc/15"
-           "/opt/homebrew/opt/libgccjit/lib/gcc/15"
-           "/opt/homebrew/opt/gcc/lib/gcc/15/gcc/aarch64-apple-darwin25/15")
+           "/opt/homebrew/opt/libgccjit/lib/gcc/16"
+           "/opt/homebrew/opt/gcc/lib/gcc/16/gcc/aarch64-apple-darwin25/16")
          ":"))
 #+end_src
 
 #+begin_quote
 [!NOTE]
-- =15= specified in the above paths may have to be aligned to your environment.
+- =16= specified in the above paths may have to be aligned to your environment.
 - For Intel mac user, please replace =aarch64= with =x86_64=.
 - =darwin25= may also be changed, check the output of M-x ~emacs-version~, or run =/opt/homebrew/bin/gcc-15 -dumpmachine=.
 #+end_quote
@@ -259,7 +294,7 @@ Currently, installing =gcc= by brew is required to compile additional lisp code 
 If you use =batch-native-compile= or =batch-byte+native-compile= in a batch mode, setting for LIBRARY_PATH in your shell may be required as well.
 
 #+begin_src sh
-export LIBRARY_PATH="/opt/homebrew/opt/gcc/lib/gcc/15:/opt/homebrew/opt/libgccjit/lib/gcc/15:/opt/homebrew/opt/gcc/lib/gcc/15/gcc/aarch64-apple-darwin25/15"
+export LIBRARY_PATH="/opt/homebrew/opt/gcc/lib/gcc/16:/opt/homebrew/opt/libgccjit/lib/gcc/16:/opt/homebrew/opt/gcc/lib/gcc/16/gcc/aarch64-apple-darwin25/16"
 ${EMACS} -Q --batch --eval="(setq native-comp-eln-load-path (list (expand-file-name \"eln-cache/\" user-emacs-directory)))" -f batch-byte+native-compile init.el
 #+end_src
 
@@ -284,20 +319,30 @@ The following code will disable NativeComp module in each emacs session. So, no 
 #+end_src
 
 *** Integrated dynamic libraries:
-- libffi.7.dylib (or libffi.8.dylib), libffi is NOT contained in HEAD pkg.
+:PROPERTIES:
+:ID:       BAACCD8A-D159-4445-9EFF-6897BD2B0704
+:END:
 - libgmp.10.dylib
-- libintl.8.dylib
-- libtree-sitter.0.26.dylib
 - libgnutls.30.dylib
-- libnettle.8.dylib
-- libunistring.5.dylib
-- libhogweed.6.dylib
-- libp11-kit.0.dylib
+- libhogweed.7.dylib
 - libidn2.0.dylib
+- libintl.8.dylib
+- libnettle.9.dylib
+- libp11-kit.0.dylib
 - libtasn1.6.dylib
+- libtree-sitter.0.26.dylib
+- libunistring.5.dylib
+
+Additionally for NativeComp:
+- libgccjit.0.dylib
+- libisl.23.dylib
+- libmpc.3.dylib
+- libmpfr.6.dylib
+- libzstd.1.dylib
+
 
 The =system-configuration-features= is:
 
-=ACL GNUTLS LIBXML2 MODULES NOTIFY KQUEUE NS PDUMPER SQLITE3 THREADS TOOLKIT_SCROLL_BARS TREE_SITTER ZLIB=
+=ACL GNUTLS LIBXML2 MODULES NOTIFY KQUEUE NS PDUMPER SQLITE3 THREADS TOOLKIT_SCROLL_BARS TREE_SITTER ZLIB=, and =NATIVE_COMP= for some packages.
 
 Enjoy!
