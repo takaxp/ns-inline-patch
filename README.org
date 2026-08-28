@@ -121,11 +121,11 @@ These packages are built based on the latest development source code. So it may 
 #+caption: Emacs 31.0.50 HEAD of Master branch (*with* NativeComp)
 | Version | Chip  | macOS          | :link:    |       Date | md5                              |
 |---------+-------+----------------+-----------+------------+----------------------------------|
-| 32.0.50 | Apple | Tahoe or later | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc.pkg][:package:]] | 2026-08-22 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc.md5][180d004681f3b17a6be272ce6fdc89c2]] |
-| 32.0.50 | Apple | Sequoia (15)   | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc-15.pkg][:package:]] | 2026-08-22 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc-15.md5][993b31d46a7cd56ac34069530f7d92a4]] |
-| 32.0.50 | Apple | Sonoma (14)    | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc-14.pkg][:package:]] | 2026-08-22 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc-14.md5][5fc49961f40fece8e363205b9c73b5e3]] |
-| 32.0.50 | Intel | Tahoe or later | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel_nc.pkg][:package:]] | 2026-08-22 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel_nc.md5][2a8ecf6e8a8ee1c0b54abeda58d092a2]] |
-| 32.0.50 | Intel | Sequoia (15)   | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel_nc-15.pkg][:package:]] | 2026-08-22 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel_nc-15.md5][fa226c739ec1c5e969c18f81dac69c58]] |
+| 32.0.50 | Apple | Tahoe or later | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc.pkg][:package:]] | 2026-08-28 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc.md5][fea29fd19487008d81a8295cf7a55029]] |
+| 32.0.50 | Apple | Sequoia (15)   | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc-15.pkg][:package:]] | 2026-08-28 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc-15.md5][1e9ec55eab32a88651479852d54c2fde]] |
+| 32.0.50 | Apple | Sonoma (14)    | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc-14.pkg][:package:]] | 2026-08-28 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_apple_nc-14.md5][90ed1122ba41c4f70447cd49805de185]] |
+| 32.0.50 | Intel | Tahoe or later | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel_nc.pkg][:package:]] | 2026-08-28 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel_nc.md5][ae8c5b98af7bb220928943d39edcb07f]] |
+| 32.0.50 | Intel | Sequoia (15)   | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel_nc-15.pkg][:package:]] | 2026-08-28 | [[https://pxaka.tokyo/emacs/pkg/emacs-head_intel_nc-15.md5][1b35c463e3a8e6bb0fb239fe8b80475e]] |
 
 #+begin_quote
 [!IMPORTANT]
