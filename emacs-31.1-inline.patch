@@ -1068,7 +1068,7 @@ diff -crN --exclude .git emacs_origin/src/macim.m emacs/src/macim.m
 +   if (NILP (Fmac_input_source_is_ascii_capable()))
 +     {
 +       if (NILP (Vmac_use_input_method_on_system)
-+           || this_command_key_count
++           /* || this_command_key_count */
 +           || cursor_in_echo_area
 +           || !NILP (BVAR (current_buffer, read_only)))
 +         return TRUE;
